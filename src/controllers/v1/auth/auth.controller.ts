@@ -32,9 +32,9 @@ export class AuthController {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     public async login(@Req() req: any, @Res() res: any, @BodyParams() user: LoginRequest): Promise<AuthResponse> {
         try {
-        return res.send(req.user);
+            return res.send(req.user);
         } catch (error) {
-        throw new Exception(error.status, error.message);
+            throw new Exception(error.status, error.message);
         }
     }
 

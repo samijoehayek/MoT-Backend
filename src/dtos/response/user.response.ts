@@ -2,6 +2,8 @@
 
 import { Property } from '@tsed/schema';
 import { User } from '../../models/user';
+import { Role } from '../../models/roles';
+import { RoleResponse } from './role.response';
 
 export class UserResponse implements User {
     @Property()  
@@ -15,6 +17,15 @@ export class UserResponse implements User {
 
     @Property()
     password: string;
+    
+    @Property()
+    tag: string;
+
+    @Property()
+    roleId: string;
+
+    @Property(() => RoleResponse)
+    role: Role;
 
     @Property()
     isActive: boolean;

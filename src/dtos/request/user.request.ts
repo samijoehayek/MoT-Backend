@@ -16,6 +16,12 @@ export class UserRequest {
     password?: string;
 
     @Property()
+    tag?: string;
+
+    @Property()
+    roleId?: string;
+
+    @Property()
     isActive: boolean;
 
     @Property()

@@ -6,7 +6,7 @@ import { USER_REPOSITORY } from "../repositories/user/user.repository";
 import { BodyParams, Req } from "@tsed/common";
 import { envs } from "../config/envs";
 import * as jwt from "jsonwebtoken";
-import { UserRequest } from "../dtos/request/user.request";
+import { LoginRequest } from "../dtos/request/auth.request";
 
 @Protocol({
   name: "login-passport",
@@ -23,7 +23,7 @@ export class LoginPassportProtocol implements OnVerify {
   @Inject(EncryptionService)
   encryptionService: EncryptionService;
 
-  async $onVerify(@Req() req: Req, @BodyParams() payload: UserRequest) {
+  async $onVerify(@Req() req: Req, @BodyParams() payload: LoginRequest) {
     if (!payload.username || !payload.password) throw new Error("Username and password are required");
 
     const user = await this.userRepository.findOne({
