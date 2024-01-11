@@ -41,8 +41,8 @@ export class AuthController {
     @Put("/changePassword")
     @Authenticate("jwt-passport")
     @Returns(200, Boolean)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-    public async changePassword(@Req() req: any, @BodyParams() payload: ChangePasswordRequest): Promise<Boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public async changePassword(@Req() req: any, @BodyParams() payload: ChangePasswordRequest): Promise<boolean> {
         try {
         return await this.service.changePassword(req.user.user, payload);
         } catch (error) {

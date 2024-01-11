@@ -28,8 +28,7 @@ export class AuthService {
   }
 
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public async changePassword(user: User, payload: ChangePasswordRequest): Promise<Boolean> {
+  public async changePassword(user: User, payload: ChangePasswordRequest): Promise<boolean> {
     console.log(user.email);
     const encrytedOldPassword = this.encryptionService.encryptMD5(user.email + payload.oldPassword);
     if (encrytedOldPassword !== user.password) throw new Error("Old password is incorrect");

@@ -3,4 +3,5 @@
  */
 
 export * from "./auth/auth.controller";
+export * from "./content/content.controller";
 export * from "./user/user.controller";
