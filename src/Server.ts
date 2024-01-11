@@ -4,16 +4,16 @@ import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/ajv";
 import "@tsed/swagger";
-import {config} from "./config/index";
-import * as v1 from "./controllers/v1/index";
-import { InjectorService } from "./services/injector.service";
-import * as pages from "./controllers/pages/index";
-import cookieParser from "cookie-parser";
-import compress from "compression";
 import cors from "cors";
-import methodOverride from "method-override";
 import bodyParser from "body-parser";
+import compress from "compression";
+import cookieParser from "cookie-parser";
+import methodOverride from "method-override";
+import {config} from "./config/index";
+import * as pages from "./controllers/pages/index";
+import * as v1 from "./controllers/v1/index";
 import session from "express-session";
+import { InjectorService } from "./services/injector.service";
 
 const rootDir = __dirname;
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : [];
@@ -123,6 +123,7 @@ export class Server {
             path: "/",
             httpOnly: true,
             secure: false,
+            maxAge: 1
           }
         })
       )

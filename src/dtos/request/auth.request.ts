@@ -7,3 +7,11 @@ export class LoginRequest {
     @Property()
     password: string;
 }
+
+export class ChangePasswordRequest {
+    @Property()
+    oldPassword: string;
+
+    @Property()
+    newPassword: string;
+}
