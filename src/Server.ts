@@ -116,7 +116,7 @@ export class Server {
       )
       .use(
         session({
-          secret: "TickitBackendKey",
+          secret: "MoTBackendKey",
           resave: true,
           saveUninitialized: true,
           cookie: {
