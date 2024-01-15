@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user";
 
 @Entity()
 export class Role{
@@ -10,6 +11,9 @@ export class Role{
 
     @Column({nullable:true})
     roleDescription!: string;
+
+    @OneToMany(() => User, (user) => user.role)
+    user!: User[];
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;

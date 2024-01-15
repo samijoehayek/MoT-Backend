@@ -1,5 +1,6 @@
 import { Property } from "@tsed/schema";
 import { Role } from "../../models/roles";
+import { User } from "src/models/user";
 
 export class RoleResponse implements Role{
 
@@ -11,6 +12,9 @@ export class RoleResponse implements Role{
 
     @Property()
     roleDescription: string;
+
+    @Property()
+    user: User[];
 
     @Property()
     createdAt: Date;
