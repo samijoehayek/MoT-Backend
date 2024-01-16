@@ -11,12 +11,12 @@ export class ManagerController {
     @Inject(ManagerService)
     protected service: ManagerService;
 
-    @Put("/disableUser/:id")
+    @Put("/toggleUserLogIn/:isActive/:id")
     @Authenticate("access-passport")
     @Returns(200, Boolean)
-    public async disableUser(@PathParams("id") id:string): Promise<boolean> {
+    public async toggleUserLogIn(@PathParams("id") id:string, @PathParams("isActive") isActive:boolean): Promise<boolean> {
         try {
-            return await this.service.disableUser(id);
+            return await this.service.toggleUserLogIn(id, isActive);
         } catch (err) {
             throw new Exception(err.status, err.message);
         }
