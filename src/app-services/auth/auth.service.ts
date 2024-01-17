@@ -47,6 +47,10 @@ export class AuthService {
 
     await this.userRepository.update({ id: user.id }, { password: encryptedPassword });
 
+    // This is the email content being sent
+    const html = '<p>Password has been Changed</p>'
+    await this.transporterService.sendEmail({ html, subject: "Success!!", to: user.email })
+
     return true;
   }
 }

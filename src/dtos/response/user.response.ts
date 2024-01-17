@@ -28,6 +28,9 @@ export class UserResponse implements User {
     role: Role;
 
     @Property()
+    isVerified: boolean;
+
+    @Property()
     isActive: boolean;
 
     @Property()

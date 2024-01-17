@@ -22,9 +22,6 @@ export class UserRequest {
     roleId?: string;
 
     @Property()
-    isActive: boolean;
-
-    @Property()
     createAt?: Date;
 
     @Property()
