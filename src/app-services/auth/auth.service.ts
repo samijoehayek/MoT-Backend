@@ -5,6 +5,7 @@ import { UserRequest } from "../../dtos/request/user.request";
 import { UserResponse } from "../../dtos/response/user.response";
 import { ChangePasswordRequest } from "../../dtos/request/auth.request";
 import { User } from "../../models/user";
+import { TransporterService } from "../../services/transporter.service";
 
 @Service()
 export class AuthService {
@@ -13,6 +14,9 @@ export class AuthService {
 
   @Inject(EncryptionService)
   protected encryptionService: EncryptionService;
+
+  @Inject(TransporterService)
+  protected transporterService: TransporterService;
 
   public async signup(payload: UserRequest): Promise<UserResponse> {
     // Check if user created email and password
@@ -24,6 +28,11 @@ export class AuthService {
 
     // save the user
     const user = await this.userRepository.save({ ...payload });
+
+    // This is the email content being sent
+    const html = '<p>Welcome to MoT</p>'
+    await this.transporterService.sendEmail({ html, subject: "MindFlares: Welcome!", to: payload.email })
+
     return user;
   }
 

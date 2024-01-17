@@ -10,7 +10,7 @@ export class UserRequest {
     username: string;
     
     @Property()
-    email?: string;
+    email: string;
 
     @Property()
     password?: string;
