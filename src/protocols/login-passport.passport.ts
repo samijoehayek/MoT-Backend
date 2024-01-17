@@ -38,6 +38,9 @@ export class LoginPassportProtocol implements OnVerify {
     const canLogIn = user.isActive == true;
     if(!canLogIn) throw new Error("User is banned");
 
+    const userIsVerified = user.isVerified == true;
+    if(!userIsVerified) throw new Error("User is not verified");
+
     const token = jwt.sign(
       {
         iss: envs.JWT_ISSUER,
