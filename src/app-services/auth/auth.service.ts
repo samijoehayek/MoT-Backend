@@ -72,6 +72,9 @@ export class AuthService {
     const user = await this.userRepository.findOne({ where: { id: userVerification.userId } });
     if (!user) throw new Error("User not found");
 
+    const isExpired = userVerification.expiresAt < new Date();
+    if (isExpired) throw new Error("Token has expired");
+
     await this.userRepository.update({ id: user.id }, { isVerified: true });
 
     // This is the email content being sent
