@@ -24,6 +24,12 @@ export class JwtPassportProtocol implements OnVerify {
     const user = await this.userRepository.findOne({ where: { id: jwtPayload.sub } });
     if (!user) throw new Error("Invalid token");
 
+    // Check if the token has expired
+    const currentTimestamp = Math.floor(Date.now()); // Current time in milliseconds
+    if (jwtPayload.exp && jwtPayload.exp < currentTimestamp) {
+      throw new Error("Token has expired");
+    }
+
     return (req.user = { token: jwtPayload, user });
   }
 }

@@ -46,7 +46,7 @@ export class LoginPassportProtocol implements OnVerify {
         iss: envs.JWT_ISSUER,
         aud: envs.JWT_AUDIENCE,
         sub: user.id,
-        exp: Date.now() + Number(envs.JWT_EXPIRATION_AGE) * 1000
+        exp: Date.now() + (Number(envs.JWT_EXPIRATION_AGE) * 1000)
       },
       envs.JWT_KEY as string
     );
