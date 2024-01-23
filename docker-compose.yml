@@ -1,5 +1,16 @@
 version: '3.5'
 services:
+  postgresdb:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=MoT-Local
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   server:
     build:
       context: .
@@ -9,6 +20,26 @@ services:
         - https_proxy
         - no_proxy
     image: mot-backend/server:latest
+    depends_on:
+      - postgresdb
     ports:
       - "8081:8081"
+    environment:
+      - NODE_ENV=staging
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://mot-dev.com
+      - POSTGRES_HOST=postgresdb
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=MoT-Local
+      - JWT_KEY=secret123
+      - JWT_ISSUER=accounts.mindflares.me
+      - JWT_AUDIENCE=test.com
+      - JWT_EXPIRATION_AGE=43200
+      - PASSWORD_RECOVERY_KEY=secret123
+      - TRANSPORTER_EMAIL=samijoehayek1@gmail.com
+      - TRANSPORTER_PASSWORD=jgtd sihu xmar widc
+    stdin_open: true
+    tty: true
+      
 

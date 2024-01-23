@@ -35,12 +35,18 @@ export class LoginPassportProtocol implements OnVerify {
     const encryptPassword = this.encryptionService.encryptMD5(user.email + payload.password);
     if (encryptPassword !== user.password) throw new Error("Password is incorrect");
 
+    const canLogIn = user.isActive == true;
+    if(!canLogIn) throw new Error("User is banned");
+
+    const userIsVerified = user.isVerified == true;
+    if(!userIsVerified) throw new Error("User is not verified");
+
     const token = jwt.sign(
       {
         iss: envs.JWT_ISSUER,
         aud: envs.JWT_AUDIENCE,
         sub: user.id,
-        exp: Date.now() + Number(envs.JWT_EXPIRATION_AGE) * 1000
+        exp: Date.now() + (Number(envs.JWT_EXPIRATION_AGE) * 1000)
       },
       envs.JWT_KEY as string
     );

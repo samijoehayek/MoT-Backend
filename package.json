@@ -39,8 +39,10 @@
     "@tsed/swagger": "^7.55.0",
     "@types/express-session": "^1.17.10",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/nodemailer": "^6.4.14",
     "@types/passport-jwt": "^4.0.0",
     "@types/passport-local": "^1.0.38",
+    "@types/uuid": "^9.0.7",
     "ajv": "^8.12.0",
     "barrelsby": "^2.8.1",
     "body-parser": "^1.20.2",
@@ -56,11 +58,13 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
+    "nodemailer": "^6.9.8",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
-    "typeorm": "^0.3.19"
+    "typeorm": "^0.3.19",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@tsed/cli-plugin-eslint": "5.0.0",

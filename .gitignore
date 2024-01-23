@@ -52,6 +52,12 @@ test/**/*.js.map
 /public
 /dist
 
+#postgres
+pgdata
+
 #env
 .env.local
 .env.development
+.env.example
+
+

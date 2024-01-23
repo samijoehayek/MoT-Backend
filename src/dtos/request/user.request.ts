@@ -10,7 +10,7 @@ export class UserRequest {
     username: string;
     
     @Property()
-    email?: string;
+    email: string;
 
     @Property()
     password?: string;
@@ -20,9 +20,6 @@ export class UserRequest {
 
     @Property()
     roleId?: string;
-
-    @Property()
-    isActive: boolean;
 
     @Property()
     createAt?: Date;

@@ -24,6 +24,9 @@ export class User {
   @ManyToOne(() => Role, (role:Role) => role.id)
   @JoinColumn({ name: "roleId" })
   role: Role;
+
+  @Column({ default: false })
+  isVerified: boolean;
   
   @Column({ default: true })
   isActive: boolean;
