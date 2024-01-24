@@ -18,7 +18,18 @@ export class RoleService {
     }
 
     public async createRole(payload: RoleRequest): Promise<RoleResponse> {
+        // Set role name to lowercase, this is done to avoid duplicate role names
+        if(payload.roleName) payload.roleName = String(payload.roleName).toLowerCase();
+
+        // Check if role with this name exists, if it does throw an error
+        const role = await this.roleRepository.findOne({ where: { roleName: payload.roleName } });
+        if (role)
+            throw new NotFound("role with this name exists");
+
+        // Set role id to lowercase
         if(payload.id) payload.id = String(payload.id).toLowerCase();
+
+        // Return the role created 
         return await this.roleRepository.save({...payload});
     }
 
