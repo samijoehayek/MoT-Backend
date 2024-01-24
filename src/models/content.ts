@@ -14,6 +14,9 @@ export class Content {
     @Column("jsonb", { nullable: true })
     contentJson!: string;
 
+    @Column("jsonb", { nullable: true })
+    contentJsonArabic!: string;
+
     @CreateDateColumn()
     createdAt!: Date;
 

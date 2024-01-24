@@ -16,6 +16,9 @@ export class ContentResponse implements Content {
     contentJson: string;
 
     @Property()
+    contentJsonArabic: string;
+
+    @Property()
     createdAt: Date;
 
     @Property()

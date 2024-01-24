@@ -14,6 +14,9 @@ export class ContentRequest {
     contentJson?: string;
 
     @Property()
+    contentJsonArabic?: string;
+
+    @Property()
     createdBy?: string
 
     @Property()
