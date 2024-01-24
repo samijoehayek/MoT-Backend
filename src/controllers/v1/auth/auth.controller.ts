@@ -27,6 +27,16 @@ export class AuthController {
     }
   }
 
+  @Put("/resendVerificationEmail/:userId")
+  @Returns(200, Boolean)
+  public async resendVerificationEmail(@PathParams("userId") userId: string): Promise<boolean> {
+    try {
+      return await this.service.resendVerificationEmail(userId);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
   @Put("/verify/:token")
   @Returns(200, Boolean)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

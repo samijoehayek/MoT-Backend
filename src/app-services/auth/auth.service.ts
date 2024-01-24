@@ -49,6 +49,25 @@ export class AuthService {
     return user;
   }
 
+  public async resendVerificationEmail(userId: string): Promise<boolean> {
+    const currentUrl = "http://localhost:8083";
+    const uniqueString = uuidv4();
+      
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+  
+    // Save the user verification request
+    await this.userVerificationRepository.update({ userId: userId }, {verficationToken:uniqueString, expiresAt: new Date(Date.now() + 6 * 60 * 60 * 1000)  }); 
+  
+    // This is the email content being sent
+    const html = `<p>Welcome to MoT</p><p>Verify your email address to complete the signup and login into your account.</p><p>The link will expire in 6 hours.</p><p>Press <a href=${
+      currentUrl + "/v1/auth/verify/" + uniqueString
+    }> here </a> to verify your email.</p>`;
+    await this.transporterService.sendEmail({ html, subject: "Verify Your Email", to: user.email });
+  
+    return true;
+  }
+
   public async changePassword(user: User, payload: ChangePasswordRequest): Promise<boolean> {
     const encrytedOldPassword = this.encryptionService.encryptMD5(user.email + payload.oldPassword);
     if (encrytedOldPassword !== user.password) throw new Error("Old password is incorrect");
