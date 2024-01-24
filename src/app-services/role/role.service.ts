@@ -11,9 +11,14 @@ export class RoleService {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async getRole(filter?: any): Promise<Array<RoleResponse>> {
+        // Set filter 'roleNmae' to lowercase, this is done to avoid confusion
+        if(filter?.where.roleName) filter.where.roleName = String(filter.where.roleName).toLowerCase();
+
+        // If filter is provided, use it to find role, else find all roles
         const role = filter ? await this.roleRepository.find(filter) : await this.roleRepository.find();
         if(!role) return [];
-        console.log(JSON.parse('{"where":{"roleName":"Moderator"}}'));
+
+        // Return role objects in the form of Role Response
         return role;
     }
 
@@ -34,23 +39,37 @@ export class RoleService {
     }
 
     public async updateRole(id: string, payload: RoleRequest): Promise<RoleResponse> {
+        // Make id lowercase in case it is sent with a capital letter
+        id = id.toLowerCase();
+
+        // Get the role with the given id
         const role = await this.roleRepository.findOne({ where: { id: id } });
         if (!role)
             throw new NotFound("role not found");
 
-        id = id.toLowerCase();
+         // Set role name to lowercase, this is done to avoid duplicate role names
+         if(payload.roleName) payload.roleName = String(payload.roleName).toLowerCase();
+
+        // Update role with the role payload sent in the form of RoleRequest
         await this.roleRepository.update({ id: id }, { ...payload });
 
+        // Return the updated role
         return role;
     }
 
     public async removeRole(id: string): Promise<boolean> {
+        // Make id lowercase in case it is sent with a capital letter
         id = id.toLowerCase();
+
+        // Get the role with the given id
         const role = await this.roleRepository.findOne({ where: { id: id } });
         if (!role)
             throw new NotFound("role not found");
 
+        // Remove the role
         await this.roleRepository.remove(role);
+
+        // Return true if role is removed
         return true;
     }
 }
