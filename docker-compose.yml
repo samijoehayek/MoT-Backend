@@ -9,7 +9,7 @@ services:
       - "5433:5432"
     environment:
       - POSTGRES_DB=MoT-Local
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=MoT-Local
       - POSTGRES_PASSWORD=postgres
   server:
     build:
@@ -29,7 +29,7 @@ services:
       - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://mot-dev.com
       - POSTGRES_HOST=postgresdb
       - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=MoT-Local
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=MoT-Local
       - JWT_KEY=secret123
