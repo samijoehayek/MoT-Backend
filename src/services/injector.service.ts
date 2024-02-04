@@ -2,7 +2,9 @@ import { Inject, Service } from "@tsed/di";
 import { SignupPassportProtocol } from "../protocols/signup-passport.protocol";
 import { LoginPassportProtocol } from "../protocols/login-passport.passport";
 import { JwtPassportProtocol } from "../protocols/jwt-passport.protocol";
-import { AccessPassportProtocol } from "../protocols/access-passport.protocol";
+import { ManagerPassportProtocol } from "../protocols/manager-passport.protocol";
+import { AdminLoginPassportProtocol } from "../protocols/admin-login-passport.protocol";
+import { AdminPassportProtocol } from "../protocols/admin-passport.protocol";
 
 @Service()
 export class InjectorService {
@@ -15,6 +17,12 @@ export class InjectorService {
     @Inject(JwtPassportProtocol)
     public jwtPassportProtocol: JwtPassportProtocol;
 
-    @Inject(AccessPassportProtocol)
-    public accessPassportProtocol: AccessPassportProtocol;
+    @Inject(ManagerPassportProtocol)
+    public managerPassportProtocol: ManagerPassportProtocol;
+
+    @Inject(AdminLoginPassportProtocol)
+    public adminLoginPassportProtocol: AdminLoginPassportProtocol;
+
+    @Inject(AdminPassportProtocol)
+    public adminPassportProtocol: AdminPassportProtocol;
 }

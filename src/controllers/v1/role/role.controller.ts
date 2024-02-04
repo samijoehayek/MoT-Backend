@@ -5,6 +5,7 @@ import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Exception } from "@tsed/exceptions";
 import { RoleResponse } from "../../../dtos/response/role.response";
 import { RoleRequest } from "../../../dtos/request/role.request";
+import { Authenticate } from "@tsed/passport";
 
 @Controller("/role")
 @Tags("Role")
@@ -23,6 +24,7 @@ export class RoleController{
     }
 
     @Post("/")
+    @Authenticate("admin-passport")
     @Returns(200, RoleResponse)
     public async createRole(@BodyParams() role: RoleRequest): Promise<RoleResponse> {
         try {
@@ -33,6 +35,7 @@ export class RoleController{
     }
 
     @Put("/:id")
+    @Authenticate("admin-passport")
     @Returns(200, RoleResponse)
     public async updateRole(@PathParams("id") id:string, @BodyParams() role: RoleRequest): Promise<RoleResponse> {
         try {
@@ -43,6 +46,7 @@ export class RoleController{
     }
 
     @Delete("/:id")
+    @Authenticate("admin-passport")
     @Returns(200, Boolean)
     public async deleteRole(@PathParams("id") id: string): Promise<boolean> {
         try {

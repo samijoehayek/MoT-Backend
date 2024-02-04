@@ -7,7 +7,7 @@ import { USER_REPOSITORY } from "../repositories/user/user.repository";
 import { ROLE_REPOSITORY } from "../repositories/role/role.repository";
 
 @Protocol({
-  name: "access-passport",
+  name: "admin-passport",
   useStrategy: Strategy,
   settings: {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -16,7 +16,7 @@ import { ROLE_REPOSITORY } from "../repositories/role/role.repository";
     audience: envs.JWT_AUDIENCE
   }
 })
-export class AccessPassportProtocol implements OnVerify {
+export class AdminPassportProtocol implements OnVerify {
   @Inject(USER_REPOSITORY)
   userRepository: USER_REPOSITORY;
 
@@ -29,7 +29,7 @@ export class AccessPassportProtocol implements OnVerify {
     if (!user) throw new Error("Invalid token");
     
     const role = await this.roleRepository.findOne({ where: { id: user.roleId } });
-    if (!role?.roleName || role.roleName.toLowerCase() !== "manager") throw new Error("User is not manager");
+    if (!role?.roleName || role.roleName.toLowerCase() !== "admin") throw new Error("User is not Admin");
 
     return (req.user = { token: jwtPayload, user });
   }

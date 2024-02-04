@@ -12,7 +12,7 @@ export class ManagerController {
     protected service: ManagerService;
 
     @Put("/toggleUserLogIn/:isActive/:id")
-    @Authenticate("access-passport")
+    @Authenticate("manager-passport")
     @Returns(200, Boolean)
     public async toggleUserLogIn(@PathParams("id") id:string, @PathParams("isActive") isActive:boolean): Promise<boolean> {
         try {
