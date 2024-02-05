@@ -15,9 +15,6 @@ export class Item {
   @Column({ nullable: true })
   itemRarity!: number;
 
-  @Column()
-  itemPrice!: number;
-
   @OneToMany(() => Ownership, (ownership) => ownership.user)
   ownership: Ownership[];
 

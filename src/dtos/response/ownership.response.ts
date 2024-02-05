@@ -21,6 +21,9 @@ export class OwnershipResponse {
     item: Item;
 
     @Property()
+    quantity: number;
+
+    @Property()
     createdAt?: Date;
 
     @Property()

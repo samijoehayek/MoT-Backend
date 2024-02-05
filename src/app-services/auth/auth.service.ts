@@ -8,11 +8,15 @@ import { User } from "../../models/user";
 import { TransporterService } from "../../services/transporter.service";
 import { v4 as uuidv4 } from "uuid";
 import { USER_VERIFICATION_REPOSITORY } from "../../repositories/userVerification/userVerification.repository";
+import { ROLE_REPOSITORY } from "../../repositories/role/role.repository";
 
 @Service()
 export class AuthService {
   @Inject(USER_REPOSITORY)
   protected userRepository: USER_REPOSITORY;
+
+  @Inject(ROLE_REPOSITORY)
+  protected roleRepository: ROLE_REPOSITORY;
 
   @Inject(USER_VERIFICATION_REPOSITORY)
   protected userVerificationRepository: USER_VERIFICATION_REPOSITORY;
@@ -32,6 +36,13 @@ export class AuthService {
       payload.email = payload.email.toLowerCase();
       const encryptPassword = this.encryptionService.encryptMD5(payload.email + payload.password);
       payload.password = encryptPassword;
+    }
+
+    // If user did not choose a role, default to user
+    if (!payload.roleId) {
+      // Get the role id for normal user
+      const role = await this.roleRepository.findOne({ where: { roleName: "user" } });
+      payload.roleId = role?.id;
     }
 
     // save the user

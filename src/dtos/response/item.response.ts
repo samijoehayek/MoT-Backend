@@ -17,9 +17,6 @@ export class ItemResponse implements Item{
     itemRarity: number;
 
     @Property()
-    itemPrice: number;
-
-    @Property()
     ownership: Ownership[];
 
     @Property()

@@ -5,6 +5,8 @@ import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Exception } from "@tsed/exceptions";
 import { ItemResponse } from "../../../dtos/response/item.response";
 import { ItemRequest } from "../../../dtos/request/item.request";
+import { OwnershipRequest } from "../../../dtos/request/ownership.request";
+import { Authenticate } from "@tsed/passport";
 
 @Controller("/item")
 @Tags("Item")
@@ -23,6 +25,7 @@ export class ItemController{
     }
 
     @Post("/")
+    @Authenticate("admin-passport")
     @Returns(200, ItemResponse)
     public async createItem(@BodyParams() item: ItemRequest): Promise<ItemResponse> {
         try {
@@ -33,6 +36,7 @@ export class ItemController{
     }
 
     @Put("/:id")
+    @Authenticate("admin-passport")
     @Returns(200, ItemResponse)
     public async updateItem(@PathParams("id") id:string, @BodyParams() item: ItemRequest): Promise<ItemResponse> {
         try {
@@ -43,6 +47,7 @@ export class ItemController{
     }
 
     @Delete("/:id")
+    @Authenticate("admin-passport")
     @Returns(200, Boolean)
     public async deleteItem(@PathParams("id") id: string): Promise<boolean> {
         try {
@@ -51,5 +56,27 @@ export class ItemController{
             throw new Exception(err.status, err.message);
         }
     }
+
+    @Post("/collect")
+    @Returns(200, Boolean)
+    public async collectItem(@BodyParams() ownership: OwnershipRequest): Promise<boolean> {
+        try {
+            return await this.service.collectItem(ownership);
+        } catch (err) {
+            throw new Exception(err.status, err.message);
+        }
+    }
+
+    @Post("/drop")
+    @Returns(200, Boolean)
+    public async dropItem(@BodyParams() ownership: OwnershipRequest): Promise<boolean> {
+        try {
+            return await this.service.dropItem(ownership);
+        } catch (err) {
+            throw new Exception(err.status, err.message);
+        }
+    }
+
+
 
 }
