@@ -1,6 +1,9 @@
 import { Property } from "@tsed/schema";
+import { Item } from "../../models/item";
+import { Ownership } from "src/models/ownership";
 
-export class ItemResponse {
+export class ItemResponse implements Item{
+    
     @Property()
     id: string;
 
@@ -12,6 +15,12 @@ export class ItemResponse {
 
     @Property()
     itemRarity: number;
+
+    @Property()
+    itemPrice: number;
+
+    @Property()
+    ownership: Ownership[];
 
     @Property()
     createdAt: Date;

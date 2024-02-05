@@ -4,6 +4,7 @@ import { Property } from '@tsed/schema';
 import { User } from '../../models/user';
 import { Role } from '../../models/roles';
 import { RoleResponse } from './role.response';
+import { Ownership } from 'src/models/ownership';
 
 export class UserResponse implements User {
     @Property()  
@@ -26,6 +27,12 @@ export class UserResponse implements User {
 
     @Property(() => RoleResponse)
     role: Role;
+
+    @Property()
+    ownership: Ownership[];
+
+    @Property()
+    balance: number;
 
     @Property()
     isVerified: boolean;
