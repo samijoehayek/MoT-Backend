@@ -19,6 +19,9 @@ export class UserRequest {
     tag?: string;
 
     @Property()
+    roleId?: string
+
+    @Property()
     createAt?: Date;
 
     @Property()
