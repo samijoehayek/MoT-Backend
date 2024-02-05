@@ -19,7 +19,7 @@ export class UserRequest {
     tag?: string;
 
     @Property()
-    roleId?: string;
+    roleId?: string
 
     @Property()
     createAt?: Date;

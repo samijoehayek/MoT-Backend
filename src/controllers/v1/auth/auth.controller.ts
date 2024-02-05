@@ -48,11 +48,25 @@ export class AuthController {
     }
   }
 
+  // All users including admins can use this endpoint
   @Post("/login")
   @Authenticate("login-passport")
   @Returns(200, AuthResponse)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   public async login(@Req() req: any, @Res() res: any, @BodyParams() user: LoginRequest): Promise<AuthResponse> {
+    try {
+      return res.send(req.user);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  // Only admins can login from this endpoint
+  @Post("/adminLogin")
+  @Authenticate("admin-login-passport")
+  @Returns(200, AuthResponse)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+  public async adminLogin(@Req() req: any, @Res() res: any, @BodyParams() user: LoginRequest): Promise<AuthResponse> {
     try {
       return res.send(req.user);
     } catch (error) {
