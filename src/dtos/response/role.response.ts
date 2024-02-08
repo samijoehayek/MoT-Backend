@@ -1,5 +1,5 @@
 import { Property } from "@tsed/schema";
-import { Role } from "../../models/roles";
+import { Role } from "../../models/role";
 import { User } from "src/models/user";
 
 export class RoleResponse implements Role{

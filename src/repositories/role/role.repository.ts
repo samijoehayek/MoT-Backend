@@ -1,4 +1,4 @@
-import { Role } from "../../models/roles";
+import { Role } from "../../models/role";
 import { PostgresDataSource } from "../../datasources/PostgresDatasource";
 import { registerProvider } from "@tsed/di";
 
