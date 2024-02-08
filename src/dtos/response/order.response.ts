@@ -1,5 +1,5 @@
 import { Property } from "@tsed/schema";
-import { Order } from "src/models/order";
+import { Order } from "../../models/order";
 import { UserResponse } from "./user.response";
 import { User } from "../../models/user";
 

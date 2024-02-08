@@ -1,6 +1,6 @@
 import { Property } from "@tsed/schema";
 import { Item } from "../../models/item";
-import { Ownership } from "src/models/ownership";
+import { Ownership } from "../../models/ownership";
 
 export class ItemResponse implements Item{
     

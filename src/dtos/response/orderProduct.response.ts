@@ -1,8 +1,8 @@
 import { Property } from "@tsed/schema";
-import { OrderProduct } from "src/models/orderProduct";
+import { OrderProduct } from "../../models/orderProduct";
 import { OrderResponse } from "./order.response";
-import { Order } from "src/models/order";
-import { Product } from "src/models/product";
+import { Order } from "../../models/order";
+import { Product } from "../../models/product";
 import { ProductResponse } from "./product.response";
 
 export class OrderProductResponse implements OrderProduct {

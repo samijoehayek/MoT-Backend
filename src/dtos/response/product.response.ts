@@ -1,5 +1,5 @@
 import { Property } from "@tsed/schema";
-import { Product } from "src/models/product";
+import { Product } from "../../models/product";
 
 export class ProductResponse implements Product {
     @Property()

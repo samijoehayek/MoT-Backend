@@ -4,7 +4,7 @@ import { Property } from '@tsed/schema';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
 import { RoleResponse } from './role.response';
-import { Ownership } from 'src/models/ownership';
+import { Ownership } from '../../models/ownership';
 
 export class UserResponse implements User {
     @Property()  

@@ -1,6 +1,6 @@
 import { Property } from "@tsed/schema";
-import { PaymentConfiguration } from "src/models/paymentConfiguration";
-import { User } from "src/models/user";
+import { PaymentConfiguration } from "../../models/paymentConfiguration";
+import { User } from "../../models/user";
 
 export class PaymentConfigurationResponse implements PaymentConfiguration {
     @Property()

@@ -1,8 +1,8 @@
 import { Inject, Service } from "@tsed/di";
 import { OWNERSHIP_REPOSITORY } from "../../repositories/ownership/ownership.repository";
 import { NotFound } from "@tsed/exceptions";
-import { OwnershipRequest } from "src/dtos/request/ownership.request";
-import { OwnershipResponse } from "src/dtos/response/ownership.response";
+import { OwnershipRequest } from "../../dtos/request/ownership.request";
+import { OwnershipResponse } from "../../dtos/response/ownership.response";
 
 @Service()
 export class OwnershipService {
