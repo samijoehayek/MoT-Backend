@@ -55,4 +55,15 @@ export class OrderController {
             throw new Exception(err.status, err.message);
         }
     }
+
+    @Put("success/:id")
+    @Authenticate("jwt-passport")
+    @Returns(200, OrderResponse)
+    public async updateOrderSuccess(@PathParams("id") id:string, @BodyParams() products: {productId:string, quantity:number}[]): Promise<OrderResponse> {
+        try {
+            return await this.service.updateOrderSuccess(id, products);
+        } catch (err) {
+            throw new Exception(err.status, err.message);
+        }
+    }
 }
