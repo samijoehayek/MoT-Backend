@@ -6,6 +6,8 @@ export * from "./auth/auth.controller";
 export * from "./content/content.controller";
 export * from "./item/item.controller";
 export * from "./manager/manager.controller";
+export * from "./order/order.controller";
+export * from "./orderProduct/orderProduct.controller";
 export * from "./ownership/ownership.controller";
 export * from "./paymentConfiguration/paymentConfiguration.controller";
 export * from "./product/product.controller";

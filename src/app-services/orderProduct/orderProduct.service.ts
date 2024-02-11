@@ -24,9 +24,26 @@ export class OrderProductService {
     return orderProduct;
   }
 
-  public async createOrderProduct(payload: OrderProductRequest): Promise<OrderProductResponse> {
-    if (payload.id) payload.id = String(payload.id).toLowerCase();
-    return await this.orderProductRepository.save({ ...payload });
+  public async createOrderProduct(payload: OrderProductRequest[]): Promise<OrderProductResponse[]> {
+    // If all products are valid, proceed with saving them
+    try {
+        const responses: OrderProductResponse[] = [];
+        for (const product of payload) {
+            if (product.id) product.id = String(product.id).toLowerCase();
+            
+            // Check if the order product exists in the db by checking the orderId and the productId
+            const existingOrderProduct = await this.orderProductRepository.findOne({ where: { orderId: product.orderId, productId: product.productId } });
+            if (existingOrderProduct) throw new Error("OrderProduct already exists");
+
+            // Save each valid order product to the database
+            const response = await this.orderProductRepository.save(product);
+            responses.push(response);
+        }
+        return responses;
+    } catch (error) {
+        // Handle database errors or other exceptions
+        throw new Error("Failed to save order products: " + error.message);
+    }
   }
 
   public async updateOrderProduct(id: string, payload: OrderProductRequest): Promise<OrderProductResponse> {

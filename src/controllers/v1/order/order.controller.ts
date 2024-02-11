@@ -24,6 +24,7 @@ export class OrderController {
     }
 
     @Post("/")
+    @Authenticate("jwt-passport")
     @Returns(200, OrderResponse)
     public async createOrder(@BodyParams() order: OrderRequest): Promise<OrderResponse> {
         try {
@@ -34,7 +35,7 @@ export class OrderController {
     }
 
     @Put("/:id")
-    @Authenticate("admin-passport")
+    @Authenticate("jwt-passport")
     @Returns(200, OrderResponse)
     public async updateOrder(@PathParams("id") id:string, @BodyParams() order: OrderRequest): Promise<OrderResponse> {
         try {
@@ -45,7 +46,7 @@ export class OrderController {
     }
 
     @Delete("/:id")
-    @Authenticate("admin-passport")
+    @Authenticate("jwt-passport")
     @Returns(200, Boolean)
     public async deleteOrder(@PathParams("id") id: string): Promise<boolean> {
         try {
@@ -54,5 +55,4 @@ export class OrderController {
             throw new Exception(err.status, err.message);
         }
     }
-
 }

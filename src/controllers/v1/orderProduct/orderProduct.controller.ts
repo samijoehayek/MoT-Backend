@@ -24,8 +24,9 @@ export class OrderProductController {
     }
 
     @Post("/")
+    @Authenticate("jwt-passport")
     @Returns(200, OrderProductResponse)
-    public async createOrderProduct(@BodyParams() orderProduct: OrderProductRequest): Promise<OrderProductResponse> {
+    public async createOrderProduct(@BodyParams() orderProduct: OrderProductRequest[]): Promise<OrderProductResponse[]> {
         try {
             return await this.service.createOrderProduct(orderProduct);
         } catch (error) {
@@ -34,7 +35,7 @@ export class OrderProductController {
     }
 
     @Put("/:id")
-    @Authenticate("admin-passport")
+    @Authenticate("jwt-passport")
     @Returns(200, OrderProductResponse)
     public async updateOrderProduct(@PathParams("id") id:string, @BodyParams() orderProduct: OrderProductRequest): Promise<OrderProductResponse> {
         try {
@@ -45,7 +46,7 @@ export class OrderProductController {
     }
 
     @Delete("/:id")
-    @Authenticate("admin-passport")
+    @Authenticate("jwt-passport")
     @Returns(200, Boolean)
     public async deleteOrderProduct(@PathParams("id") id: string): Promise<boolean> {
         try {
