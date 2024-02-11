@@ -10,11 +10,15 @@ export class ProductRequest{
     @Property() 
     description: string;
 
+    @Property()
+    image: string;
+
     @Property() 
     price: number;
 
     @Property() 
     quantity: number;
+
     
     @Property() 
     available?: boolean;

@@ -12,6 +12,9 @@ export class ProductResponse implements Product {
     description: string;
 
     @Property()
+    image: string;
+
+    @Property()
     price: number;
 
     @Property()

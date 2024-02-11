@@ -14,6 +14,9 @@ export class Product {
   @Column()
   price!: number;
 
+  @Column({ nullable: true})
+  image!: string
+
   @Column()
   quantity!: number;
 
