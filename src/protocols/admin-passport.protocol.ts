@@ -31,6 +31,12 @@ export class AdminPassportProtocol implements OnVerify {
     const role = await this.roleRepository.findOne({ where: { id: user.roleId } });
     if (!role?.roleName || role.roleName.toLowerCase() !== "admin") throw new Error("User is not Admin");
 
+    // Check if the token has expired
+    const currentTimestamp = Math.floor(Date.now()); // Current time in milliseconds
+    if (jwtPayload.exp && jwtPayload.exp < currentTimestamp) {
+      throw new Error("Token has expired");
+    }
+
     return (req.user = { token: jwtPayload, user });
   }
 }

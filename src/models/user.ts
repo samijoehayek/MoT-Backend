@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn } from "typeorm";
-import { Role } from "./roles";
+import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Role } from "./role";
+import { Ownership } from "./ownership";
 
 @Entity()
 export class User {
@@ -24,6 +25,12 @@ export class User {
   @ManyToOne(() => Role, (role:Role) => role.id)
   @JoinColumn({ name: "roleId" })
   role: Role;
+
+  @OneToMany(() => Ownership, (ownership) => ownership.user)
+  ownership: Ownership[];
+
+  @Column({ default: 0 })
+  balance: number;
 
   @Column({ default: false })
   isVerified: boolean;
