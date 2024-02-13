@@ -68,12 +68,6 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS
       allowedHeaders: [
         "Content-Type",
         "Authorization",
-        "x-web3-auth-admin",
-        "x-web3-auth-address",
-        "x-web3-auth-msg",
-        "x-web3-auth-signed",
-        "x-web3-auth-chain",
-        "x-web3-auth-isevm"
       ],
     }),
     cookieParser(),

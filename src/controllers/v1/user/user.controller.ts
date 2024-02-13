@@ -1,7 +1,7 @@
 import { Controller, Inject } from "@tsed/di";
-import { Post, Returns, Tags } from "@tsed/schema";
+import { Post, Put, Returns, Tags } from "@tsed/schema";
 import { UserResponse } from "../../../dtos/response/user.response";
-import { BodyParams, QueryParams } from "@tsed/platform-params";
+import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Exception } from "@tsed/exceptions";
 import { Get } from "@tsed/schema";
 import { UserService } from "../../../app-services/user/user.service";
@@ -56,6 +56,18 @@ export class UserController {
   public async adminCreate(@BodyParams() user:UserRequest): Promise<UserResponse>{
     try {
       return await this.service.createUser(user);
+    } catch (error) {
+      throw new Exception(error.status, error.message)
+    }
+
+  }
+
+  @Put("/updateUserActivity/:userId/:activityStatus")
+  @Authenticate("admin-passport")
+  @Returns(200, Boolean)
+  public async updateUserActivity(@PathParams("userId") userId:string, @PathParams("activityStatus") activityStatus:boolean): Promise<boolean>{
+    try {
+      return await this.service.updateUserStatus(userId, activityStatus);
     } catch (error) {
       throw new Exception(error.status, error.message)
     }

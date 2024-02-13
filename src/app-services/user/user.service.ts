@@ -65,4 +65,17 @@ export class UserService {
     const newUser = await this.repository.save({ ...payload, isVerified:true });
     return newUser;
   }
+
+  // Function to update user isActive status  
+  public async updateUserStatus(userId: string, status: boolean): Promise<boolean> {
+
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+    
+    if (user.isActive === status) throw new Error("Status is already set to " + status);
+    user.isActive = status;
+
+    await this.repository.save(user);
+    return true;
+  }
 }
