@@ -14,8 +14,8 @@ export class UserCollectableRequest {
     quantity: number;
 
     @Property()
-    createdAt?: string;
+    createdAt?: Date;
 
     @Property()
-    updatedAt?: string;
+    updatedAt?: Date;
 }

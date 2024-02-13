@@ -5,7 +5,7 @@ import { User } from "./user";
 @Entity()
 export class UserCollectable {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   userId: string;

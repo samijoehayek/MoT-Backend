@@ -7,7 +7,7 @@ import { CollectableResponse } from "./collectable.response";
 
 export class UserCollectableResponse implements UserCollectable{
     @Property()
-    id!: number;
+    id!: string;
 
     @Property()
     userId: string;

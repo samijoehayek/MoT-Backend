@@ -8,7 +8,7 @@ export class CollectableRequest {
     name: string;
 
     @Property()
-    description: number;
+    description: string;
 
     @Property()
     value: number;
