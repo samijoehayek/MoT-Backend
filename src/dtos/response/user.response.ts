@@ -5,6 +5,8 @@ import { User } from '../../models/user';
 import { Role } from '../../models/role';
 import { RoleResponse } from './role.response';
 import { Ownership } from '../../models/ownership';
+import { Avatar } from '../../models/avatar';
+import { AvatarResponse } from './avatar.response';
 
 export class UserResponse implements User {
     @Property()  
@@ -27,6 +29,12 @@ export class UserResponse implements User {
 
     @Property(() => RoleResponse)
     role: Role;
+
+    @Property()
+    avatarId: string;
+
+    @Property(() => AvatarResponse)
+    avatar: Avatar;
 
     @Property()
     ownership: Ownership[];

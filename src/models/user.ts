@@ -1,6 +1,7 @@
 import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Role } from "./role";
 import { Ownership } from "./ownership";
+import { Avatar } from "./avatar";
 
 @Entity()
 export class User {
@@ -22,9 +23,16 @@ export class User {
   // Add foreign key from the roles table
   @Column({ nullable: true })
   roleId: string;
-  @ManyToOne(() => Role, (role:Role) => role.id)
+  @ManyToOne(() => Role, (role: Role) => role.id)
   @JoinColumn({ name: "roleId" })
   role: Role;
+
+  // Add foreign key from the avatar table
+  @Column({ nullable: true})
+  avatarId: string;
+  @ManyToOne(() => Avatar, (avatar: Avatar) => avatar.id)
+  @JoinColumn({ name: "avatarId" })
+  avatar: Avatar;
 
   @OneToMany(() => Ownership, (ownership) => ownership.user)
   ownership: Ownership[];
@@ -34,7 +42,7 @@ export class User {
 
   @Column({ default: false })
   isVerified: boolean;
-  
+
   @Column({ default: true })
   isActive: boolean;
 

@@ -3,6 +3,7 @@
  */
 
 export * from "./auth/auth.controller";
+export * from "./avatar/avatar.controller";
 export * from "./content/content.controller";
 export * from "./item/item.controller";
 export * from "./manager/manager.controller";

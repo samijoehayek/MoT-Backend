@@ -4,11 +4,15 @@ import { USER_REPOSITORY } from "../../repositories/user/user.repository";
 import { UserRequest } from "../../dtos/request/user.request";
 import { Conflict, NotAcceptable } from "@tsed/exceptions";
 import { EncryptionService } from "../encryption/encryption.service";
+import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
 
 @Service()
 export class UserService {
   @Inject(USER_REPOSITORY)
   protected repository: USER_REPOSITORY;
+
+  @Inject(AVATAR_REPOSITORY)
+  protected avatarRepository: AVATAR_REPOSITORY;
 
   @Inject(EncryptionService)
   protected encryptionService: EncryptionService;
@@ -30,6 +34,27 @@ export class UserService {
       ? await this.repository.findOne({ where: { id: id }, ...filter })
       : await this.repository.findOne({ where: { id: id } });
     if (!user) return {} as UserResponse;
+    return user;
+  }
+
+  // Function to set avatar for user
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async setAvatarForUser(userId: string, avatarId: string, jwtPayload:any): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (userId != user_Id?.id) throw new Error("User not authorized to set avatar for another user");
+
+    const avatarFound = user.avatarId ? true : false;
+    if (avatarFound) throw new Error("User already has an avatar");
+
+    const avatar = await this.avatarRepository.findOne({ where: { id: avatarId } });
+    if (!avatar) throw new Error("Avatar not found");
+
+    user.avatarId = avatarId;
+    await this.repository.save(user);
     return user;
   }
 

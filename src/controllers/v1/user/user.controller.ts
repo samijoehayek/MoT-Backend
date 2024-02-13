@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Controller, Inject } from "@tsed/di";
 import { Post, Put, Returns, Tags } from "@tsed/schema";
 import { UserResponse } from "../../../dtos/response/user.response";
@@ -5,7 +6,7 @@ import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Exception } from "@tsed/exceptions";
 import { Get } from "@tsed/schema";
 import { UserService } from "../../../app-services/user/user.service";
-import { Authenticate } from "@tsed/passport";
+import { Arg, Authenticate } from "@tsed/passport";
 import { Req } from "@tsed/common";
 import { UserRequest } from "../../../dtos/request/user.request";
 
@@ -34,6 +35,17 @@ export class UserController {
       return filter
         ? await this.service.getUserById(req.user.user.id, JSON.parse(filter))
         : await this.service.getUserById(req.user.user.id);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/setAvatarForUser/:userId/:avatarId")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserResponse)
+  public async setAvatarForUser(@PathParams("userId") userId: string, @PathParams("avatarId") avatarId: string, @Arg(0) jwtPayload:any): Promise<UserResponse> {
+    try {
+      return await this.service.setAvatarForUser(userId, avatarId, jwtPayload);
     } catch (error) {
       throw new Exception(error.status, error.message);
     }
