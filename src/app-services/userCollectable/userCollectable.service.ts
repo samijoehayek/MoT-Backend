@@ -2,7 +2,7 @@ import { Inject, Service } from "@tsed/di";
 import { USER_COLLECTABLE_REPOSITORY } from "../../repositories/userCollectable/userCollectable.repository";
 import { NotFound } from "@tsed/exceptions";
 import { UserCollectableRequest } from "../../dtos/request/userCollectable.request";
-import { UserCollectableResponse } from "../../dtos/response/userCollectable.reponse";
+import { UserCollectableResponse } from "../../dtos/response/userCollectable.response";
 
 @Service()
 export class UserCollectableService {
