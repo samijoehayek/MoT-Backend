@@ -2,6 +2,7 @@ import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn, OneToMan
 import { Role } from "./role";
 import { Ownership } from "./ownership";
 import { Avatar } from "./avatar";
+import { UserCollectable } from "./userCollectable";
 
 @Entity()
 export class User {
@@ -28,7 +29,7 @@ export class User {
   role: Role;
 
   // Add foreign key from the avatar table
-  @Column({ nullable: true})
+  @Column({ nullable: true })
   avatarId: string;
   @ManyToOne(() => Avatar, (avatar: Avatar) => avatar.id)
   @JoinColumn({ name: "avatarId" })
@@ -36,6 +37,10 @@ export class User {
 
   @OneToMany(() => Ownership, (ownership) => ownership.user)
   ownership: Ownership[];
+
+  // One collectable can have many instances for users to collect
+  @OneToMany(() => UserCollectable, (userCollectable) => userCollectable.user)
+  userCollectable: UserCollectable[];
 
   @Column({ default: 0 })
   balance: number;

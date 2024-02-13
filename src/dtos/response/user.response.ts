@@ -7,6 +7,7 @@ import { RoleResponse } from './role.response';
 import { Ownership } from '../../models/ownership';
 import { Avatar } from '../../models/avatar';
 import { AvatarResponse } from './avatar.response';
+import { UserCollectable } from 'src/models/userCollectable';
 
 export class UserResponse implements User {
     @Property()  
@@ -38,6 +39,9 @@ export class UserResponse implements User {
 
     @Property()
     ownership: Ownership[];
+
+    @Property()
+    userCollectable: UserCollectable[];
 
     @Property()
     balance: number;
