@@ -3,9 +3,9 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 import { User } from "./user";
 import { Item } from "./item";
 
-// This model is used to represent the ownership of an collectable item by a user
+// This model is used to represent the user items of an collectable item by a user
 @Entity()
-export class Ownership {
+export class UserItem {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 

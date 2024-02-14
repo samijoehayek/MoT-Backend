@@ -3,9 +3,9 @@ import { UserResponse } from "./user.response";
 import { User } from "../../models/user";
 import { Item } from "../../models/item";
 import { ItemResponse } from "./item.response";
-import { Ownership } from "../../models/ownership";
+import { UserItem } from "../../models/userItem";
 
-export class OwnershipResponse implements Ownership{
+export class UserItemResponse implements UserItem{
     @Property()
     id!: string;
 

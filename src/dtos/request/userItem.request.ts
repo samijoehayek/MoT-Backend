@@ -1,6 +1,6 @@
 import { Property } from '@tsed/schema';
 
-export class OwnershipRequest {
+export class UserItemRequest {
     @Property()
     id?: string;
 

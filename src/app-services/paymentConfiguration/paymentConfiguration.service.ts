@@ -4,8 +4,6 @@ import { PaymentConfigurationRequest } from "../../dtos/request/paymentConfigura
 import { PaymentConfigurationResponse } from "../../dtos/response/paymentConfiguration.response";
 import { PAYMENT_CONFIGURATION_REPOSITORY } from "../../repositories/paymentConfiguration/paymentConfiguration.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
-import { OWNERSHIP_REPOSITORY } from "../../repositories/ownership/ownership.repository";
-
 @Service()
 export class PaymentConfigurationService {
   @Inject(PAYMENT_CONFIGURATION_REPOSITORY)
@@ -13,9 +11,6 @@ export class PaymentConfigurationService {
 
   @Inject(USER_REPOSITORY)
   protected userRepository: USER_REPOSITORY;
-
-  @Inject(OWNERSHIP_REPOSITORY)
-  protected ownershipRepository: OWNERSHIP_REPOSITORY;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async getPaymentConfiguration(filter?: any): Promise<Array<PaymentConfigurationResponse>> {

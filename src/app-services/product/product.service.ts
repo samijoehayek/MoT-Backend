@@ -4,8 +4,6 @@ import { ProductRequest } from "../../dtos/request/product.request";
 import { ProductResponse } from "../../dtos/response/product.response";
 import { PRODUCT_REPOSITORY } from "../../repositories/product/product.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
-import { OWNERSHIP_REPOSITORY } from "../../repositories/ownership/ownership.repository";
-
 @Service()
 export class ProductService {
   @Inject(PRODUCT_REPOSITORY)
@@ -13,9 +11,6 @@ export class ProductService {
 
   @Inject(USER_REPOSITORY)
   protected userRepository: USER_REPOSITORY;
-
-  @Inject(OWNERSHIP_REPOSITORY)
-  protected ownershipRepository: OWNERSHIP_REPOSITORY;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async getProduct(filter?: any): Promise<Array<ProductResponse>> {

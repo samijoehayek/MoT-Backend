@@ -5,6 +5,8 @@ import { UserRequest } from "../../dtos/request/user.request";
 import { Conflict, NotAcceptable } from "@tsed/exceptions";
 import { EncryptionService } from "../encryption/encryption.service";
 import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
+import { USER_COLLECTABLE_REPOSITORY } from "../../repositories/userCollectable/userCollectable.repository";
+import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectable.repository";
 
 @Service()
 export class UserService {
@@ -13,6 +15,12 @@ export class UserService {
 
   @Inject(AVATAR_REPOSITORY)
   protected avatarRepository: AVATAR_REPOSITORY;
+
+  @Inject(USER_COLLECTABLE_REPOSITORY)
+  protected userCollectableRepository: USER_COLLECTABLE_REPOSITORY;
+
+  @Inject(COLLECTABLE_REPOSITORY)
+  protected collectableRepository: COLLECTABLE_REPOSITORY;
 
   @Inject(EncryptionService)
   protected encryptionService: EncryptionService;
@@ -36,6 +44,34 @@ export class UserService {
     if (!user) return {} as UserResponse;
     return user;
   }
+
+  // Function to collect item for user
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async collectItem(collectableId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (userId != user_Id?.id) throw new Error("User not authorized to collect item for another user");
+
+    const collectable = await this.collectableRepository.findOne({ where: { id: collectableId } });
+    if (!collectable) throw new Error("Collectable not found");
+
+    const userCollectable = await this.userCollectableRepository.findOne({ where: { collectableId: collectableId, userId:userId } });
+    if (userCollectable) throw new Error("User collectable already exists, user cannot the item two times");
+
+    // Add balance to user account with the value of the collectable
+    user.balance = user.balance + collectable.value;
+
+    // Add collectable to user collectable
+    await this.userCollectableRepository.save({ collectableId: collectableId, userId: userId});
+
+    // Save the user with the new balance
+    await this.repository.save(user);
+    return user;
+  }
+
 
   // Function to set avatar for user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

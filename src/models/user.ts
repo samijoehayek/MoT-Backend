@@ -1,6 +1,6 @@
 import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Role } from "./role";
-import { Ownership } from "./ownership";
+import { UserItem } from "./userItem";
 import { Avatar } from "./avatar";
 import { UserCollectable } from "./userCollectable";
 
@@ -35,8 +35,8 @@ export class User {
   @JoinColumn({ name: "avatarId" })
   avatar: Avatar;
 
-  @OneToMany(() => Ownership, (ownership) => ownership.user)
-  ownership: Ownership[];
+  @OneToMany(() => UserItem, (userItem) => userItem.user)
+  userItem: UserItem[];
 
   // One collectable can have many instances for users to collect
   @OneToMany(() => UserCollectable, (userCollectable) => userCollectable.user)

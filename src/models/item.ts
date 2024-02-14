@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Ownership } from "./ownership";
+import { UserItem } from "./userItem";
 
 @Entity()
 export class Item {
@@ -15,8 +15,8 @@ export class Item {
   @Column({ nullable: true })
   itemRarity!: number;
 
-  @OneToMany(() => Ownership, (ownership) => ownership.user)
-  ownership: Ownership[];
+  @OneToMany(() => UserItem, (userItem) => userItem.user)
+  userItem: UserItem[];
 
   @CreateDateColumn()
   createdAt!: Date;

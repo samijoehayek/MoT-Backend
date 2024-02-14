@@ -4,7 +4,7 @@ import { Property } from '@tsed/schema';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
 import { RoleResponse } from './role.response';
-import { Ownership } from '../../models/ownership';
+import { UserItem } from '../../models/userItem';
 import { Avatar } from '../../models/avatar';
 import { AvatarResponse } from './avatar.response';
 import { UserCollectable } from 'src/models/userCollectable';
@@ -38,7 +38,7 @@ export class UserResponse implements User {
     avatar: Avatar;
 
     @Property()
-    ownership: Ownership[];
+    userItem: UserItem[];
 
     @Property()
     userCollectable: UserCollectable[];

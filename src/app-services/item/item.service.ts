@@ -4,8 +4,8 @@ import { ItemRequest } from "../../dtos/request/item.request";
 import { ItemResponse } from "../../dtos/response/item.response";
 import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
-import { OwnershipRequest } from "../../dtos/request/ownership.request";
-import { OWNERSHIP_REPOSITORY } from "../../repositories/ownership/ownership.repository";
+// import { UserItemRequest } from "../../dtos/request/userItem.request";
+import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 
 @Service()
 export class ItemService {
@@ -15,8 +15,8 @@ export class ItemService {
   @Inject(USER_REPOSITORY)
   protected userRepository: USER_REPOSITORY;
 
-  @Inject(OWNERSHIP_REPOSITORY)
-  protected ownershipRepository: OWNERSHIP_REPOSITORY;
+  @Inject(USER_ITEM_REPOSITORY)
+  protected userItemRepository: USER_ITEM_REPOSITORY;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async getItem(filter?: any): Promise<Array<ItemResponse>> {
@@ -49,43 +49,43 @@ export class ItemService {
     return true;
   }
 
-  public async collectItem(payload: OwnershipRequest): Promise<boolean> {
-    const item = await this.itemRepository.findOne({ where: { id: payload.itemId } });
-    if (!item) throw new NotFound("Item not found");
+  // public async collectItem(payload: OwnershipRequest): Promise<boolean> {
+  //   const item = await this.itemRepository.findOne({ where: { id: payload.itemId } });
+  //   if (!item) throw new NotFound("Item not found");
 
-    const user = await this.userRepository.findOne({ where: { id: payload.userId } });
-    if (!user) throw new NotFound("User not found");
+  //   const user = await this.userRepository.findOne({ where: { id: payload.userId } });
+  //   if (!user) throw new NotFound("User not found");
 
-    const ownership = await this.ownershipRepository.findOne({ where: { userId: payload.userId, itemId: payload.itemId } });
-    if (ownership) {
-      await this.ownershipRepository.update(
-        { userId: payload.userId, itemId: payload.itemId },
-        { quantity: ownership.quantity + payload.quantity }
-      );
-    } else {
-      await this.ownershipRepository.save({ userId: payload.userId, itemId: payload.itemId, quantity: payload.quantity });
-    }
+  //   const ownership = await this.ownershipRepository.findOne({ where: { userId: payload.userId, itemId: payload.itemId } });
+  //   if (ownership) {
+  //     await this.ownershipRepository.update(
+  //       { userId: payload.userId, itemId: payload.itemId },
+  //       { quantity: ownership.quantity + payload.quantity }
+  //     );
+  //   } else {
+  //     await this.ownershipRepository.save({ userId: payload.userId, itemId: payload.itemId, quantity: payload.quantity });
+  //   }
 
-    return true;
-  }
+  //   return true;
+  // }
 
-    public async dropItem(payload: OwnershipRequest): Promise<boolean> {
-        const item = await this.itemRepository.findOne({ where: { id: payload.itemId } });
-        if (!item) throw new NotFound("Item not found");
-    
-        const user = await this.userRepository.findOne({ where: { id: payload.userId } });
-        if (!user) throw new NotFound("User not found");
-    
-        const ownership = await this.ownershipRepository.findOne({ where: { userId: payload.userId, itemId: payload.itemId } });
-        if (!ownership) throw new NotFound("Ownership not found");
-    
-        if (ownership.quantity < payload.quantity) throw new NotFound("Insufficient quantity");
-    
-        await this.ownershipRepository.update(
-        { userId: payload.userId, itemId: payload.itemId },
-        { quantity: ownership.quantity - payload.quantity }
-        );
-    
-        return true;
-    }
+  // public async dropItem(payload: OwnershipRequest): Promise<boolean> {
+  //   const item = await this.itemRepository.findOne({ where: { id: payload.itemId } });
+  //   if (!item) throw new NotFound("Item not found");
+
+  //   const user = await this.userRepository.findOne({ where: { id: payload.userId } });
+  //   if (!user) throw new NotFound("User not found");
+
+  //   const ownership = await this.ownershipRepository.findOne({ where: { userId: payload.userId, itemId: payload.itemId } });
+  //   if (!ownership) throw new NotFound("Ownership not found");
+
+  //   if (ownership.quantity < payload.quantity) throw new NotFound("Insufficient quantity");
+
+  //   await this.ownershipRepository.update(
+  //     { userId: payload.userId, itemId: payload.itemId },
+  //     { quantity: ownership.quantity - payload.quantity }
+  //   );
+
+  //   return true;
+  // }
 }
