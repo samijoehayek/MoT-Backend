@@ -7,7 +7,7 @@ import { RoleResponse } from './role.response';
 import { UserItem } from '../../models/userItem';
 import { Avatar } from '../../models/avatar';
 import { AvatarResponse } from './avatar.response';
-import { UserCollectable } from 'src/models/userCollectable';
+import { UserCollectable } from '../../models/userCollectable';
 
 export class UserResponse implements User {
     @Property()  
@@ -24,6 +24,18 @@ export class UserResponse implements User {
     
     @Property()
     tag: string;
+
+    @Property()
+    head: string;
+
+    @Property()
+    torso: string;
+
+    @Property()
+    legs: string;
+
+    @Property()
+    feet: string;
 
     @Property()
     roleId: string;

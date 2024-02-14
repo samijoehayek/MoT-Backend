@@ -7,6 +7,9 @@ import { EncryptionService } from "../encryption/encryption.service";
 import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
 import { USER_COLLECTABLE_REPOSITORY } from "../../repositories/userCollectable/userCollectable.repository";
 import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectable.repository";
+import { UserItemResponse } from "../../dtos/response/userItem.response";
+import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
+import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 
 @Service()
 export class UserService {
@@ -21,6 +24,12 @@ export class UserService {
 
   @Inject(COLLECTABLE_REPOSITORY)
   protected collectableRepository: COLLECTABLE_REPOSITORY;
+
+  @Inject(ITEM_REPOSITORY)
+  protected itemRepository: ITEM_REPOSITORY;
+
+  @Inject(USER_ITEM_REPOSITORY)
+  protected userItemRepository: USER_ITEM_REPOSITORY;
 
   @Inject(EncryptionService)
   protected encryptionService: EncryptionService;
@@ -68,6 +77,76 @@ export class UserService {
     await this.userCollectableRepository.save({ collectableId: collectableId, userId: userId});
 
     // Save the user with the new balance
+    await this.repository.save(user);
+    return user;
+  }
+
+  // Function to buy item for user
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async buyItem(itemId: string, userId: string, jwtPayload:any): Promise<UserItemResponse> {
+
+    // Check if the user is found
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the user logged in is buyin new item for himself
+    const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (userId != user_Id?.id) throw new Error("User not authorized to buy item for another user");
+
+    // Check if the item is found
+    const item = await this.itemRepository.findOne({ where: { id: itemId } });
+    if (!item) throw new Error("Collectable not found");
+
+    // Check if the item is available for the user avatar
+    if(item.avatarId != user.avatarId) throw new Error("Item is not available for user avatar");
+
+    // Check if the user already has the item
+    const userItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId:userId } });
+    if(userItem) throw new Error("User already has the item");
+
+    // Check if the user has enough balance to buy the item
+    if(user.balance < item.price) throw new Error("User does not have enough balance to buy this item");
+
+    // Deduct balance from user account with the value of the item
+    user.balance = user.balance - item.price;
+
+    // Add item to user item
+    await this.userItemRepository.save({ itemId: itemId, userId: userId});
+
+    // Save the user with the new balance
+    await this.repository.save(user);
+
+    // Get new user item  
+    const newUserItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId:userId } });
+    if (!newUserItem) throw new Error("User item not found");
+
+    return newUserItem;
+  }
+
+  // Function to set user wearable
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async setUserWearable(itemId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (userId != user_Id?.id) throw new Error("User not authorized to set wearable for another user");
+
+    const item = await this.itemRepository.findOne({ where: { id: itemId } });
+    if (!item) throw new Error("Item not found");
+
+    const avatar = await this.avatarRepository.findOne({ where: { id: user.avatarId } });
+    if (!avatar) throw new Error("Avatar not found");
+
+    if (item.avatarId != avatar.id) throw new Error("Item is not available for user avatar");
+
+    if (item.type === "head") user.head = itemId;
+    if (item.type === "torso") user.torso = itemId;
+    if (item.type === "legs") user.legs = itemId;
+    if (item.type === "feet") user.feet = itemId;
+
     await this.repository.save(user);
     return user;
   }

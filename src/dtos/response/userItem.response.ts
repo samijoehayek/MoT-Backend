@@ -22,9 +22,6 @@ export class UserItemResponse implements UserItem{
     item: Item;
 
     @Property()
-    quantity: number;
-
-    @Property()
     createdAt: Date;
 
     @Property()

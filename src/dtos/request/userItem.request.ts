@@ -11,9 +11,6 @@ export class UserItemRequest {
     itemId: string;
 
     @Property()
-    quantity: number;
-
-    @Property()
     createdAt?: string;
 
     @Property()

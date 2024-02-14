@@ -21,9 +21,6 @@ export class UserItem {
   @JoinColumn({ name: "itemId" })
   item: Item;
 
-  @Column()
-  quantity!: number;
-
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
 

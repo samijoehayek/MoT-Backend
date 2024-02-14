@@ -4,8 +4,8 @@ import { ItemRequest } from "../../dtos/request/item.request";
 import { ItemResponse } from "../../dtos/response/item.response";
 import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
-// import { UserItemRequest } from "../../dtos/request/userItem.request";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
+import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
 
 @Service()
 export class ItemService {
@@ -14,6 +14,9 @@ export class ItemService {
 
   @Inject(USER_REPOSITORY)
   protected userRepository: USER_REPOSITORY;
+
+  @Inject(AVATAR_REPOSITORY)
+  protected avatarRepository: AVATAR_REPOSITORY;
 
   @Inject(USER_ITEM_REPOSITORY)
   protected userItemRepository: USER_ITEM_REPOSITORY;
@@ -27,6 +30,20 @@ export class ItemService {
 
   public async createItem(payload: ItemRequest): Promise<ItemResponse> {
     if (payload.id) payload.id = String(payload.id).toLowerCase();
+
+    // check if the price is positive
+    if (payload.price < 0) throw new NotFound("Price cannot be negative");
+
+    // check if the avatar id exists
+    const avatar = await this.avatarRepository.findOne({ where: { id: payload.avatarId } });
+    if (!avatar) throw new NotFound("Avatar not found");
+
+    // Make the type lowercase and see if it does match one of the 4 types
+    payload.type = payload.type.toLowerCase();
+    if (payload.type !== "head" && payload.type !== "torso" && payload.type !== "legs" && payload.type !== "feet") {
+      throw new NotFound("Type not found");
+    }
+
     return await this.itemRepository.save({ ...payload });
   }
 
@@ -48,44 +65,4 @@ export class ItemService {
     await this.itemRepository.remove(item);
     return true;
   }
-
-  // public async collectItem(payload: OwnershipRequest): Promise<boolean> {
-  //   const item = await this.itemRepository.findOne({ where: { id: payload.itemId } });
-  //   if (!item) throw new NotFound("Item not found");
-
-  //   const user = await this.userRepository.findOne({ where: { id: payload.userId } });
-  //   if (!user) throw new NotFound("User not found");
-
-  //   const ownership = await this.ownershipRepository.findOne({ where: { userId: payload.userId, itemId: payload.itemId } });
-  //   if (ownership) {
-  //     await this.ownershipRepository.update(
-  //       { userId: payload.userId, itemId: payload.itemId },
-  //       { quantity: ownership.quantity + payload.quantity }
-  //     );
-  //   } else {
-  //     await this.ownershipRepository.save({ userId: payload.userId, itemId: payload.itemId, quantity: payload.quantity });
-  //   }
-
-  //   return true;
-  // }
-
-  // public async dropItem(payload: OwnershipRequest): Promise<boolean> {
-  //   const item = await this.itemRepository.findOne({ where: { id: payload.itemId } });
-  //   if (!item) throw new NotFound("Item not found");
-
-  //   const user = await this.userRepository.findOne({ where: { id: payload.userId } });
-  //   if (!user) throw new NotFound("User not found");
-
-  //   const ownership = await this.ownershipRepository.findOne({ where: { userId: payload.userId, itemId: payload.itemId } });
-  //   if (!ownership) throw new NotFound("Ownership not found");
-
-  //   if (ownership.quantity < payload.quantity) throw new NotFound("Insufficient quantity");
-
-  //   await this.ownershipRepository.update(
-  //     { userId: payload.userId, itemId: payload.itemId },
-  //     { quantity: ownership.quantity - payload.quantity }
-  //   );
-
-  //   return true;
-  // }
 }

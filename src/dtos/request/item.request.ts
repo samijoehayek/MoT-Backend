@@ -8,10 +8,13 @@ export class ItemRequest {
     itemName: string;
 
     @Property()
-    itemNumber: number;
+    price: number;
 
     @Property()
-    itemRarity: number;
+    type: string;
+
+    @Property()
+    avatarId: string;
 
     @Property()
     createdAt?: string;

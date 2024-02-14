@@ -21,6 +21,18 @@ export class User {
   @Column({ nullable: true })
   tag: string;
 
+  @Column({ nullable: true })
+  head: string;
+
+  @Column({ nullable: true })
+  torso: string;
+
+  @Column({ nullable: true })
+  legs: string;
+
+  @Column({ nullable: true })
+  feet: string;
+
   // Add foreign key from the roles table
   @Column({ nullable: true })
   roleId: string;

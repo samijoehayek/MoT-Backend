@@ -9,6 +9,7 @@ import { UserService } from "../../../app-services/user/user.service";
 import { Arg, Authenticate } from "@tsed/passport";
 import { Req } from "@tsed/common";
 import { UserRequest } from "../../../dtos/request/user.request";
+import { UserItemResponse } from "../../../dtos/response/userItem.response";
 
 @Controller("/users")
 @Tags("users")
@@ -43,9 +44,37 @@ export class UserController {
   @Put("/collectItem")
   @Authenticate("jwt-passport")
   @Returns(200, UserResponse)
-  public async collectItem(@BodyParams() collectObject: { collectableId: string; userId: string }, @Arg(0) jwtPayload: any): Promise<UserResponse> {
+  public async collectItem(
+    @BodyParams() collectObject: { collectableId: string; userId: string },
+    @Arg(0) jwtPayload: any
+  ): Promise<UserResponse> {
     try {
       return await this.service.collectItem(collectObject.collectableId, collectObject.userId, jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Post("/buyItem")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserItemResponse)
+  public async buyItem(@BodyParams() buyObject: { itemId: string; userId: string }, @Arg(0) jwtPayload: any): Promise<UserItemResponse> {
+    try {
+      return await this.service.buyItem(buyObject.itemId, buyObject.userId, jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/setUserWearable")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserResponse)
+  public async setUserWearable(
+    @BodyParams() wearableObject: { itemId: string; userId: string },
+    @Arg(0) jwtPayload: any
+  ): Promise<UserResponse> {
+    try {
+      return await this.service.setUserWearable(wearableObject.itemId, wearableObject.userId, jwtPayload);
     } catch (error) {
       throw new Exception(error.status, error.message);
     }

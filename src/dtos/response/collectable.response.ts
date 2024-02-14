@@ -1,6 +1,6 @@
 import { Property } from "@tsed/schema";
 import { Collectable } from "../../models/collectable";
-import { UserCollectable } from "src/models/userCollectable";
+import { UserCollectable } from "../../models/userCollectable";
 
 export class CollectableResponse implements Collectable{
    
