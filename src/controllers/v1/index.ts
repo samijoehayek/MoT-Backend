@@ -7,7 +7,7 @@ export * from "./avatar/avatar.controller";
 export * from "./collectable/collectable.item";
 export * from "./content/content.controller";
 export * from "./item/item.controller";
-export * from "./manager/manager.controller";
+export * from "./moderator/moderator.controller";
 export * from "./order/order.controller";
 export * from "./orderProduct/orderProduct.controller";
 export * from "./paymentConfiguration/paymentConfiguration.controller";

@@ -65,6 +65,9 @@ export class UserResponse implements User {
     isActive: boolean;
 
     @Property()
+    isMuted: boolean;
+
+    @Property()
     createAt: Date;
 
     @Property()
