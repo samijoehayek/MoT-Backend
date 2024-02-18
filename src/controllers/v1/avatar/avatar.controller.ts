@@ -9,51 +9,60 @@ import { Authenticate } from "@tsed/passport";
 
 @Controller("/avatar")
 @Tags("Avatar")
-export class AvatarController{
-    @Inject(AvatarService)
-    protected service: AvatarService;
+export class AvatarController {
+  @Inject(AvatarService)
+  protected service: AvatarService;
 
-    @Get("/")
-    @Returns(200, Array).Of(AvatarResponse)
-    public async getAvatar(@QueryParams("filter") filter?: string): Promise<AvatarResponse[]> {
-        try {
-            return filter ? await this.service.getAvatar(JSON.parse(filter)) : await this.service.getAvatar();
-        } catch (error) {
-            throw new Exception(error.status, error.message);
-        }
+  @Get("/")
+  @Returns(200, Array).Of(AvatarResponse)
+  public async getAvatar(@QueryParams("filter") filter?: string): Promise<AvatarResponse[]> {
+    try {
+      return filter ? await this.service.getAvatar(JSON.parse(filter)) : await this.service.getAvatar();
+    } catch (error) {
+      throw new Exception(error.status, error.message);
     }
+  }
 
-    @Post("/")
-    @Authenticate("admin-passport")
-    @Returns(200, AvatarResponse)
-    public async createAvatar(@BodyParams() avatar: AvatarRequest): Promise<AvatarResponse> {
-        try {
-            return await this.service.createAvatar(avatar);
-        } catch (error) {
-            throw new Exception(error.status, error.message);
-        }
+  @Post("/")
+  @Authenticate("admin-passport")
+  @Returns(200, AvatarResponse)
+  public async createAvatar(@BodyParams() avatar: AvatarRequest): Promise<AvatarResponse> {
+    try {
+      return await this.service.createAvatar(avatar);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
     }
+  }
 
-    @Put("/:id")
-    @Authenticate("admin-passport")
-    @Returns(200, AvatarResponse)
-    public async updateAvatar(@PathParams("id") id:string, @BodyParams() avatar: AvatarRequest): Promise<AvatarResponse> {
-        try {
-            return await this.service.updateAvatar(id, avatar);
-        } catch (err) {
-            throw new Exception(err.status, err.message);
-        }
+  @Put("/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, AvatarResponse)
+  public async updateAvatar(@PathParams("id") id: string, @BodyParams() avatar: AvatarRequest): Promise<AvatarResponse> {
+    try {
+      return await this.service.updateAvatar(id, avatar);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
     }
+  }
 
-    @Delete("/:id")
-    @Authenticate("admin-passport")
-    @Returns(200, Boolean)
-    public async deleteAvatar(@PathParams("id") id: string): Promise<boolean> {
-        try {
-            return await this.service.removeAvatar(id);
-        } catch (err) {
-            throw new Exception(err.status, err.message);
-        }
+  @Delete("/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, Boolean)
+  public async deleteAvatar(@PathParams("id") id: string): Promise<boolean> {
+    try {
+      return await this.service.removeAvatar(id);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
     }
+  }
 
+  @Get("/searchAvatarByName")
+  @Returns(200, Array).Of(AvatarResponse)
+  public async searchAvatar(@QueryParams("search") search: string): Promise<AvatarResponse[]> {
+    try {
+      return await this.service.searchAvatarByName(search);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
 }

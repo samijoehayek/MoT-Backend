@@ -41,6 +41,16 @@ export class UserController {
     }
   }
 
+  @Get("/searchUserByName")
+  @Returns(200, Array).Of(UserResponse)
+  public async searchUser(@QueryParams("search") search: string): Promise<UserResponse[]> {
+    try {
+      return await this.service.searchUserByName(search);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
   @Put("/collectItem")
   @Authenticate("jwt-passport")
   @Returns(200, UserResponse)

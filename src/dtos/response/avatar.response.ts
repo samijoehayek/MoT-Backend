@@ -14,9 +14,8 @@ export class AvatarResponse implements Avatar{
     gender: string;
 
     @Property()
-    model: number;
-
-    @Property()
     user: User[];
 
+    @Property()
+    userNumber: number;
 }

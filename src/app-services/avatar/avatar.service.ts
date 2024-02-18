@@ -3,6 +3,7 @@ import { NotFound } from "@tsed/exceptions";
 import { AvatarRequest } from "../../dtos/request/avatar.request";
 import { AvatarResponse } from "../../dtos/response/avatar.response";
 import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
+import { ILike } from "typeorm";
 
 @Service()
 export class AvatarService {
@@ -21,6 +22,14 @@ export class AvatarService {
         // Return avatar objects in the form of Avatar Response
         return avatar;
     }
+
+    public async searchAvatarByName(search: string): Promise<Array<AvatarResponse>> {
+        const avatar = await this.avatarRepository.find({
+          where: { name: ILike("%" + search + "%") },
+        });
+        if (!avatar) return [];
+        return avatar;
+      }
 
     public async createAvatar(payload: AvatarRequest): Promise<AvatarResponse> {
         // Set avatar name to lowercase, this is done to avoid duplicate avatar names

@@ -4,6 +4,7 @@ import { CollectableRequest } from "../../dtos/request/collectable.request";
 import { CollectableResponse } from "../../dtos/response/collectable.response";
 import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectable.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
+import { ILike } from "typeorm";
 
 @Service()
 export class CollectableService {
@@ -42,5 +43,13 @@ export class CollectableService {
 
     await this.collectableRepository.remove(collectable);
     return true;
+  }
+
+  public async searchCollectableByName(search: string): Promise<Array<CollectableResponse>> {
+    const collectable = await this.collectableRepository.find({
+      where: { name: ILike("%" + search + "%") },
+    });
+    if (!collectable) return [];
+    return collectable;
   }
 }

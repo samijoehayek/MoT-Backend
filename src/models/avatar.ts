@@ -12,9 +12,9 @@ export class Avatar {
     @Column()
     gender: string;
 
-    @Column({unique: true})
-    model: number;
-
     @OneToMany(() => User, (user) => user.role)
     user!: User[];
+
+    @Column({ default: 0})
+    userNumber: number;
 }

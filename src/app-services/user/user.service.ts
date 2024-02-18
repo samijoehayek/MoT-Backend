@@ -10,6 +10,7 @@ import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectab
 import { UserItemResponse } from "../../dtos/response/userItem.response";
 import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
+import { ILike } from "typeorm";
 
 @Service()
 export class UserService {
@@ -52,6 +53,14 @@ export class UserService {
       : await this.repository.findOne({ where: { id: id } });
     if (!user) return {} as UserResponse;
     return user;
+  }
+
+  public async searchUserByName(search: string): Promise<Array<UserResponse>> {
+    const users = await this.repository.find({
+      where: { username: ILike("%" + search + "%") },
+    });
+    if (!users) return [];
+    return users;
   }
 
   // Function to collect item for user
@@ -169,6 +178,11 @@ export class UserService {
     if (!avatar) throw new Error("Avatar not found");
 
     user.avatarId = avatarId;
+
+    // Save new number of avatar users
+    avatar.userNumber = avatar.userNumber + 1;
+    await this.avatarRepository.save(avatar);
+
     await this.repository.save(user);
     return user;
   }
@@ -202,7 +216,7 @@ export class UserService {
       payload.password = encryptPassword;
     }
 
-    const newUser = await this.repository.save({ ...payload, isVerified:true });
+    const newUser = await this.repository.save({ ...payload, isVerified:true, balance:100 });
     return newUser;
   }
 

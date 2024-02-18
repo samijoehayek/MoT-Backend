@@ -9,7 +9,4 @@ export class AvatarRequest {
 
     @Property()  
     gender: string;
-
-    @Property()  
-    model: number;
 }
