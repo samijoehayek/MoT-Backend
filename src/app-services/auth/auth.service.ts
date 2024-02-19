@@ -60,6 +60,12 @@ export class AuthService {
     return user;
   }
 
+  public async userIsAdmin(user: UserResponse): Promise<boolean> {
+    const role = await this.roleRepository.findOne({ where: { id: user.roleId } });
+    if (!role?.roleName || role.roleName.toLowerCase() !== "admin") throw new Error("User is not Admin");
+    return true;
+  }
+
   public async resendVerificationEmail(userId: string): Promise<boolean> {
     const currentUrl = "http://localhost:8083";
     const uniqueString = uuidv4();

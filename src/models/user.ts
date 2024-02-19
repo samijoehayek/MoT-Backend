@@ -15,8 +15,11 @@ export class User {
   @Column({ unique: true, nullable: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true})
   password: string;
+
+  @Column({ nullable: true })
+  googleId: string;
 
   @Column({ nullable: true })
   tag: string;
@@ -65,6 +68,9 @@ export class User {
 
   @Column({ default: false })
   isMuted: boolean;
+
+  @Column({ default: false })
+  isOAuth!: boolean;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createAt: Date;
