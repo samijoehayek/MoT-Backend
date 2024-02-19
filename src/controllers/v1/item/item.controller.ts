@@ -5,7 +5,7 @@ import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Exception } from "@tsed/exceptions";
 import { ItemResponse } from "../../../dtos/response/item.response";
 import { ItemRequest } from "../../../dtos/request/item.request";
-import { OwnershipRequest } from "../../../dtos/request/ownership.request";
+// import { UserItemRequest } from "../../../dtos/request/userItem.request";
 import { Authenticate } from "@tsed/passport";
 
 @Controller("/item")
@@ -57,25 +57,25 @@ export class ItemController{
         }
     }
 
-    @Post("/collect")
-    @Returns(200, Boolean)
-    public async collectItem(@BodyParams() ownership: OwnershipRequest): Promise<boolean> {
-        try {
-            return await this.service.collectItem(ownership);
-        } catch (err) {
-            throw new Exception(err.status, err.message);
-        }
-    }
+    // @Post("/collect")
+    // @Returns(200, Boolean)
+    // public async collectItem(@BodyParams() userItem: UserItemRequest): Promise<boolean> {
+    //     try {
+    //         return await this.service.collectItem(userItem);
+    //     } catch (err) {
+    //         throw new Exception(err.status, err.message);
+    //     }
+    // }
 
-    @Post("/drop")
-    @Returns(200, Boolean)
-    public async dropItem(@BodyParams() ownership: OwnershipRequest): Promise<boolean> {
-        try {
-            return await this.service.dropItem(ownership);
-        } catch (err) {
-            throw new Exception(err.status, err.message);
-        }
-    }
+    // @Post("/drop")
+    // @Returns(200, Boolean)
+    // public async dropItem(@BodyParams() userItem: UserItemRequest): Promise<boolean> {
+    //     try {
+    //         return await this.service.dropItem(userItem);
+    //     } catch (err) {
+    //         throw new Exception(err.status, err.message);
+    //     }
+    // }
 
 
 

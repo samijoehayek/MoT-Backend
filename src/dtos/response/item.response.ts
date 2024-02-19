@@ -1,9 +1,9 @@
 import { Property } from "@tsed/schema";
 import { Item } from "../../models/item";
-import { Ownership } from "../../models/ownership";
+import { UserItem } from "../../models/userItem";
+import { AvatarResponse } from "./avatar.response";
 
-export class ItemResponse implements Item{
-    
+export class ItemResponse implements Item{    
     @Property()
     id: string;
 
@@ -11,13 +11,19 @@ export class ItemResponse implements Item{
     itemName: string;
 
     @Property()
-    itemNumber: number;
+    price: number;
 
     @Property()
-    itemRarity: number;
+    type: string;
 
     @Property()
-    ownership: Ownership[];
+    avatarId: string;
+
+    @Property(() => AvatarResponse)
+    avatar: AvatarResponse;
+
+    @Property()
+    userItem: UserItem[];
 
     @Property()
     createdAt: Date;

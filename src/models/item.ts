@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Ownership } from "./ownership";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserItem } from "./userItem";
+import { Avatar } from "./avatar";
 
 @Entity()
 export class Item {
@@ -10,13 +11,19 @@ export class Item {
   itemName!: string;
 
   @Column()
-  itemNumber!: number;
+  price!: number;
 
-  @Column({ nullable: true })
-  itemRarity!: number;
+  @Column()
+  type: string;
 
-  @OneToMany(() => Ownership, (ownership) => ownership.user)
-  ownership: Ownership[];
+  @Column()
+  avatarId!: string;
+  @ManyToOne(() => Avatar, (avatar: Avatar) => avatar.id)
+  @JoinColumn({ name: "avatarId" })
+  avatar: Avatar;
+
+  @OneToMany(() => UserItem, (userItem) => userItem.user)
+  userItem: UserItem[];
 
   @CreateDateColumn()
   createdAt!: Date;

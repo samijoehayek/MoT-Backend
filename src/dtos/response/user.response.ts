@@ -4,7 +4,10 @@ import { Property } from '@tsed/schema';
 import { User } from '../../models/user';
 import { Role } from '../../models/role';
 import { RoleResponse } from './role.response';
-import { Ownership } from '../../models/ownership';
+import { UserItem } from '../../models/userItem';
+import { Avatar } from '../../models/avatar';
+import { AvatarResponse } from './avatar.response';
+import { UserCollectable } from '../../models/userCollectable';
 
 export class UserResponse implements User {
     @Property()  
@@ -23,13 +26,34 @@ export class UserResponse implements User {
     tag: string;
 
     @Property()
+    head: string;
+
+    @Property()
+    torso: string;
+
+    @Property()
+    legs: string;
+
+    @Property()
+    feet: string;
+
+    @Property()
     roleId: string;
 
     @Property(() => RoleResponse)
     role: Role;
 
     @Property()
-    ownership: Ownership[];
+    avatarId: string;
+
+    @Property(() => AvatarResponse)
+    avatar: Avatar;
+
+    @Property()
+    userItem: UserItem[];
+
+    @Property()
+    userCollectable: UserCollectable[];
 
     @Property()
     balance: number;
@@ -39,6 +63,9 @@ export class UserResponse implements User {
 
     @Property()
     isActive: boolean;
+
+    @Property()
+    isMuted: boolean;
 
     @Property()
     createAt: Date;

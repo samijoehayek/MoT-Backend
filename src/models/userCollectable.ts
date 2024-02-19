@@ -1,28 +1,23 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-
+import { Collectable } from "./collectable";
 import { User } from "./user";
-import { Item } from "./item";
 
-// This model is used to represent the ownership of an collectable item by a user
 @Entity()
-export class Ownership {
+export class UserCollectable {
   @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  id: string;
 
   @Column()
-  userId!: string;
-  @ManyToOne(() => User, (user: User) => user.id)
+  userId: string;
+  @ManyToOne(() => User, (user) => user.userCollectable)
   @JoinColumn({ name: "userId" })
   user: User;
 
   @Column()
-  itemId!: string;
-  @ManyToOne(() => Item, (item: Item) => item.id)
-  @JoinColumn({ name: "itemId" })
-  item: Item;
-
-  @Column()
-  quantity!: number;
+  collectableId: string;
+  @ManyToOne(() => Collectable, (collectable) => collectable.userCollectable)
+  @JoinColumn({ name: "collectableId" })
+  collectable: Collectable;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;

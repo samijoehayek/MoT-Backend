@@ -3,8 +3,9 @@ import { UserResponse } from "./user.response";
 import { User } from "../../models/user";
 import { Item } from "../../models/item";
 import { ItemResponse } from "./item.response";
+import { UserItem } from "../../models/userItem";
 
-export class OwnershipResponse {
+export class UserItemResponse implements UserItem{
     @Property()
     id!: string;
 
@@ -21,11 +22,8 @@ export class OwnershipResponse {
     item: Item;
 
     @Property()
-    quantity: number;
+    createdAt: Date;
 
     @Property()
-    createdAt?: Date;
-
-    @Property()
-    updatedAt?: Date;
+    updatedAt: Date;
 }

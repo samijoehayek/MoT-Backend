@@ -22,6 +22,9 @@ export class UserRequest {
     roleId?: string
 
     @Property()
+    avatarId?: string;  
+
+    @Property()
     createAt?: Date;
 
     @Property()

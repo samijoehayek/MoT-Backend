@@ -46,7 +46,7 @@ export class AuthService {
     }
 
     // save the user
-    const user = await this.userRepository.save({ ...payload });
+    const user = await this.userRepository.save({ ...payload, balance:100 });
 
     // Save the user verification request
     await this.userVerificationRepository.save({ userId: user.id, verficationToken:uniqueString, expiresAt: new Date(Date.now() + 6 * 60 * 60 * 1000)  }); 

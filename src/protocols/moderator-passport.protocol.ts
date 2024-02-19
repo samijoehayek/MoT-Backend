@@ -7,7 +7,7 @@ import { USER_REPOSITORY } from "../repositories/user/user.repository";
 import { ROLE_REPOSITORY } from "../repositories/role/role.repository";
 
 @Protocol({
-  name: "manager-passport",
+  name: "moderator-passport",
   useStrategy: Strategy,
   settings: {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -16,7 +16,7 @@ import { ROLE_REPOSITORY } from "../repositories/role/role.repository";
     audience: envs.JWT_AUDIENCE
   }
 })
-export class ManagerPassportProtocol implements OnVerify {
+export class ModeratorPassportProtocol implements OnVerify {
   @Inject(USER_REPOSITORY)
   userRepository: USER_REPOSITORY;
 

@@ -1,6 +1,8 @@
 import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Role } from "./role";
-import { Ownership } from "./ownership";
+import { UserItem } from "./userItem";
+import { Avatar } from "./avatar";
+import { UserCollectable } from "./userCollectable";
 
 @Entity()
 export class User {
@@ -19,24 +21,50 @@ export class User {
   @Column({ nullable: true })
   tag: string;
 
+  @Column({ nullable: true })
+  head: string;
+
+  @Column({ nullable: true })
+  torso: string;
+
+  @Column({ nullable: true })
+  legs: string;
+
+  @Column({ nullable: true })
+  feet: string;
+
   // Add foreign key from the roles table
   @Column({ nullable: true })
   roleId: string;
-  @ManyToOne(() => Role, (role:Role) => role.id)
+  @ManyToOne(() => Role, (role: Role) => role.id)
   @JoinColumn({ name: "roleId" })
   role: Role;
 
-  @OneToMany(() => Ownership, (ownership) => ownership.user)
-  ownership: Ownership[];
+  // Add foreign key from the avatar table
+  @Column({ nullable: true })
+  avatarId: string;
+  @ManyToOne(() => Avatar, (avatar: Avatar) => avatar.id)
+  @JoinColumn({ name: "avatarId" })
+  avatar: Avatar;
+
+  @OneToMany(() => UserItem, (userItem) => userItem.user)
+  userItem: UserItem[];
+
+  // One collectable can have many instances for users to collect
+  @OneToMany(() => UserCollectable, (userCollectable) => userCollectable.user)
+  userCollectable: UserCollectable[];
 
   @Column({ default: 0 })
   balance: number;
 
   @Column({ default: false })
   isVerified: boolean;
-  
+
   @Column({ default: true })
   isActive: boolean;
+
+  @Column({ default: false })
+  isMuted: boolean;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createAt: Date;

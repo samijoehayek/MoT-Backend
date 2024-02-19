@@ -1,6 +1,6 @@
 import { Property } from '@tsed/schema';
 
-export class OwnershipRequest {
+export class UserItemRequest {
     @Property()
     id?: string;
 
@@ -9,9 +9,6 @@ export class OwnershipRequest {
 
     @Property()
     itemId: string;
-
-    @Property()
-    quantity: number;
 
     @Property()
     createdAt?: string;
