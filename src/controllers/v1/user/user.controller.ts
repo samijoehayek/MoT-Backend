@@ -90,6 +90,20 @@ export class UserController {
     }
   }
 
+  @Put("/removeUserWearable")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserResponse)
+  public async removeUserWearable(
+    @BodyParams() wearableObject: { itemId: string; userId: string },
+    @Arg(0) jwtPayload: any
+  ): Promise<UserResponse> {
+    try {
+      return await this.service.removeUserWearable(wearableObject.itemId, wearableObject.userId, jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
   @Put("/setAvatarForUser/:userId/:avatarId")
   @Authenticate("jwt-passport")
   @Returns(200, UserResponse)

@@ -143,11 +143,11 @@ export class UserService {
     const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
     if (userId != user_Id?.id) throw new Error("User not authorized to set wearable for another user");
 
-    const item = await this.itemRepository.findOne({ where: { id: itemId } });
-    if (!item) throw new Error("Item not found");
-
     const avatar = await this.avatarRepository.findOne({ where: { id: user.avatarId } });
     if (!avatar) throw new Error("Avatar not found");
+
+    const item = await this.itemRepository.findOne({ where: { id: itemId } });
+    if (!item) throw new Error("Item not found");
 
     if (item.avatarId != avatar.id) throw new Error("Item is not available for user avatar");
 
@@ -155,6 +155,32 @@ export class UserService {
     if (item.type === "torso") user.torso = itemId;
     if (item.type === "legs") user.legs = itemId;
     if (item.type === "feet") user.feet = itemId;
+
+    await this.repository.save(user);
+    return user;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async removeUserWearable(itemId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (userId != user_Id?.id) throw new Error("User not authorized to set wearable for another user");
+
+    const avatar = await this.avatarRepository.findOne({ where: { id: user.avatarId } });
+    if (!avatar) throw new Error("Avatar not found");
+
+    const item = await this.itemRepository.findOne({ where: { id: itemId } });
+    if (!item) throw new Error("Item not found");
+
+    if (item.avatarId != avatar.id) throw new Error("Item is not available for user avatar");
+
+    if (item.type === "head") user.head == null;
+    if (item.type === "torso") user.torso == null;
+    if (item.type === "legs") user.legs == null;
+    if (item.type === "feet") user.feet == null;
 
     await this.repository.save(user);
     return user;
