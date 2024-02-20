@@ -177,10 +177,10 @@ export class UserService {
 
     if (item.avatarId != avatar.id) throw new Error("Item is not available for user avatar");
 
-    if (item.type === "head") user.head == null;
-    if (item.type === "torso") user.torso == null;
-    if (item.type === "legs") user.legs == null;
-    if (item.type === "feet") user.feet == null;
+    if (item.type === "head") user.head = "";
+    if (item.type === "torso") user.torso = "";
+    if (item.type === "legs") user.legs = "";
+    if (item.type === "feet") user.feet = "";
 
     await this.repository.save(user);
     return user;
