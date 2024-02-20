@@ -7,7 +7,7 @@ import { EncryptionService } from "../encryption/encryption.service";
 import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
 import { USER_COLLECTABLE_REPOSITORY } from "../../repositories/userCollectable/userCollectable.repository";
 import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectable.repository";
-import { UserItemResponse } from "../../dtos/response/userItem.response";
+// import { UserItemResponse } from "../../dtos/response/userItem.response";
 import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 import { ILike } from "typeorm";
@@ -92,7 +92,7 @@ export class UserService {
 
   // Function to buy item for user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async buyItem(itemId: string, userId: string, jwtPayload:any): Promise<UserItemResponse> {
+  public async buyItem(itemId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
 
     // Check if the user is found
     userId = userId.toLowerCase();
@@ -130,7 +130,7 @@ export class UserService {
     const newUserItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId:userId } });
     if (!newUserItem) throw new Error("User item not found");
 
-    return newUserItem;
+    return user;
   }
 
   // Function to set user wearable

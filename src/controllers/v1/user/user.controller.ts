@@ -9,7 +9,7 @@ import { UserService } from "../../../app-services/user/user.service";
 import { Arg, Authenticate } from "@tsed/passport";
 import { Req } from "@tsed/common";
 import { UserRequest } from "../../../dtos/request/user.request";
-import { UserItemResponse } from "../../../dtos/response/userItem.response";
+// import { UserItemResponse } from "../../../dtos/response/userItem.response";
 
 @Controller("/users")
 @Tags("users")
@@ -67,8 +67,8 @@ export class UserController {
 
   @Post("/buyItem")
   @Authenticate("jwt-passport")
-  @Returns(200, UserItemResponse)
-  public async buyItem(@BodyParams() buyObject: { itemId: string; userId: string }, @Arg(0) jwtPayload: any): Promise<UserItemResponse> {
+  @Returns(200, UserResponse)
+  public async buyItem(@BodyParams() buyObject: { itemId: string; userId: string }, @Arg(0) jwtPayload: any): Promise<UserResponse> {
     try {
       return await this.service.buyItem(buyObject.itemId, buyObject.userId, jwtPayload);
     } catch (error) {
