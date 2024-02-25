@@ -37,6 +37,10 @@ services:
       - JWT_AUDIENCE=test.com
       - JWT_EXPIRATION_AGE=43200
       - PASSWORD_RECOVERY_KEY=secret123
+      - CLIENT_ID=413784712948-937kce3lqhb1oq3it00uti9vnolchbn2.apps.googleusercontent.com
+      - CLIENT_SECRET=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
+      - CALLBACK_URL=http://8.208.86.107:8081/v1/auth/oAuth/callback
+      - REDIRECT_URL=http://localhost:3001/dashboard
       - TRANSPORTER_EMAIL=samijoehayek1@gmail.com
       - TRANSPORTER_PASSWORD=jgtd sihu xmar widc
     stdin_open: true
