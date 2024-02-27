@@ -29,7 +29,7 @@ export class ModeratorPassportProtocol implements OnVerify {
     if (!user) throw new Error("Invalid token");
     
     const role = await this.roleRepository.findOne({ where: { id: user.roleId } });
-    if (!role?.roleName || role.roleName.toLowerCase() !== ("manager" || "admin")) throw new Error("User is neither a manager or an admin");
+    if (!role?.roleName || role.roleName.toLowerCase() !== ("moderator" || "admin")) throw new Error("User is neither a moderator or an admin");
 
     return (req.user = { token: jwtPayload, user });
   }
