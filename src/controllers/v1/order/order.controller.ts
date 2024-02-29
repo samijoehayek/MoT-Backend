@@ -14,6 +14,7 @@ export class OrderController {
     protected service: OrderService;
 
     @Get("/")
+    @Authenticate("jwt-passport")
     @Returns(200, Array).Of(OrderResponse)
     public async getOrder(@QueryParams("filter") filter?: string): Promise<OrderResponse[]> {
         try {

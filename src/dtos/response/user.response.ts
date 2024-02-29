@@ -21,6 +21,9 @@ export class UserResponse implements User {
 
     @Property()
     password: string;
+
+    @Property()
+    googleId: string;
     
     @Property()
     tag: string;
@@ -66,6 +69,9 @@ export class UserResponse implements User {
 
     @Property()
     isMuted: boolean;
+
+    @Property()
+    isOAuth: boolean;
 
     @Property()
     createAt: Date;

@@ -5,6 +5,8 @@ import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Exception } from "@tsed/exceptions";
 import { ContentResponse } from "../../../dtos/response/content.response";
 import { ContentRequest } from "../../../dtos/request/content.request";
+import { Authenticate } from "@tsed/passport";
+
 
 @Controller("/content")
 @Tags("Content")
@@ -13,6 +15,7 @@ export class ContentController{
     protected service: ContentService;
 
     @Get("/")
+    @Authenticate("user-passport")
     @Returns(200, Array).Of(ContentResponse)
     public async getContent(@QueryParams("filter") filter?: string): Promise<ContentResponse[]> {
         try {
@@ -23,6 +26,7 @@ export class ContentController{
     }
 
     @Post("/")
+    @Authenticate("admin-passport")
     @Returns(200, ContentResponse)
     public async createContent(@BodyParams() content: ContentRequest): Promise<ContentResponse> {
         try {
@@ -33,6 +37,7 @@ export class ContentController{
     }
 
     @Put("/:id")
+    @Authenticate("admin-passport")
     @Returns(200, ContentResponse)
     public async updateContent(@PathParams("id") id:string, @BodyParams() content: ContentRequest): Promise<ContentResponse> {
         try {
@@ -43,6 +48,7 @@ export class ContentController{
     }
 
     @Delete("/:id")
+    @Authenticate("admin-passport")
     @Returns(200, Boolean)
     public async deleteContent(@PathParams("id") id: string): Promise<boolean> {
         try {

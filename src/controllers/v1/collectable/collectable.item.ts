@@ -14,6 +14,7 @@ export class CollectableController {
   protected service: CollectableService;
 
   @Get("/")
+  @Authenticate("user-passport")
   @Returns(200, Array).Of(CollectableResponse)
   public async getCollectable(@QueryParams("filter") filter?: string): Promise<CollectableResponse[]> {
     try {
@@ -60,6 +61,7 @@ export class CollectableController {
   }
 
   @Get("/searchCollectableByName")
+  @Authenticate("user-passport")
   @Returns(200, Array).Of(CollectableResponse)
   public async searchAvatar(@QueryParams("search") search: string): Promise<CollectableResponse[]> {
     try {

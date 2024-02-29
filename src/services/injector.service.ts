@@ -5,24 +5,32 @@ import { JwtPassportProtocol } from "../protocols/jwt-passport.protocol";
 import { ModeratorPassportProtocol } from "../protocols/moderator-passport.protocol";
 import { AdminLoginPassportProtocol } from "../protocols/admin-login-passport.protocol";
 import { AdminPassportProtocol } from "../protocols/admin-passport.protocol";
+import { OAuthPassportProtocol } from "../protocols/oauth-passport.protocol";
+import { UserPassportProtocol } from "../protocols/user-passport.protocol";
 
 @Service()
 export class InjectorService {
-    @Inject(SignupPassportProtocol)
-    public signupPassportProtocol: SignupPassportProtocol;
-    
-    @Inject(LoginPassportProtocol)
-    public loginPassportProtocol: LoginPassportProtocol;
+  @Inject(SignupPassportProtocol)
+  public signupPassportProtocol: SignupPassportProtocol;
 
-    @Inject(JwtPassportProtocol)
-    public jwtPassportProtocol: JwtPassportProtocol;
+  @Inject(LoginPassportProtocol)
+  public loginPassportProtocol: LoginPassportProtocol;
 
-    @Inject(ModeratorPassportProtocol)
-    public moderatorPassportProtocol: ModeratorPassportProtocol;
+  @Inject(JwtPassportProtocol)
+  public jwtPassportProtocol: JwtPassportProtocol;
 
-    @Inject(AdminLoginPassportProtocol)
-    public adminLoginPassportProtocol: AdminLoginPassportProtocol;
+  @Inject(ModeratorPassportProtocol)
+  public moderatorPassportProtocol: ModeratorPassportProtocol;
 
-    @Inject(AdminPassportProtocol)
-    public adminPassportProtocol: AdminPassportProtocol;
+  @Inject(AdminLoginPassportProtocol)
+  public adminLoginPassportProtocol: AdminLoginPassportProtocol;
+
+  @Inject(AdminPassportProtocol)
+  public adminPassportProtocol: AdminPassportProtocol;
+
+  @Inject(OAuthPassportProtocol)
+  public oAuthPassportProtocol: OAuthPassportProtocol;
+
+  @Inject(UserPassportProtocol)
+  public userPassportProtocol: UserPassportProtocol;
 }

@@ -15,6 +15,7 @@ export class ItemController{
     protected service: ItemService;
 
     @Get("/")
+    @Authenticate("user-passport")
     @Returns(200, Array).Of(ItemResponse)
     public async getItem(@QueryParams("filter") filter?: string): Promise<ItemResponse[]> {
         try {

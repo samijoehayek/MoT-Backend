@@ -1,5 +1,5 @@
 import { Controller, Inject } from "@tsed/di";
-import { Post, Put, Returns, Tags } from "@tsed/schema";
+import { Get, Post, Put, Returns, Tags } from "@tsed/schema";
 import { AuthService } from "../../../app-services/auth/auth.service";
 import { Authenticate } from "@tsed/passport";
 import { AuthResponse } from "../../../dtos/response/auth.response";
@@ -93,6 +93,43 @@ export class AuthController {
   public async validateToken(@Req() req: any): Promise<UserResponse> {
     try {
       return req.user;
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
+  @Get("/userIsAdmin")
+  @Authenticate("jwt-passport")
+  @Returns(200, Boolean)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async userIsAdmin(@Req() req: any): Promise<boolean> {
+    try {
+      return await this.service.userIsAdmin(req.user.user);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Get("/oAuth")
+  @Authenticate("oauth-passport", { scope: ["profile", "email"] })
+  @Returns(200, AuthResponse)
+  public async oAuth(): Promise<boolean> {
+    try {
+      return true;
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
+  @Get("/oAuth/callback")
+  @Authenticate("oauth-passport", {
+    failureRedirect: "http://localhost:3000/fail",
+    failWithError: true,
+  })
+  @Returns(200, AuthResponse)
+  public async oAuthCallback(): Promise<boolean> {
+    try {
+      return true;
     } catch (err) {
       throw new Exception(err.status, err.message);
     }

@@ -14,6 +14,7 @@ import * as pages from "./controllers/pages/index";
 import * as v1 from "./controllers/v1/index";
 import session from "express-session";
 import { InjectorService } from "./services/injector.service";
+import { specInfo } from "./specs/specInfo";
 
 const rootDir = __dirname;
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : [];
@@ -58,7 +59,10 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS
   swagger: [
     {
       path: "/doc",
-      specVersion: "3.0.1"
+      specVersion: "3.0.1",
+      spec: {
+        info: specInfo
+      }
     }
   ],
   middlewares: [

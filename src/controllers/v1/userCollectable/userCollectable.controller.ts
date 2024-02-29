@@ -14,6 +14,7 @@ export class UserCollectableController{
     protected service: UserCollectableService;
 
     @Get("/")
+    @Authenticate("admin-passport")
     @Returns(200, Array).Of(UserCollectableResponse)
     public async getUserCollectable(@QueryParams("filter") filter?: string): Promise<UserCollectableResponse[]> {
         try {
@@ -24,7 +25,7 @@ export class UserCollectableController{
     }
 
     @Post("/")
-    @Authenticate("admin-passport")
+    @Authenticate("user-passport")
     @Returns(200, UserCollectableResponse)
     public async createUserCollectable(@BodyParams() userCollectable: UserCollectableRequest): Promise<UserCollectableResponse> {
         try {

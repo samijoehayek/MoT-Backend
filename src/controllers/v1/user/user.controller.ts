@@ -9,7 +9,7 @@ import { UserService } from "../../../app-services/user/user.service";
 import { Arg, Authenticate } from "@tsed/passport";
 import { Req } from "@tsed/common";
 import { UserRequest } from "../../../dtos/request/user.request";
-import { UserItemResponse } from "../../../dtos/response/userItem.response";
+// import { UserItemResponse } from "../../../dtos/response/userItem.response";
 
 @Controller("/users")
 @Tags("users")
@@ -18,6 +18,7 @@ export class UserController {
   protected service: UserService;
 
   @Get("/")
+  @Authenticate("admin-passport")
   @Returns(200, Array).Of(UserResponse)
   public async getAll(@QueryParams("filter") filter?: string): Promise<UserResponse[]> {
     try {
@@ -42,6 +43,7 @@ export class UserController {
   }
 
   @Get("/searchUserByName")
+  @Authenticate("admin-passport")
   @Returns(200, Array).Of(UserResponse)
   public async searchUser(@QueryParams("search") search: string): Promise<UserResponse[]> {
     try {
@@ -67,8 +69,8 @@ export class UserController {
 
   @Post("/buyItem")
   @Authenticate("jwt-passport")
-  @Returns(200, UserItemResponse)
-  public async buyItem(@BodyParams() buyObject: { itemId: string; userId: string }, @Arg(0) jwtPayload: any): Promise<UserItemResponse> {
+  @Returns(200, UserResponse)
+  public async buyItem(@BodyParams() buyObject: { itemId: string; userId: string }, @Arg(0) jwtPayload: any): Promise<UserResponse> {
     try {
       return await this.service.buyItem(buyObject.itemId, buyObject.userId, jwtPayload);
     } catch (error) {
@@ -85,6 +87,20 @@ export class UserController {
   ): Promise<UserResponse> {
     try {
       return await this.service.setUserWearable(wearableObject.itemId, wearableObject.userId, jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/removeUserWearable")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserResponse)
+  public async removeUserWearable(
+    @BodyParams() wearableObject: { itemId: string; userId: string },
+    @Arg(0) jwtPayload: any
+  ): Promise<UserResponse> {
+    try {
+      return await this.service.removeUserWearable(wearableObject.itemId, wearableObject.userId, jwtPayload);
     } catch (error) {
       throw new Exception(error.status, error.message);
     }
