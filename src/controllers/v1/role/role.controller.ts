@@ -14,6 +14,7 @@ export class RoleController{
     protected service: RoleService;
 
     @Get("/")
+    @Authenticate("admin-passport")
     @Returns(200, Array).Of(RoleResponse)
     public async getRole(@QueryParams("filter") filter?: string): Promise<RoleResponse[]> {
         try {

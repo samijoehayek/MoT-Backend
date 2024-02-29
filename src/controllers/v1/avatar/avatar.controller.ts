@@ -14,6 +14,7 @@ export class AvatarController {
   protected service: AvatarService;
 
   @Get("/")
+  @Authenticate("user-passport")
   @Returns(200, Array).Of(AvatarResponse)
   public async getAvatar(@QueryParams("filter") filter?: string): Promise<AvatarResponse[]> {
     try {

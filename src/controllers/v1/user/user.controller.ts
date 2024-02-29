@@ -18,6 +18,7 @@ export class UserController {
   protected service: UserService;
 
   @Get("/")
+  @Authenticate("admin-passport")
   @Returns(200, Array).Of(UserResponse)
   public async getAll(@QueryParams("filter") filter?: string): Promise<UserResponse[]> {
     try {
@@ -42,6 +43,7 @@ export class UserController {
   }
 
   @Get("/searchUserByName")
+  @Authenticate("admin-passport")
   @Returns(200, Array).Of(UserResponse)
   public async searchUser(@QueryParams("search") search: string): Promise<UserResponse[]> {
     try {
