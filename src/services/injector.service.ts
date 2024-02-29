@@ -6,6 +6,7 @@ import { ModeratorPassportProtocol } from "../protocols/moderator-passport.proto
 import { AdminLoginPassportProtocol } from "../protocols/admin-login-passport.protocol";
 import { AdminPassportProtocol } from "../protocols/admin-passport.protocol";
 import { OAuthPassportProtocol } from "../protocols/oauth-passport.protocol";
+import { UserPassportProtocol } from "../protocols/user-passport.protocol";
 
 @Service()
 export class InjectorService {
@@ -29,4 +30,7 @@ export class InjectorService {
 
   @Inject(OAuthPassportProtocol)
   public oAuthPassportProtocol: OAuthPassportProtocol;
+
+  @Inject(UserPassportProtocol)
+  public userPassportProtocol: UserPassportProtocol;
 }
