@@ -28,7 +28,7 @@ export class AuthService {
   protected transporterService: TransporterService;
 
   public async signup(payload: UserRequest): Promise<UserResponse> {
-    const currentUrl = "http://localhost:3001/verify-email?verificationString=";
+    const currentUrl = "http://8.208.86.107/verify-email?verificationString=";
     const uniqueString = uuidv4();
 
     // Check if user created email and password
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   public async resendVerificationEmail(userId: string): Promise<boolean> {
-    const currentUrl = "http://localhost:8083";
+    const currentUrl = "http://:8083";
     const uniqueString = uuidv4();
       
     const user = await this.userRepository.findOne({ where: { id: userId } });
