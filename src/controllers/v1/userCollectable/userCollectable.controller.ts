@@ -25,7 +25,7 @@ export class UserCollectableController{
     }
 
     @Post("/")
-    @Authenticate("admin-passport")
+    @Authenticate("user-passport")
     @Returns(200, UserCollectableResponse)
     public async createUserCollectable(@BodyParams() userCollectable: UserCollectableRequest): Promise<UserCollectableResponse> {
         try {
