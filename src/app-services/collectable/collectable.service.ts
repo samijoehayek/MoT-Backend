@@ -36,6 +36,42 @@ export class CollectableService {
     return collectable;
   }
 
+  public async updateCollectableName(id: string, collectableName: string): Promise<CollectableResponse> {
+    const collectable = await this.collectableRepository.findOne({ where: { id: id } });
+    if (!collectable) throw new NotFound("Collectable not found");
+
+    if (collectable.name == collectableName) throw new Error("Collectable name is already set to " + collectableName);
+    collectable.name = collectableName;
+
+    await this.collectableRepository.update({ id: id }, { ...collectable });
+    return collectable;
+  }
+
+  public async updateCollectableDescription(id: string, collectableDescription: string): Promise<CollectableResponse> {
+    const collectable = await this.collectableRepository.findOne({ where: { id: id } });
+    if (!collectable) throw new NotFound("Collectable not found");
+
+    if (collectable.description == collectableDescription) throw new Error("Collectable descrption is already set to " + collectableDescription);
+    collectable.description = collectableDescription;
+
+    await this.collectableRepository.update({ id: id }, { ...collectable });
+    return collectable;
+  }
+
+  public async updateCollectableValue(id: string, collectableValue: number): Promise<CollectableResponse> {
+    const collectable = await this.collectableRepository.findOne({ where: { id: id } });
+    if (!collectable) throw new NotFound("Collectable not found");
+
+    if (collectable.value == collectableValue) throw new Error("Collectable value is already set to " + collectableValue);
+
+    // Check if the value of the collectable is logical
+    if (collectableValue < 0) throw new Error("Collectable value can't be negative");
+    collectable.value = collectableValue;
+
+    await this.collectableRepository.update({ id: id }, { ...collectable });
+    return collectable;
+  }
+
   public async removeCollectable(id: string): Promise<boolean> {
     id = id.toLowerCase();
     const collectable = await this.collectableRepository.findOne({ where: { id: id } });
@@ -47,7 +83,7 @@ export class CollectableService {
 
   public async searchCollectableByName(search: string): Promise<Array<CollectableResponse>> {
     const collectable = await this.collectableRepository.find({
-      where: { name: ILike("%" + search + "%") },
+      where: { name: ILike("%" + search + "%") }
     });
     if (!collectable) return [];
     return collectable;

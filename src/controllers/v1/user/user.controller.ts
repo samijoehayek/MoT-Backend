@@ -156,4 +156,37 @@ export class UserController {
       throw new Exception(error.status, error.message);
     }
   }
+
+  @Put("/updateUserTag/:userId")
+  @Authenticate("admin-passport")
+  @Returns(200, UserResponse)
+  public async updateUser(@PathParams("userId") userId: string, @BodyParams() tag: { tag: string }): Promise<UserResponse> {
+    try {
+      return await this.service.updateUserTag(userId, tag.tag);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/updateUserBalance/:userId")
+  @Authenticate("admin-passport")
+  @Returns(200, UserResponse)
+  public async updateUserBalance(@PathParams("userId") userId: string, @BodyParams() balance: { balance: number }): Promise<UserResponse> {
+    try {
+      return await this.service.updateUserBalance(userId, balance.balance);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/updateUserRole/:userId")
+  @Authenticate("admin-passport")
+  @Returns(200, UserResponse)
+  public async updateUserRole(@PathParams("userId") userId: string, @BodyParams() role: { roleId: string }): Promise<UserResponse> {
+    try {
+      return await this.service.updateUserRole(userId, role.roleId);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
 }
