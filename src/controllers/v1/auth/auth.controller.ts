@@ -5,7 +5,6 @@ import { Authenticate } from "@tsed/passport";
 import { AuthResponse } from "../../../dtos/response/auth.response";
 import { BodyParams, PathParams, Req, Res } from "@tsed/common";
 import { Exception } from "@tsed/exceptions";
-import { UserRequest } from "../../../dtos/request/user.request";
 import { ChangePasswordRequest, LoginRequest } from "../../../dtos/request/auth.request";
 import { UserResponse } from "../../../dtos/response/user.response";
 
@@ -19,7 +18,7 @@ export class AuthController {
   @Authenticate("signup-passport")
   @Returns(200, AuthResponse)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-  public async signup(@Req() req: any, @Res() res: any, @BodyParams() user: UserRequest): Promise<AuthResponse> {
+  public async signup(@Req() req: any, @Res() res: any): Promise<AuthResponse> {
     try {
       return res.send(req.user);
     } catch (error) {

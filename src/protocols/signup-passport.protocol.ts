@@ -49,14 +49,6 @@ export class SignupPassportProtocol implements OnVerify {
     });
     if (found) throw new Conflict("Email or username already exists");
 
-    // Check if the user chose a role of admin
-    const isAdmin = await this.roleRepository.findOne({ where: { id: payload.roleId } });
-    console.log(isAdmin);
-    if(isAdmin?.roleName.toLowerCase() === "admin") {
-      console.log("Entered the conditional statement")
-      throw new NotAcceptable("You cannot create an admin account");
-    }
-
     const user = await this.service.signup(payload);
 
     const token = jwt.sign(
