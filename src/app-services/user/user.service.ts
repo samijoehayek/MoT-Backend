@@ -59,9 +59,11 @@ export class UserService {
   }
 
   public async searchUserByName(search: string): Promise<Array<UserResponse>> {
-    const users = await this.repository.find({
-      where: { username: ILike("%" + search + "%") }
-    });
+    const users = await this.repository.find(
+      {
+        where: { username: ILike("%" + search + "%") },
+        relations: ["role"]
+      });
     if (!users) return [];
     return users;
   }
