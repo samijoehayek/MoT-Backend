@@ -71,4 +71,15 @@ export class ItemController {
       throw new Exception(err.status, err.message);
     }
   }
+
+  @Get("/searchItemByName")
+  @Authenticate("user-passport")
+  @Returns(200, Array).Of(ItemResponse)
+  public async searchAvatar(@QueryParams("search") search: string): Promise<ItemResponse[]> {
+    try {
+      return await this.service.searchItemByName(search);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
 }
