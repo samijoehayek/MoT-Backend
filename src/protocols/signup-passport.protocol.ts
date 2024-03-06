@@ -34,6 +34,7 @@ export class SignupPassportProtocol implements OnVerify {
   protected encryptionService: EncryptionService;
 
   async $onVerify(@Req() req: Req, @BodyParams() payload: UserRequest) {
+    console.log("Payload inside protocol: " +  payload)
     if (!payload.email || !payload.password) throw new NotAcceptable("Email and password are required");
 
     // Validate email format using class-validator
@@ -47,6 +48,7 @@ export class SignupPassportProtocol implements OnVerify {
       where: [{ email: payload.email?.toLowerCase() }, { username: payload.username }]
     });
     if (found) throw new Conflict("Email or username already exists");
+
     const user = await this.service.signup(payload);
 
     const token = jwt.sign(
