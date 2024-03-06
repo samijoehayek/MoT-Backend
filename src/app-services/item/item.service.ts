@@ -6,6 +6,7 @@ import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
+import { ILike } from "typeorm";
 
 @Service()
 export class ItemService {
@@ -78,5 +79,13 @@ export class ItemService {
 
     await this.itemRepository.remove(item);
     return true;
+  }
+
+  public async searchItemByName(search: string): Promise<Array<ItemResponse>> {
+    const item = await this.itemRepository.find({
+      where: { itemName: ILike("%" + search + "%") }
+    });
+    if (!item) return [];
+    return item;
   }
 }
