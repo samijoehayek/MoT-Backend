@@ -26,7 +26,7 @@ services:
       - "8081:8081"
     environment:
       - NODE_ENV=staging
-      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://mot-dev.com,http://8.213.23.40,http://http://8.213.36.157
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://mot-dev.com,http://8.213.23.40,http://8.213.36.157
       - POSTGRES_HOST=postgresdb
       - POSTGRES_PORT=5432
       - POSTGRES_USER=MoT-Local
