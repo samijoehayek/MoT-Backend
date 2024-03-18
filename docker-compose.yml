@@ -26,7 +26,7 @@ services:
       - "8081:8081"
     environment:
       - NODE_ENV=staging
-      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://mot-dev.com,http://8.213.23.40
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://frontend-mt.com,https://adminpanel-mt.com
       - POSTGRES_HOST=postgresdb
       - POSTGRES_PORT=5432
       - POSTGRES_USER=MoT-Local
@@ -39,8 +39,8 @@ services:
       - PASSWORD_RECOVERY_KEY=secret123
       - CLIENT_ID=413784712948-937kce3lqhb1oq3it00uti9vnolchbn2.apps.googleusercontent.com
       - CLIENT_SECRET=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
-      - CALLBACK_URL=http://8.208.86.107/v1/auth/oAuth/callback
-      - REDIRECT_URL=http://localhost:3001/dashboard
+      - CALLBACK_URL=https://backend-mt/v1/auth/oAuth/callback
+      - REDIRECT_URL=https://frontend-mt.com/dashboard
       - TRANSPORTER_EMAIL=samijoehayek1@gmail.com
       - TRANSPORTER_PASSWORD=jgtd sihu xmar widc
     stdin_open: true
