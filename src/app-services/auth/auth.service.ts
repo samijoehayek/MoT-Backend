@@ -86,7 +86,7 @@ export class AuthService {
       }
     }
     // save the user
-    const user = await this.userRepository.save({ ...payload, balance: 100 });
+    const user = await this.userRepository.save({ ...payload, balance: 100, isVerified: true });
 
     return user;
   }
