@@ -39,7 +39,7 @@ services:
       - PASSWORD_RECOVERY_KEY=secret123
       - CLIENT_ID=413784712948-937kce3lqhb1oq3it00uti9vnolchbn2.apps.googleusercontent.com
       - CLIENT_SECRET=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
-      - CALLBACK_URL=https://backend-mt/v1/auth/oAuth/callback
+      - CALLBACK_URL=https://backend-mt.com/v1/auth/oAuth/callback
       - REDIRECT_URL=https://frontend-mt.com/dashboard
       - TRANSPORTER_EMAIL=samijoehayek1@gmail.com
       - TRANSPORTER_PASSWORD=jgtd sihu xmar widc
