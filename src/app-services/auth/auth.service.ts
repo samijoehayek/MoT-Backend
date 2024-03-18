@@ -71,6 +71,26 @@ export class AuthService {
     return user;
   }
 
+  public async googleSignup(payload: UserRequest): Promise<UserResponse> {
+    // If user did not choose a role, default to user
+    if (!payload.roleId) {
+      // Get the role id for normal user
+      const role = await this.roleRepository.findOne({ where: { roleName: "user" } });
+      payload.roleId = role?.id;
+    } else {
+      const roleObject = await this.roleRepository.findOne({ where: { id: payload.roleId } });
+      // Check if the user chose a role of admin
+      if (roleObject?.roleName.toLowerCase() === "admin") {
+        console.log("Entered the conditional statement");
+        throw new Error("You cannot create an admin account");
+      }
+    }
+    // save the user
+    const user = await this.userRepository.save({ ...payload, balance: 100 });
+
+    return user;
+  }
+
   public async userIsAdmin(user: UserResponse): Promise<boolean> {
     const role = await this.roleRepository.findOne({ where: { id: user.roleId } });
     if (!role?.roleName || role.roleName.toLowerCase() !== "admin") throw new Error("User is not Admin");

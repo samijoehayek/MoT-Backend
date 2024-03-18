@@ -25,17 +25,16 @@ export class OAuthPassportProtocol implements OnVerify {
   userRepository: USER_REPOSITORY;
 
   async $onVerify(@Res() res: any, @Arg(0) accessToken: string, @Arg(1) refreshToken: any, @Arg(2) profile: any) {
-    console.log(111111);
     let user = await this.userRepository.findOne({
       where: [{ googleId: profile.id, isOAuth: true }]
     });
 
     if (!user)
-      user = await this.authService.signup({
+      user = await this.authService.googleSignup({
         email: profile.emails[0].value,
         googleId: profile.id,
         username: profile.emails[0].value.split("@")[0],
-        isOAuth: true
+        isOAuth: true,
       } as UserRequest);
 
     const token = jwt.sign(
