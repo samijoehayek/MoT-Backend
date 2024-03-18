@@ -122,7 +122,7 @@ export class AuthController {
 
   @Get("/oAuth/callback")
   @Authenticate("oauth-passport", {
-    failureRedirect: "http://localhost:3000/fail",
+    failureRedirect: "https://frontend-mt.com/fail",
     failWithError: true,
   })
   @Returns(200, AuthResponse)
