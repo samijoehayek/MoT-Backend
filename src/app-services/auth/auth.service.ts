@@ -28,7 +28,7 @@ export class AuthService {
   protected transporterService: TransporterService;
 
   public async signup(payload: UserRequest): Promise<UserResponse> {
-    const currentUrl = "http://8.208.86.107/verify-email?verificationString=";
+    const currentUrl = "https://backend-mt.com";
     const uniqueString = uuidv4();
 
     // Check if user created email and password
@@ -64,7 +64,7 @@ export class AuthService {
 
     // This is the email content being sent
     const html = `<p>Welcome to MoT</p><p>Verify your email address to complete the signup and login into your account.</p><p>The link will expire in 6 hours.</p><p>Press <a href=${
-      currentUrl + uniqueString
+      currentUrl + "/v1/auth/verify/" + uniqueString
     }> here </a> to verify your email.</p>`;
     await this.transporterService.sendEmail({ html, subject: "Verify Your Email", to: payload.email });
 
@@ -78,7 +78,7 @@ export class AuthService {
   }
 
   public async resendVerificationEmail(userId: string): Promise<boolean> {
-    const currentUrl = "http://:8083";
+    const currentUrl = "https://backend-mt.com";
     const uniqueString = uuidv4();
 
     const user = await this.userRepository.findOne({ where: { id: userId } });
