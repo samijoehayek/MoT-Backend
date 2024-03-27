@@ -135,6 +135,28 @@ export class AuthService {
     return true;
   }
 
+  public async forgotPassword(token: string, newPassword: string): Promise<boolean> {
+    const userVerification = await this.userVerificationRepository.findOne({ where: { verficationToken: token } });
+    if (!userVerification) throw new Error("Invalid token");
+
+    const user = await this.userRepository.findOne({ where: { id: userVerification.userId } });
+    if (!user) throw new Error("User not found");
+
+    const isExpired = userVerification.expiresAt < new Date();
+    if (isExpired) throw new Error("Token has expired");
+
+    const encryptedPassword = this.encryptionService.encryptMD5(user.email + newPassword);
+    if(encryptedPassword === user.password) throw new Error("New password must be different from old password");
+    
+    await this.userRepository.update({ id: user.id }, { password: encryptedPassword });
+
+    // This is the email content being sent
+    const html = "<p>Password has been Changed</p>";
+    await this.transporterService.sendEmail({ html, subject: "Success!!", to: user.email });
+
+    return true;
+  }
+
   public async verify(token: string): Promise<boolean> {
     const userVerification = await this.userVerificationRepository.findOne({ where: { verficationToken: token } });
     if (!userVerification) throw new Error("Invalid token");
@@ -150,6 +172,29 @@ export class AuthService {
     // This is the email content being sent
     const html = "<p>Email has been verified</p>";
     await this.transporterService.sendEmail({ html, subject: "Success!!", to: user.email });
+
+    return true;
+  }
+
+  public async forgotPasswordEmail(email: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({ where: { email: email } });
+    if (!user) throw new Error("Email does not exist");
+
+    const currentUrl = "http://localhost:3000/forgot-password?userId=" + user.id + "&verificationString=";
+    const uniqueString = uuidv4();
+
+    // Save the user verification request
+    await this.userVerificationRepository.save({
+      userId: user.id,
+      verficationToken: uniqueString,
+      expiresAt: new Date(Date.now() + 6 * 60 * 60 * 1000)
+    });
+
+    // This is the email content being sent
+    const html = `<p>Reset your password</p><p>Click the link below to reset your password.</p><p>The link will expire in 6 hours.</p><p>Press <a href=${
+      currentUrl + uniqueString
+    }> here </a> to reset your password.</p>`;
+    await this.transporterService.sendEmail({ html, subject: "Reset Password", to: email });
 
     return true;
   }
