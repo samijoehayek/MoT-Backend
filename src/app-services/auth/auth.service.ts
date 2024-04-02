@@ -81,7 +81,7 @@ export class AuthService {
     </div>
     <div style="background-color: #f5f5f5; padding: 20px;">
       <div style="text-align: center;">
-        <img src="https://frontend-mt.com/images/logo/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+        <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/x-platform.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
@@ -152,7 +152,7 @@ export class AuthService {
     </div>
     <div style="background-color: #f5f5f5; padding: 20px;">
       <div style="text-align: center;">
-        <img src="https://frontend-mt.com/images/logo/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+        <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/x-platform.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
@@ -186,7 +186,7 @@ export class AuthService {
     </div>
     <div style="background-color: #f5f5f5; padding: 20px;">
       <div style="text-align: center;">
-        <img src="https://frontend-mt.com/images/logo/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+        <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/x-platform.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
@@ -232,7 +232,7 @@ export class AuthService {
     </div>
     <div style="background-color: #f5f5f5; padding: 20px;">
       <div style="text-align: center;">
-        <img src="https://frontend-mt.com/images/logo/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+        <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/x-platform.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
@@ -297,7 +297,7 @@ export class AuthService {
       </div>
       <div style="background-color: #f5f5f5; padding: 20px;">
         <div style="text-align: center;">
-          <img src="https://frontend-mt.com/images/logo/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+          <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
           <div style="margin-top: 20px;">
             <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
             <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/x-platform.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
