@@ -86,7 +86,7 @@ export class AuthService {
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
           <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facbook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
         <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
@@ -157,7 +157,7 @@ export class AuthService {
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
           <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facbook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
         <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
@@ -191,7 +191,7 @@ export class AuthService {
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
           <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facbook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
         <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
@@ -237,7 +237,7 @@ export class AuthService {
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
           <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facbook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
         <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
@@ -302,7 +302,7 @@ export class AuthService {
             <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
             <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
             <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-            <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facbook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+            <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
           </div>
           <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
           <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
