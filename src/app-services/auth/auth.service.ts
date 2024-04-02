@@ -214,7 +214,7 @@ export class AuthService {
     // This is the email content being sent
     const html = `
       <div style="text-align: center;">
-        <img src="https://backend-mt/images/image.png" alt="Saudi Tourism Metaverse" style="max-width: 400px; margin: 0 auto;">
+        <img src="https://backend-mt.com/images/image.png" alt="Saudi Tourism Metaverse" style="max-width: 400px; margin: 0 auto;">
         <h2 style="font-size: 24px; margin-top: 20px;">Saudi Tourism Metaverse</h2>
         <p style="font-size: 16px; margin-top: 20px;">Thank you for registering for the Saudi Tourism Metaverse.</p>
         <p style="font-size: 16px;">Click on the button below to verify your email.</p>
@@ -227,7 +227,7 @@ export class AuthService {
       </div>
       <div style="background-color: #f5f5f5; padding: 20px; margin-top: 40px;">
       <div style="text-align: center;">
-        <img src="https://backend-mt/images/logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+        <img src="https://backend-mt.com/images/logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
           <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="linkedin-icon-url" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
           <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="twitter-icon-url" alt="Twitter" style="width: 24px; height: 24px;"></a>
