@@ -9,6 +9,7 @@ import { TransporterService } from "../../services/transporter.service";
 import { v4 as uuidv4 } from "uuid";
 import { USER_VERIFICATION_REPOSITORY } from "../../repositories/userVerification/userVerification.repository";
 import { ROLE_REPOSITORY } from "../../repositories/role/role.repository";
+import { USER_PASSWORD_VERIFICATION_REPOSITORY } from "../../repositories/userPasswordVerification/userPasswordVerification.repository";
 
 @Service()
 export class AuthService {
@@ -20,6 +21,9 @@ export class AuthService {
 
   @Inject(USER_VERIFICATION_REPOSITORY)
   protected userVerificationRepository: USER_VERIFICATION_REPOSITORY;
+
+  @Inject(USER_PASSWORD_VERIFICATION_REPOSITORY)
+  protected userPasswordVerificationRepository: USER_PASSWORD_VERIFICATION_REPOSITORY;
 
   @Inject(EncryptionService)
   protected encryptionService: EncryptionService;
@@ -63,11 +67,22 @@ export class AuthService {
     });
 
     // This is the email content being sent
-    const html = `<p>Welcome to MoT</p><p>Verify your email address to complete the signup and login into your account.</p><p>The link will expire in 6 hours.</p><p>Press <a href=${
-      currentUrl + uniqueString
-    }> here </a> to verify your email.</p>`;
-    await this.transporterService.sendEmail({ html, subject: "Verify Your Email", to: payload.email });
+    const html = `
+      <div style="text-align: center;">
+        <img src="https://example.com/image.jpg" alt="Saudi Tourism Metaverse" style="max-width: 400px; margin: 0 auto;">
+        <h2 style="font-size: 24px; margin-top: 20px;">Saudi Tourism Metaverse</h2>
+        <p style="font-size: 16px; margin-top: 20px;">Thank you for registering for the Saudi Tourism Metaverse.</p>
+        <p style="font-size: 16px;">Click on the button below to verify your email.</p>
+        <div style="margin-top: 30px;">
+          <a href="${
+            currentUrl + uniqueString
+          }" style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 4px; border: 2px solid #ffffff; font-size: 16px;">Verify Email</a>
+        </div>
+        <p style="font-size: 14px; margin-top: 20px;">The link will expire in 6 hours.</p>
+      </div>
+    `;
 
+    await this.transporterService.sendEmail({ html, subject: "Verify Your Email", to: payload.email });
     return user;
   }
 
@@ -136,19 +151,25 @@ export class AuthService {
   }
 
   public async forgotPassword(token: string, newPassword: string): Promise<boolean> {
-    const userVerification = await this.userVerificationRepository.findOne({ where: { verficationToken: token } });
-    if (!userVerification) throw new Error("Invalid token");
+    const userPasswordVerification = await this.userPasswordVerificationRepository.findOne({ where: { verificationToken: token } });
+    if (!userPasswordVerification) throw new Error("Invalid token");
 
-    const user = await this.userRepository.findOne({ where: { id: userVerification.userId } });
+    const user = await this.userRepository.findOne({ where: { id: userPasswordVerification.userId } });
     if (!user) throw new Error("User not found");
 
-    const isExpired = userVerification.expiresAt < new Date();
+    const isExpired = userPasswordVerification.expiresAt < new Date();
     if (isExpired) throw new Error("Token has expired");
 
+    if (!newPassword) throw new Error("New password is required");
+
+    if (userPasswordVerification.passwordChanged) throw new Error("Password has already been changed, Create new request");
+
     const encryptedPassword = this.encryptionService.encryptMD5(user.email + newPassword);
-    if(encryptedPassword === user.password) throw new Error("New password must be different from old password");
-    
+    if (encryptedPassword === user.password) throw new Error("New password must be different from old password");
+
     await this.userRepository.update({ id: user.id }, { password: encryptedPassword });
+
+    await this.userPasswordVerificationRepository.update({ id: userPasswordVerification.id }, { passwordChanged: true });
 
     // This is the email content being sent
     const html = "<p>Password has been Changed</p>";
@@ -180,20 +201,44 @@ export class AuthService {
     const user = await this.userRepository.findOne({ where: { email: email } });
     if (!user) throw new Error("Email does not exist");
 
-    const currentUrl = "http://localhost:3000/forgot-password?userId=" + user.id + "&verificationString=";
+    const currentUrl = "https://localhost:3000/forgot-password?userId=" + user.id + "&verificationString=";
     const uniqueString = uuidv4();
 
     // Save the user verification request
-    await this.userVerificationRepository.save({
+    await this.userPasswordVerificationRepository.save({
       userId: user.id,
-      verficationToken: uniqueString,
-      expiresAt: new Date(Date.now() + 6 * 60 * 60 * 1000)
+      verificationToken: uniqueString,
+      expiresAt: new Date(Date.now() + 1 * 60 * 60 * 1000)
     });
 
     // This is the email content being sent
-    const html = `<p>Reset your password</p><p>Click the link below to reset your password.</p><p>The link will expire in 6 hours.</p><p>Press <a href=${
-      currentUrl + uniqueString
-    }> here </a> to reset your password.</p>`;
+    const html = `
+      <div style="text-align: center;">
+        <img src="https://backend-mt/images/image.png" alt="Saudi Tourism Metaverse" style="max-width: 400px; margin: 0 auto;">
+        <h2 style="font-size: 24px; margin-top: 20px;">Saudi Tourism Metaverse</h2>
+        <p style="font-size: 16px; margin-top: 20px;">Thank you for registering for the Saudi Tourism Metaverse.</p>
+        <p style="font-size: 16px;">Click on the button below to verify your email.</p>
+        <div style="margin-top: 30px;">
+          <a href="${
+            currentUrl + uniqueString
+          }" style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 4px; border: 2px solid #ffffff; font-size: 16px;">Verify Email</a>
+        </div>
+        <p style="font-size: 14px; margin-top: 20px;">The link will expire in 6 hours.</p>
+      </div>
+      <div style="background-color: #f5f5f5; padding: 20px; margin-top: 40px;">
+      <div style="text-align: center;">
+        <img src="https://backend-mt/images/logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
+        <div style="margin-top: 20px;">
+          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="linkedin-icon-url" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="twitter-icon-url" alt="Twitter" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="instagram-icon-url" alt="Instagram" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="facebook-icon-url" alt="Facebook" style="width: 24px; height: 24px;"></a>
+        </div>
+        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
+        <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
+      </div>
+    </div>
+    `;
     await this.transporterService.sendEmail({ html, subject: "Reset Password", to: email });
 
     return true;
