@@ -83,12 +83,12 @@ export class AuthService {
       <div style="text-align: center;">
         <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
-          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.svg" alt="Instagram" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.svg" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
-        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
+        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because ${user.email} is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
       </div>
     </div>
@@ -154,12 +154,12 @@ export class AuthService {
       <div style="text-align: center;">
         <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
-          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.svg" alt="Instagram" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.svg" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
-        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
+        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because ${user.email} is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
       </div>
     </div>
@@ -188,12 +188,12 @@ export class AuthService {
       <div style="text-align: center;">
         <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
-          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.svg" alt="Instagram" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.svg" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
-        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
+        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because ${user.email} is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
       </div>
     </div>
@@ -234,12 +234,12 @@ export class AuthService {
       <div style="text-align: center;">
         <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
         <div style="margin-top: 20px;">
-          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.svg" alt="Instagram" style="width: 24px; height: 24px;"></a>
+          <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.svg" alt="Facebook" style="width: 24px; height: 24px;"></a>
         </div>
-        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
+        <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because ${user.email} is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
         <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
       </div>
     </div>
@@ -286,7 +286,7 @@ export class AuthService {
     const html = `
       <div style="background-image: url('https://frontend-mt.com/images/webgl-loader.jpg'); background-size: cover; background-position: center; padding: 40px;">
         <h2 style="font-size: 24px; margin-top: 20px; color: white;">Saudi Tourism Metaverse</h2>
-        <p style="font-size: 16px; margin-top: 20px; color: white;">We have verified that its you!</p>
+        <p style="font-size: 16px; margin-top: 20px; color: white;">Forgot your password?</p>
         <p style="font-size: 16px; color: white;">Click on the button below to reset your password.</p>
         <div style="margin-top: 30px;">
           <a href="${
@@ -299,12 +299,12 @@ export class AuthService {
         <div style="text-align: center;">
           <img src="https://frontend-mt.com/images/logos/stc-logo.png" alt="Logo" style="max-width: 150px; margin: 0 auto;">
           <div style="margin-top: 20px;">
-            <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
-            <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.png" alt="Twitter" style="width: 24px; height: 24px;"></a>
-            <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
-            <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+            <a href="https://www.linkedin.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/linkedin.svg" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            <a href="https://www.twitter.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/twitter.svg" alt="Twitter" style="width: 24px; height: 24px;"></a>
+            <a href="https://www.instagram.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/instagram.svg" alt="Instagram" style="width: 24px; height: 24px;"></a>
+            <a href="https://www.facebook.com" target="_blank" style="display: inline-block; margin: 0 10px;"><img src="https://frontend-mt.com/images/logos/facebook.svg" alt="Facebook" style="width: 24px; height: 24px;"></a>
           </div>
-          <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because andrey@mimic.digital is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
+          <p style="font-size: 12px; color: #999999; margin-top: 20px;">You are receiving this email because ${user.email} is registered for the Saudi Tourism Metaverse. This is a no-reply email.</p>
           <p style="font-size: 12px; color: #999999; margin-top: 10px;">For any queries, please contact live support on the Metaverse experience page <a href="mailto:support-metaverse@mt.gov.sa" style="color: #999999; text-decoration: none;">support-metaverse@mt.gov.sa</a></p>
         </div>
       </div>
