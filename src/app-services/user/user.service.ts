@@ -11,6 +11,7 @@ import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectab
 import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 import { ILike } from "typeorm";
+import { ROLE_REPOSITORY } from "../../repositories/role/role.repository";
 
 @Service()
 export class UserService {
@@ -32,9 +33,11 @@ export class UserService {
   @Inject(USER_ITEM_REPOSITORY)
   protected userItemRepository: USER_ITEM_REPOSITORY;
 
+  @Inject(ROLE_REPOSITORY)
+  protected roleRepository: ROLE_REPOSITORY;
+
   @Inject(EncryptionService)
   protected encryptionService: EncryptionService;
-
 
   // Function to get all users from the database
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,16 +59,18 @@ export class UserService {
   }
 
   public async searchUserByName(search: string): Promise<Array<UserResponse>> {
-    const users = await this.repository.find({
-      where: { username: ILike("%" + search + "%") },
-    });
+    const users = await this.repository.find(
+      {
+        where: { username: ILike("%" + search + "%") },
+        relations: ["role"]
+      });
     if (!users) return [];
     return users;
   }
 
   // Function to collect item for user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async collectItem(collectableId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
+  public async collectItem(collectableId: string, userId: string, jwtPayload: any): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -76,14 +81,14 @@ export class UserService {
     const collectable = await this.collectableRepository.findOne({ where: { id: collectableId } });
     if (!collectable) throw new Error("Collectable not found");
 
-    const userCollectable = await this.userCollectableRepository.findOne({ where: { collectableId: collectableId, userId:userId } });
+    const userCollectable = await this.userCollectableRepository.findOne({ where: { collectableId: collectableId, userId: userId } });
     if (userCollectable) throw new Error("User collectable already exists, user cannot the item two times");
 
     // Add balance to user account with the value of the collectable
     user.balance = user.balance + collectable.value;
 
     // Add collectable to user collectable
-    await this.userCollectableRepository.save({ collectableId: collectableId, userId: userId});
+    await this.userCollectableRepository.save({ collectableId: collectableId, userId: userId });
 
     // Save the user with the new balance
     await this.repository.save(user);
@@ -92,8 +97,7 @@ export class UserService {
 
   // Function to buy item for user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async buyItem(itemId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
-
+  public async buyItem(itemId: string, userId: string, jwtPayload: any): Promise<UserResponse> {
     // Check if the user is found
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
@@ -108,26 +112,26 @@ export class UserService {
     if (!item) throw new Error("Collectable not found");
 
     // Check if the item is available for the user avatar
-    if(item.avatarId != user.avatarId) throw new Error("Item is not available for user avatar");
+    if (item.avatarId != user.avatarId) throw new Error("Item is not available for user avatar");
 
     // Check if the user already has the item
-    const userItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId:userId } });
-    if(userItem) throw new Error("User already has the item");
+    const userItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId: userId } });
+    if (userItem) throw new Error("User already has the item");
 
     // Check if the user has enough balance to buy the item
-    if(user.balance < item.price) throw new Error("User does not have enough balance to buy this item");
+    if (user.balance < item.price) throw new Error("User does not have enough balance to buy this item");
 
     // Deduct balance from user account with the value of the item
     user.balance = user.balance - item.price;
 
     // Add item to user item
-    await this.userItemRepository.save({ itemId: itemId, userId: userId});
+    await this.userItemRepository.save({ itemId: itemId, userId: userId });
 
     // Save the user with the new balance
     await this.repository.save(user);
 
-    // Get new user item  
-    const newUserItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId:userId } });
+    // Get new user item
+    const newUserItem = await this.userItemRepository.findOne({ where: { itemId: itemId, userId: userId } });
     if (!newUserItem) throw new Error("User item not found");
 
     return user;
@@ -135,7 +139,7 @@ export class UserService {
 
   // Function to set user wearable
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async setUserWearable(itemId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
+  public async setUserWearable(itemId: string, userId: string, jwtPayload: any): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -161,7 +165,7 @@ export class UserService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async removeUserWearable(itemId: string, userId: string, jwtPayload:any): Promise<UserResponse> {
+  public async removeUserWearable(itemId: string, userId: string, jwtPayload: any): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -186,10 +190,9 @@ export class UserService {
     return user;
   }
 
-
   // Function to set avatar for user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async setAvatarForUser(userId: string, avatarId: string, jwtPayload:any): Promise<UserResponse> {
+  public async setAvatarForUser(userId: string, avatarId: string, jwtPayload: any): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -216,7 +219,7 @@ export class UserService {
   // Function to get number of users on platform
   public async getUserNumber(): Promise<string> {
     const count = await this.repository.count();
-    if(!count) return "0";
+    if (!count) return "0";
     return count.toString();
   }
 
@@ -228,7 +231,7 @@ export class UserService {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(payload.email)) {
-        throw new NotAcceptable("Invalid email format");
+      throw new NotAcceptable("Invalid email format");
     }
 
     const found = await this.repository.findOne({
@@ -242,20 +245,65 @@ export class UserService {
       payload.password = encryptPassword;
     }
 
-    const newUser = await this.repository.save({ ...payload, isVerified:true, balance:100 });
+    const newUser = await this.repository.save({ ...payload, isVerified: true, balance: 100 });
     return newUser;
   }
 
-  // Function to update user isActive status  
+  // Function to update user isActive status
   public async updateUserStatus(userId: string, status: boolean): Promise<boolean> {
-
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
-    
+
     if (user.isActive === status) throw new Error("Status is already set to " + status);
     user.isActive = status;
 
     await this.repository.save(user);
     return true;
+  }
+
+  // Function to update user tag in the database
+  public async updateUserTag(userId: string, tag:string): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the tag being changed exists
+    if (user.tag === tag) throw new Error("User tag is already set to " + tag);
+    user.tag = tag;
+
+    await this.repository.update({ id: userId }, { ...user });
+    return user;
+  }
+
+  // Function to update user balance in the database
+  public async updateUserBalance(userId: string, balance:number): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    if (user.balance < 0) throw new Error("User balance can't be negative");
+    user.balance = balance;
+
+    await this.repository.update({ id: userId }, { ...user });
+    return user;
+  }
+
+  // Function to update user balance in the database
+  public async updateUserRole(userId: string, roleId:string): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the role being changed exists
+    const role = await this.roleRepository.findOne({ where: { id: roleId } });
+    if (!role) throw new Error("Role not found");
+
+    // User cant change role to the same role
+    if (user.roleId === roleId) throw new Error("User role is already set to " + role.roleName);
+
+    user.roleId = roleId;
+
+    await this.repository.update({ id: userId }, { ...user });
+    return user;
   }
 }

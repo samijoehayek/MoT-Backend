@@ -10,74 +10,76 @@ import { Authenticate } from "@tsed/passport";
 
 @Controller("/item")
 @Tags("Item")
-export class ItemController{
-    @Inject(ItemService)            
-    protected service: ItemService;
+export class ItemController {
+  @Inject(ItemService)
+  protected service: ItemService;
 
-    @Get("/")
-    @Authenticate("user-passport")
-    @Returns(200, Array).Of(ItemResponse)
-    public async getItem(@QueryParams("filter") filter?: string): Promise<ItemResponse[]> {
-        try {
-            return filter ? await this.service.getItem(JSON.parse(filter)) : await this.service.getItem();
-        } catch (error) {
-            throw new Exception(error.status, error.message);
-        }
+  @Get("/")
+  @Authenticate("user-passport")
+  @Returns(200, Array).Of(ItemResponse)
+  public async getItem(@QueryParams("filter") filter?: string): Promise<ItemResponse[]> {
+    try {
+      return filter ? await this.service.getItem(JSON.parse(filter)) : await this.service.getItem();
+    } catch (error) {
+      throw new Exception(error.status, error.message);
     }
+  }
 
-    @Post("/")
-    @Authenticate("admin-passport")
-    @Returns(200, ItemResponse)
-    public async createItem(@BodyParams() item: ItemRequest): Promise<ItemResponse> {
-        try {
-            return await this.service.createItem(item);
-        } catch (error) {
-            throw new Exception(error.status, error.message);
-        }
+  @Post("/")
+  @Authenticate("admin-passport")
+  @Returns(200, ItemResponse)
+  public async createItem(@BodyParams() item: ItemRequest): Promise<ItemResponse> {
+    try {
+      return await this.service.createItem(item);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
     }
+  }
 
-    @Put("/:id")
-    @Authenticate("admin-passport")
-    @Returns(200, ItemResponse)
-    public async updateItem(@PathParams("id") id:string, @BodyParams() item: ItemRequest): Promise<ItemResponse> {
-        try {
-            return await this.service.updateItem(id, item);
-        } catch (err) {
-            throw new Exception(err.status, err.message);
-        }
+  @Put("/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, ItemResponse)
+  public async updateItem(@PathParams("id") id: string, @BodyParams() item: ItemRequest): Promise<ItemResponse> {
+    try {
+      return await this.service.updateItem(id, item);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
     }
+  }
 
-    @Delete("/:id")
-    @Authenticate("admin-passport")
-    @Returns(200, Boolean)
-    public async deleteItem(@PathParams("id") id: string): Promise<boolean> {
-        try {
-            return await this.service.removeItem(id);
-        } catch (err) {
-            throw new Exception(err.status, err.message);
-        }
+  @Put("/updateItemPrice/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, ItemResponse)
+  public async updateItemPrice(
+    @PathParams("id") id: string,
+    @BodyParams() itemPrice: { price: number }
+  ): Promise<ItemResponse> {
+    try {
+      return await this.service.updateItemPrice(id, itemPrice.price);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
     }
+  }
 
-    // @Post("/collect")
-    // @Returns(200, Boolean)
-    // public async collectItem(@BodyParams() userItem: UserItemRequest): Promise<boolean> {
-    //     try {
-    //         return await this.service.collectItem(userItem);
-    //     } catch (err) {
-    //         throw new Exception(err.status, err.message);
-    //     }
-    // }
+  @Delete("/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, Boolean)
+  public async deleteItem(@PathParams("id") id: string): Promise<boolean> {
+    try {
+      return await this.service.removeItem(id);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
 
-    // @Post("/drop")
-    // @Returns(200, Boolean)
-    // public async dropItem(@BodyParams() userItem: UserItemRequest): Promise<boolean> {
-    //     try {
-    //         return await this.service.dropItem(userItem);
-    //     } catch (err) {
-    //         throw new Exception(err.status, err.message);
-    //     }
-    // }
-
-
-
+  @Get("/searchItemByName")
+  @Authenticate("user-passport")
+  @Returns(200, Array).Of(ItemResponse)
+  public async searchAvatar(@QueryParams("search") search: string): Promise<ItemResponse[]> {
+    try {
+      return await this.service.searchItemByName(search);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
 }

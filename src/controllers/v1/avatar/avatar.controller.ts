@@ -46,6 +46,17 @@ export class AvatarController {
     }
   }
 
+  @Put("/updateAvatarName/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, AvatarResponse)
+  public async updateAvatarName(@PathParams("id") avatarId: string, @BodyParams() avatarName: { name: string }): Promise<AvatarResponse> {
+    try {
+      return await this.service.updateAvatarName(avatarId, avatarName.name);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
   @Delete("/:id")
   @Authenticate("admin-passport")
   @Returns(200, Boolean)

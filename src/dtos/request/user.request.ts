@@ -16,6 +16,9 @@ export class UserRequest {
     password?: string;
 
     @Property()
+    balance?: number;
+
+    @Property()
     tag?: string;
 
     @Property()

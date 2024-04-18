@@ -49,6 +49,48 @@ export class CollectableController {
     }
   }
 
+  @Put("/updateCollectableName/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, CollectableResponse)
+  public async updateCollectableName(
+    @PathParams("id") id: string,
+    @BodyParams() collectableName: {name:string}
+  ): Promise<CollectableResponse> {
+    try {
+      return await this.service.updateCollectableName(id, collectableName.name);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
+  @Put("/updateCollectableDescription/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, CollectableResponse)
+  public async updateCollectableDescription(
+    @PathParams("id") id: string,
+    @BodyParams() collectableDescription: {description:string}
+  ): Promise<CollectableResponse> {
+    try {
+      return await this.service.updateCollectableDescription(id, collectableDescription.description);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
+  @Put("/updateCollectableValue/:id")
+  @Authenticate("admin-passport")
+  @Returns(200, CollectableResponse)
+  public async updateCollectableValue(
+    @PathParams("id") id: string,
+    @BodyParams() collectableValue: {value:number}
+  ): Promise<CollectableResponse> {
+    try {
+      return await this.service.updateCollectableValue(id, collectableValue.value);
+    } catch (err) {
+      throw new Exception(err.status, err.message);
+    }
+  }
+
   @Delete("/:id")
   @Authenticate("admin-passport")
   @Returns(200, Boolean)

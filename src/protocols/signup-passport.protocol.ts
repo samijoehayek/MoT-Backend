@@ -34,6 +34,7 @@ export class SignupPassportProtocol implements OnVerify {
   protected encryptionService: EncryptionService;
 
   async $onVerify(@Req() req: Req, @BodyParams() payload: UserRequest) {
+    console.log("Payload inside protocol: " +  payload)
     if (!payload.email || !payload.password) throw new NotAcceptable("Email and password are required");
 
     // Validate email format using class-validator
@@ -47,12 +48,6 @@ export class SignupPassportProtocol implements OnVerify {
       where: [{ email: payload.email?.toLowerCase() }, { username: payload.username }]
     });
     if (found) throw new Conflict("Email or username already exists");
-
-    // Check if the user chose a role of admin
-    const isAdmin = await this.roleRepository.findOne({ where: { id: payload.roleId } });
-    if(isAdmin?.roleName.toLowerCase() === "admin") {
-      throw new NotAcceptable("You cannot create an admin account");
-    }
 
     const user = await this.service.signup(payload);
 

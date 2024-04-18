@@ -5,7 +5,6 @@ import { Authenticate } from "@tsed/passport";
 import { AuthResponse } from "../../../dtos/response/auth.response";
 import { BodyParams, PathParams, Req, Res } from "@tsed/common";
 import { Exception } from "@tsed/exceptions";
-import { UserRequest } from "../../../dtos/request/user.request";
 import { ChangePasswordRequest, LoginRequest } from "../../../dtos/request/auth.request";
 import { UserResponse } from "../../../dtos/response/user.response";
 
@@ -19,7 +18,7 @@ export class AuthController {
   @Authenticate("signup-passport")
   @Returns(200, AuthResponse)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-  public async signup(@Req() req: any, @Res() res: any, @BodyParams() user: UserRequest): Promise<AuthResponse> {
+  public async signup(@Req() req: any, @Res() res: any): Promise<AuthResponse> {
     try {
       return res.send(req.user);
     } catch (error) {
@@ -86,6 +85,28 @@ export class AuthController {
     }
   }
 
+  @Post("/forgotPasswordEmail")
+  @Returns(200, Boolean)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async forgotPasswordEmail(@BodyParams("email") email: string): Promise<boolean> {
+    try {
+      return await this.service.forgotPasswordEmail(email);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/forgotPassword/:token")
+  @Returns(200, Boolean)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async forgotPassword(@PathParams("token") token:string, @BodyParams("newPassword") newPassword: string): Promise<boolean> {
+    try {
+      return await this.service.forgotPassword(token, newPassword);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
   @Post("/validateToken")
   @Authenticate("jwt-passport")
   @Returns(200, AuthResponse)
@@ -123,7 +144,7 @@ export class AuthController {
 
   @Get("/oAuth/callback")
   @Authenticate("oauth-passport", {
-    failureRedirect: "http://localhost:3000/fail",
+    failureRedirect: "https://frontend-mt.com/fail",
     failWithError: true,
   })
   @Returns(200, AuthResponse)
@@ -134,4 +155,6 @@ export class AuthController {
       throw new Exception(err.status, err.message);
     }
   }
+
+
 }

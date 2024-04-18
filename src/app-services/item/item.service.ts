@@ -6,6 +6,7 @@ import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_REPOSITORY } from "../../repositories/user/user.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 import { AVATAR_REPOSITORY } from "../../repositories/avatar/avatar.repository";
+import { ILike } from "typeorm";
 
 @Service()
 export class ItemService {
@@ -57,6 +58,20 @@ export class ItemService {
     return item;
   }
 
+  public async updateItemPrice(id:string, price:number): Promise<ItemResponse> {
+    const item = await this.itemRepository.findOne({ where: { id: id } });
+    if (!item) throw new NotFound("Item not found");
+
+    if (item.price == price) throw new Error("Item price is already set to " + price);
+
+    // Check if the value of the collectable is logical
+    if (price < 0) throw new Error("Item price can't be negative");
+    item.price = price;
+
+    await this.itemRepository.update({ id: id }, { ...item });
+    return item;
+  }
+
   public async removeItem(id: string): Promise<boolean> {
     id = id.toLowerCase();
     const item = await this.itemRepository.findOne({ where: { id: id } });
@@ -64,5 +79,13 @@ export class ItemService {
 
     await this.itemRepository.remove(item);
     return true;
+  }
+
+  public async searchItemByName(search: string): Promise<Array<ItemResponse>> {
+    const item = await this.itemRepository.find({
+      where: { itemName: ILike("%" + search + "%") }
+    });
+    if (!item) return [];
+    return item;
   }
 }
