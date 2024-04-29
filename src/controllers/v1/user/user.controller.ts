@@ -189,4 +189,38 @@ export class UserController {
       throw new Exception(error.status, error.message);
     }
   }
+
+  @Put("/chatGpt/chatResponse")
+  @Authenticate("jwt-passport")
+  @Returns(200, String)
+  public async chatGpt(@BodyParams() chatObject: { message: string }): Promise<string> {
+    try {
+      return await this.service.chatCompletions(chatObject.message);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/chatGpt/voiceResponse")
+  @Authenticate("jwt-passport")
+  @Returns(200, String)
+  public async chatGptVoice(@BodyParams() audioObject: { audioBytes: number[] }): Promise<string> {
+    try {
+      console.log(audioObject)
+      return await this.service.chatCompletionsVoice(audioObject.audioBytes);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Put("/chatGpt/textToSpeech")
+  @Authenticate("jwt-passport")
+  @Returns(200, Buffer)
+  public async chatGptTextToSpeech(@BodyParams() textToSpeechObject: { input: string, voice: string, speed: number }): Promise<Buffer> {
+    try {
+      return await this.service.chatTextToSpeech(textToSpeechObject.input, textToSpeechObject.speed, textToSpeechObject.voice);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
 }

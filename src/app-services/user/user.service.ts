@@ -12,6 +12,8 @@ import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
 import { ILike } from "typeorm";
 import { ROLE_REPOSITORY } from "../../repositories/role/role.repository";
+import OpenAI from "openai";
+
 
 @Service()
 export class UserService {
@@ -305,5 +307,52 @@ export class UserService {
 
     await this.repository.update({ id: userId }, { ...user });
     return user;
+  }
+
+  // Function to create chat completions for user
+  public async chatCompletions(userMessage: string): Promise<string> {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, organization: process.env.OPENAI_ORGANIZATION_ID });
+    const completions = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo-1106",
+      messages: [{ role: "user", content: userMessage }]
+    });
+    const string = JSON.stringify(completions);
+    console.log(completions);
+    return string;
+  }
+
+  // Function to create chat completions for user from voice to chat
+  public async chatCompletionsVoice(audioBytes: number[]): Promise<string> {
+    console.log("This is the audio byte array: ", audioBytes);
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, organization: process.env.OPENAI_ORGANIZATION_ID });
+
+    // Convert the audioBytes to a Blob
+    const audioBlob = new Blob([new Uint8Array(audioBytes)], { type: "audio/wav" });
+
+    // Create a File object from the Blob
+    const audioFile = new File([audioBlob], "audio.wav", { type: "audio/wav" });
+
+    const completions = await openai.audio.transcriptions.create({
+      model: "whisper-1",
+      file: audioFile
+    });
+    const string = JSON.stringify(completions);
+    console.log(completions);
+    return string;
+  }
+
+  // Function to create chat completions for user from voice to chat
+  public async chatTextToSpeech(input: string, speed: number, voice: string): Promise<Buffer> {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, organization: process.env.OPENAI_ORGANIZATION_ID });
+
+    const completions = await openai.audio.speech.create({
+      model: "tts-1",
+      voice: voice == "alloy" ? "alloy" : voice == "echo" ? "echo" : voice == "fable" ? "fable" : voice == "onyx" ? "onyx" : voice == "nova" ? "nova" : "shimmer",
+      input: input,
+      response_format: "mp3",
+      speed: speed
+    });
+    const buffer = Buffer.from(await completions.arrayBuffer());
+    return buffer;
   }
 }
