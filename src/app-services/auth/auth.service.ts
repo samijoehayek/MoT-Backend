@@ -51,7 +51,6 @@ export class AuthService {
       const roleObject = await this.roleRepository.findOne({ where: { id: payload.roleId } });
       // Check if the user chose a role of admin
       if (roleObject?.roleName.toLowerCase() === "admin") {
-        console.log("Entered the conditional statement");
         throw new Error("You cannot create an admin account");
       }
     }
@@ -108,7 +107,6 @@ export class AuthService {
       const roleObject = await this.roleRepository.findOne({ where: { id: payload.roleId } });
       // Check if the user chose a role of admin
       if (roleObject?.roleName.toLowerCase() === "admin") {
-        console.log("Entered the conditional statement");
         throw new Error("You cannot create an admin account");
       }
     }

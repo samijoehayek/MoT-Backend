@@ -34,7 +34,6 @@ export class SignupPassportProtocol implements OnVerify {
   protected encryptionService: EncryptionService;
 
   async $onVerify(@Req() req: Req, @BodyParams() payload: UserRequest) {
-    console.log("Payload inside protocol: " +  payload)
     if (!payload.email || !payload.password) throw new NotAcceptable("Email and password are required");
 
     // Validate email format using class-validator

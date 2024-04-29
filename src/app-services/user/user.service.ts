@@ -317,13 +317,11 @@ export class UserService {
       messages: [{ role: "user", content: userMessage }]
     });
     const string = JSON.stringify(completions);
-    console.log(completions);
     return string;
   }
 
   // Function to create chat completions for user from voice to chat
   public async chatCompletionsVoice(audioBytes: number[]): Promise<string> {
-    console.log("This is the audio byte array: ", audioBytes);
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, organization: process.env.OPENAI_ORGANIZATION_ID });
 
     // Convert the audioBytes to a Blob
@@ -337,7 +335,6 @@ export class UserService {
       file: audioFile
     });
     const string = JSON.stringify(completions);
-    console.log(completions);
     return string;
   }
 

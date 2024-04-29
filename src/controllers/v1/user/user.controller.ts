@@ -206,7 +206,6 @@ export class UserController {
   @Returns(200, String)
   public async chatGptVoice(@BodyParams() audioObject: { audioBytes: number[] }): Promise<string> {
     try {
-      console.log(audioObject)
       return await this.service.chatCompletionsVoice(audioObject.audioBytes);
     } catch (error) {
       throw new Exception(error.status, error.message);
