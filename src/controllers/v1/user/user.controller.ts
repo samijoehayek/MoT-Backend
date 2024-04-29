@@ -190,10 +190,11 @@ export class UserController {
     }
   }
 
-  @Put("/chatGpt/chatResponse")
+  @Post("/chatGpt/chatResponse")
   @Authenticate("jwt-passport")
   @Returns(200, String)
   public async chatGpt(@BodyParams() chatObject: { message: string }): Promise<string> {
+    console.log("Chat object: ", chatObject);
     try {
       return await this.service.chatCompletions(chatObject.message);
     } catch (error) {
