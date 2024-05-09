@@ -332,6 +332,7 @@ export class UserService {
 
     const completions = await openai.audio.transcriptions.create({
       model: "whisper-1",
+      language: "en",
       file: audioFile
     });
     const string = JSON.stringify(completions);
