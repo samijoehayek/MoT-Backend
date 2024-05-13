@@ -10,15 +10,20 @@ import { COLLECTABLE_REPOSITORY } from "../../repositories/collectable/collectab
 // import { UserItemResponse } from "../../dtos/response/userItem.response";
 import { ITEM_REPOSITORY } from "../../repositories/item/item.repository";
 import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repository";
-import { ILike } from "typeorm";
+import { ILike, LessThan } from "typeorm";
 import { ROLE_REPOSITORY } from "../../repositories/role/role.repository";
 import OpenAI from "openai";
+import { USER_SESSION_REPOSITORY } from "../../repositories/userSession/userSession.repository";
+import { UserSessionResponse } from "../../dtos/response/userSession.response";
 
 
 @Service()
 export class UserService {
   @Inject(USER_REPOSITORY)
   protected repository: USER_REPOSITORY;
+
+  @Inject(USER_SESSION_REPOSITORY)
+  protected userSessionRepository: USER_SESSION_REPOSITORY;
 
   @Inject(AVATAR_REPOSITORY)
   protected avatarRepository: AVATAR_REPOSITORY;
@@ -58,6 +63,66 @@ export class UserService {
       : await this.repository.findOne({ where: { id: id } });
     if (!user) return {} as UserResponse;
     return user;
+  }
+
+  // Function to get user session
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async getUserSession(jwtPayload: any): Promise<UserSessionResponse> {
+    const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the user has an active session
+    const userSession = await this.userSessionRepository.findOne({ where: { userId: jwtPayload.sub } });
+    if (!userSession) return {} as UserSessionResponse;
+
+    return userSession;
+  }
+
+  // Function to create user session
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async createUserSession(jwtPayload: any): Promise<UserSessionResponse> {
+    const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the user has an active session
+    const userSession = await this.userSessionRepository.findOne({ where: { userId: jwtPayload.sub } });
+    if (userSession) throw new Error("User already has an active session");
+
+    // Create a new user session
+    const sessionToken = this.encryptionService.encryptMD5(user.email + user.username + user.id);
+    return await this.userSessionRepository.save({ userId: jwtPayload.sub, sessionToken: sessionToken });
+  }
+
+  // Function to ping user session
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async pingSession(jwtPayload: any): Promise<UserSessionResponse> {
+    const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the user has an active session
+    const userSession = await this.userSessionRepository.findOne({ where: { userId: jwtPayload.sub } });
+    if (!userSession) throw new Error("User does not have an active session");
+
+    // Update the last ping time
+    userSession.lastPingAt = new Date();
+    return await this.userSessionRepository.save(userSession);
+  }
+
+  // Check User Sessions
+  public async checkUserSessions(): Promise<boolean> {
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+    const expiredSessions = await this.userSessionRepository.find({
+      where: { lastPingAt: LessThan(tenMinutesAgo) },
+    });
+
+    if (expiredSessions.length > 0) {
+      await this.userSessionRepository.remove(expiredSessions);
+      console.log(`Removed ${expiredSessions.length} expired sessions.`);
+      return true;
+    } else {
+      console.log("No expired sessions found.");
+      return false;
+    }
   }
 
   public async searchUserByName(search: string): Promise<Array<UserResponse>> {

@@ -1,13 +1,11 @@
-import { Column, PrimaryGeneratedColumn, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
 
 @Entity()
-export class UserVerification {
+export class UserSession {
+  // Add properties for the UserSession entity
   @PrimaryGeneratedColumn("uuid")
   id!: string;
-
-  @Column({ unique: true })
-  verficationToken!: string;
 
   // Add foreign key from the user table
   @Column()
@@ -16,9 +14,13 @@ export class UserVerification {
   @JoinColumn({ name: "userId" })
   user: User;
 
+  @Column({ unique: true })
+  sessionToken!: string;
+
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createAt: Date;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  expiresAt: Date;
+  lastPingAt: Date;
+  
 }
