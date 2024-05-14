@@ -9,6 +9,9 @@ export class UserSessionResponse {
 
     @Property()
     sessionToken?: string;
+
+    @Property()
+    isActive?: boolean;
     
     @Property()
     createAt?: Date;

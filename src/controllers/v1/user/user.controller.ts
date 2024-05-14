@@ -79,6 +79,18 @@ export class UserController {
     }
   }
 
+  // Toggle Session Activity
+  @Put("/toggleSessionActivity")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  public async toggleSessionActivity(@Arg(0) jwtPayload: any, @BodyParams() isActive: boolean): Promise<UserSessionResponse> {
+    try {
+      return await this.service.toggleSessionActivity(jwtPayload, isActive);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
 
   @Get("/searchUserByName")
   @Authenticate("admin-passport")

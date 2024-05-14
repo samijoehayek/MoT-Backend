@@ -17,6 +17,9 @@ export class UserSession {
   @Column({ unique: true })
   sessionToken!: string;
 
+  @Column({ default: true })
+  isActive: boolean;
+
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createAt: Date;
 

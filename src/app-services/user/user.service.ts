@@ -93,6 +93,21 @@ export class UserService {
     return await this.userSessionRepository.save({ userId: jwtPayload.sub, sessionToken: sessionToken });
   }
 
+  // Function to toggle session active status
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async toggleSessionActivity(jwtPayload: any, isActive: boolean): Promise<UserSessionResponse> {
+    const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the user has an active session
+    const userSession = await this.userSessionRepository.findOne({ where: { userId: jwtPayload.sub } });
+    if (!userSession) throw new Error("User does not have an active session");
+
+    // Toggle the session active status
+    userSession.isActive = isActive;
+    return await this.userSessionRepository.save(userSession);
+  }
+
   // Function to ping user session
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async pingSession(jwtPayload: any): Promise<UserSessionResponse> {
