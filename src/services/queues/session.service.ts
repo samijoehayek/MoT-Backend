@@ -7,7 +7,6 @@ export class SessionQueueService {
   public sessionQueue: Queue;
 
   constructor() {
-    console.log("Initializing user session queue...");
     this.sessionQueue = new Bull("sessionQueue", {
       redis: _connectionOpts,
       defaultJobOptions: {
@@ -26,6 +25,5 @@ export class SessionQueueService {
     this.sessionQueue.on("completed", (job) => job.remove());
 
     this.sessionQueue.add("processUserSession", {}, { repeat: { cron: "*/10 * * * *" } });
-    console.log("User session queue initialized.");
   }
 }

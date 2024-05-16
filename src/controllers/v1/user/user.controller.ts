@@ -79,13 +79,25 @@ export class UserController {
     }
   }
 
-  // Toggle Session Activity
-  @Put("/toggleSessionActivity")
+  // Toggle Session Activity to True
+  @Post("/sessionActivityTrue")
   @Authenticate("jwt-passport")
   @Returns(200, UserSessionResponse)
-  public async toggleSessionActivity(@Arg(0) jwtPayload: any, @BodyParams() isActive: boolean): Promise<UserSessionResponse> {
+  public async sessionActivityTrue(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
     try {
-      return await this.service.toggleSessionActivity(jwtPayload, isActive);
+      return await this.service.sessionActivityTrue(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  // Toggle Session Activity
+  @Post("/sessionActivityFalse")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  public async sessionActivityFalse(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
+    try {
+      return await this.service.sessionActivityFalse(jwtPayload);
     } catch (error) {
       throw new Exception(error.status, error.message);
     }
@@ -244,7 +256,6 @@ export class UserController {
   @Authenticate("jwt-passport")
   @Returns(200, String)
   public async chatGpt(@BodyParams() chatObject: { message: string }): Promise<string> {
-    console.log("Chat object: ", chatObject);
     try {
       return await this.service.chatCompletions(chatObject.message);
     } catch (error) {
