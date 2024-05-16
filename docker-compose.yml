@@ -11,6 +11,17 @@ services:
       - POSTGRES_DB=MoT-Local
       - POSTGRES_USER=MoT-Local
       - POSTGRES_PASSWORD=postgres
+    
+  redisrtc:
+    image: redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    volumes:
+      - ./redisdata:/data
+    ports:
+      - "6380:6379"
+
   server:
     build:
       context: .
@@ -22,6 +33,7 @@ services:
     image: mot-backend/server:latest
     depends_on:
       - postgresdb
+      - redisrtc
     ports:
       - "8081:8081"
     environment:
@@ -32,6 +44,11 @@ services:
       - POSTGRES_USER=MoT-Local
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=MoT-Local
+      - REDIS_URL=redisrtc
+      - REDIS_PORT=6379
+      - REDIS_USERNAME=default
+      - REDIS_PASSWORD=null
+      - REDIS_DATABASE=0
       - JWT_KEY=secret123
       - JWT_ISSUER=accounts.mindflares.me
       - JWT_AUDIENCE=test.com

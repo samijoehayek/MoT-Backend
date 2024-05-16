@@ -1,20 +1,18 @@
 import { Property } from "@tsed/schema";
 
 export class UserVerificationResponse {
+  @Property()
+  id!: string;
 
-    @Property()
-    id!: string;
+  @Property()
+  verificationToken!: string;
 
-    @Property()
-    verificationToken!: string;
+  @Property()
+  userId!: string;
 
-    @Property()
-    userId!: string;
+  @Property()
+  createAt!: Date;
 
-    @Property()
-    createAt!: Date;
-
-    @Property()
-    expiresAt!: Date;
-    
+  @Property()
+  expiresAt!: Date;
 }

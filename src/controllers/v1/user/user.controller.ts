@@ -9,6 +9,7 @@ import { UserService } from "../../../app-services/user/user.service";
 import { Arg, Authenticate } from "@tsed/passport";
 import { Req } from "@tsed/common";
 import { UserRequest } from "../../../dtos/request/user.request";
+import { UserSessionResponse } from "../../../dtos/response/userSession.response";
 // import { UserItemResponse } from "../../../dtos/response/userItem.response";
 
 @Controller("/users")
@@ -41,6 +42,67 @@ export class UserController {
       throw new Exception(error.status, error.message);
     }
   }
+
+  // Get User Session
+  @Get("/getUserSession")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async getUserSession(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
+    try {
+      return await this.service.getUserSession(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  @Post("/createUserSession")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  public async createUserSession(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
+    try {
+      return await this.service.createUserSession(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  // Ping Session
+  @Put("/pingSession")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  public async pingSession(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
+    try {
+      return await this.service.pingSession(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  // Toggle Session Activity to True
+  @Post("/sessionActivityTrue")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  public async sessionActivityTrue(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
+    try {
+      return await this.service.sessionActivityTrue(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
+  // Toggle Session Activity
+  @Post("/sessionActivityFalse")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserSessionResponse)
+  public async sessionActivityFalse(@Arg(0) jwtPayload: any): Promise<UserSessionResponse> {
+    try {
+      return await this.service.sessionActivityFalse(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+
 
   @Get("/searchUserByName")
   @Authenticate("admin-passport")
@@ -194,7 +256,6 @@ export class UserController {
   @Authenticate("jwt-passport")
   @Returns(200, String)
   public async chatGpt(@BodyParams() chatObject: { message: string }): Promise<string> {
-    console.log("Chat object: ", chatObject);
     try {
       return await this.service.chatCompletions(chatObject.message);
     } catch (error) {
@@ -223,4 +284,5 @@ export class UserController {
       throw new Exception(error.status, error.message);
     }
   }
+
 }

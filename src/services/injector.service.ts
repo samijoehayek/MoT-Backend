@@ -7,9 +7,12 @@ import { AdminLoginPassportProtocol } from "../protocols/admin-login-passport.pr
 import { AdminPassportProtocol } from "../protocols/admin-passport.protocol";
 import { OAuthPassportProtocol } from "../protocols/oauth-passport.protocol";
 import { UserPassportProtocol } from "../protocols/user-passport.protocol";
+import { UserSessionWorkerService } from "./workers/userSession.service";
+import { SessionService } from "./session.service";
 
 @Service()
 export class InjectorService {
+  // ------------ Inject Protocols ------------
   @Inject(SignupPassportProtocol)
   public signupPassportProtocol: SignupPassportProtocol;
 
@@ -33,4 +36,12 @@ export class InjectorService {
 
   @Inject(UserPassportProtocol)
   public userPassportProtocol: UserPassportProtocol;
+
+  // ------------ Inject Workers ------------
+  @Inject(UserSessionWorkerService)
+  public userSessionWorkerService: UserSessionWorkerService;
+
+  // ------------ Inject Services ------------
+  @Inject(SessionService)
+  public sessionService: SessionService;
 }
