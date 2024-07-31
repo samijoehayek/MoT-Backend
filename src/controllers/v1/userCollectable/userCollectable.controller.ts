@@ -15,7 +15,7 @@ export class UserCollectableController{
 
     @Get("/")
     @Authenticate("user-passport")
-    @Returns(200, Array).Of(UserCollectableResponse)
+    @(Returns(200, Array).Of(UserCollectableResponse))
     public async getUserCollectable(@QueryParams("filter") filter?: string): Promise<UserCollectableResponse[]> {
         try {
             return filter ? await this.service.getUserCollectable(JSON.parse(filter)) : await this.service.getUserCollectable();

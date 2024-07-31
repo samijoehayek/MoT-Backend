@@ -72,6 +72,9 @@ export class User {
   @Column({ default: false })
   isOAuth!: boolean;
 
+  // @Column({ default: false })
+  // has2FA: boolean;
+
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createAt: Date;
 

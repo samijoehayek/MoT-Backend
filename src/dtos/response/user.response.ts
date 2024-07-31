@@ -73,6 +73,9 @@ export class UserResponse implements User {
     @Property()
     isOAuth: boolean;
 
+    // @Property()
+    // has2FA: boolean;
+
     @Property()
     createAt: Date;
 

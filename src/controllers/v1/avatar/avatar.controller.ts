@@ -15,7 +15,7 @@ export class AvatarController {
 
   @Get("/")
   @Authenticate("user-passport")
-  @Returns(200, Array).Of(AvatarResponse)
+  @(Returns(200, Array).Of(AvatarResponse))
   public async getAvatar(@QueryParams("filter") filter?: string): Promise<AvatarResponse[]> {
     try {
       return filter ? await this.service.getAvatar(JSON.parse(filter)) : await this.service.getAvatar();
@@ -69,7 +69,7 @@ export class AvatarController {
   }
 
   @Get("/searchAvatarByName")
-  @Returns(200, Array).Of(AvatarResponse)
+  @(Returns(200, Array).Of(AvatarResponse))
   public async searchAvatar(@QueryParams("search") search: string): Promise<AvatarResponse[]> {
     try {
       return await this.service.searchAvatarByName(search);

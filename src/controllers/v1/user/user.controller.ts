@@ -20,7 +20,7 @@ export class UserController {
 
   @Get("/")
   @Authenticate("admin-passport")
-  @Returns(200, Array).Of(UserResponse)
+  @(Returns(200, Array).Of(UserResponse))
   public async getAll(@QueryParams("filter") filter?: string): Promise<UserResponse[]> {
     try {
       return filter ? await this.service.getUsers(JSON.parse(filter)) : await this.service.getUsers();
@@ -106,7 +106,7 @@ export class UserController {
 
   @Get("/searchUserByName")
   @Authenticate("admin-passport")
-  @Returns(200, Array).Of(UserResponse)
+  @(Returns(200, Array).Of(UserResponse))
   public async searchUser(@QueryParams("search") search: string): Promise<UserResponse[]> {
     try {
       return await this.service.searchUserByName(search);
