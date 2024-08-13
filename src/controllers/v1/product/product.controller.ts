@@ -15,7 +15,7 @@ export class ProductController{
 
     @Get("/")
     @Authenticate("user-passport")
-    @Returns(200, Array).Of(ProductResponse)
+    @(Returns(200, Array).Of(ProductResponse))
     public async getProduct(@QueryParams("filter") filter?: string): Promise<ProductResponse[]> {
         try {
             return filter ? await this.service.getProduct(JSON.parse(filter)) : await this.service.getProduct();

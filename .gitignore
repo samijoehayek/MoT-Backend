@@ -53,6 +53,7 @@ test/**/*.js.map
 
 #postgres
 pgdata
+redisdata
 
 #env
 .env.local

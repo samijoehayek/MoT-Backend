@@ -16,7 +16,7 @@ export class ItemController {
 
   @Get("/")
   @Authenticate("user-passport")
-  @Returns(200, Array).Of(ItemResponse)
+  @(Returns(200, Array).Of(ItemResponse))
   public async getItem(@QueryParams("filter") filter?: string): Promise<ItemResponse[]> {
     try {
       return filter ? await this.service.getItem(JSON.parse(filter)) : await this.service.getItem();
@@ -74,7 +74,7 @@ export class ItemController {
 
   @Get("/searchItemByName")
   @Authenticate("user-passport")
-  @Returns(200, Array).Of(ItemResponse)
+  @(Returns(200, Array).Of(ItemResponse))
   public async searchAvatar(@QueryParams("search") search: string): Promise<ItemResponse[]> {
     try {
       return await this.service.searchItemByName(search);

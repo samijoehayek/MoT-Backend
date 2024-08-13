@@ -41,7 +41,7 @@ export class ItemService {
 
     // Make the type lowercase and see if it does match one of the 4 types
     payload.type = payload.type.toLowerCase();
-    if (payload.type !== "head" && payload.type !== "torso" && payload.type !== "legs" && payload.type !== "feet") {
+    if (payload.type !== "head" && payload.type !== "torso" && payload.type !== "legs" && payload.type !== "feet" && payload.type !== "hands" && payload.type !== "ears" && payload.type !== "upperFace" && payload.type !== "lowerFace") {
       throw new NotFound("Type not found");
     }
 
