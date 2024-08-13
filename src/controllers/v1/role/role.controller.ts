@@ -15,7 +15,7 @@ export class RoleController{
 
     @Get("/")
     @Authenticate("admin-passport")
-    @Returns(200, Array).Of(RoleResponse)
+    @(Returns(200, Array).Of(RoleResponse))
     public async getRole(@QueryParams("filter") filter?: string): Promise<RoleResponse[]> {
         try {
             return filter ? await this.service.getRole(JSON.parse(filter)) : await this.service.getRole();

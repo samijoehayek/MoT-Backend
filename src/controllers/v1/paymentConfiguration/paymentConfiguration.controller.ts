@@ -15,7 +15,7 @@ export class PaymentConfigurationController {
 
     @Get("/")
     @Authenticate("admin-passport")
-    @Returns(200, Array).Of(PaymentConfigurationResponse)
+    @(Returns(200, Array).Of(PaymentConfigurationResponse))
     public async getPaymentConfiguration(@QueryParams("filter") filter?: string): Promise<PaymentConfigurationResponse[]> {
         try {
             return filter ? await this.service.getPaymentConfiguration(JSON.parse(filter)) : await this.service.getPaymentConfiguration();

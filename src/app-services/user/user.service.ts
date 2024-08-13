@@ -256,6 +256,10 @@ export class UserService {
     if (item.type === "torso") user.torso = itemId;
     if (item.type === "legs") user.legs = itemId;
     if (item.type === "feet") user.feet = itemId;
+    if (item.type === "hands") user.hands = itemId;
+    if (item.type === "ears") user.ears = itemId;
+    if (item.type === "upperFace") user.upperFace = itemId;
+    if (item.type === "lowerFace") user.lowerFace = itemId;
 
     await this.repository.save(user);
     return user;
@@ -282,6 +286,10 @@ export class UserService {
     if (item.type === "torso") user.torso = "";
     if (item.type === "legs") user.legs = "";
     if (item.type === "feet") user.feet = "";
+    if (item.type === "hands") user.hands = "";
+    if (item.type === "ears") user.ears = "";
+    if (item.type === "upperFace") user.upperFace = "";
+    if (item.type === "lowerFace") user.lowerFace = "";
 
     await this.repository.save(user);
     return user;
@@ -448,4 +456,20 @@ export class UserService {
     const buffer = Buffer.from(await completions.arrayBuffer());
     return buffer;
   }
+
+  // Function to update user and change 2FA in the database
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async update2FA(jwtPayload: any): Promise<UserResponse> {
+    const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (!user) throw new Error("User not found");
+
+    // Check if the 2FA being changed exists
+    if (user.has2FA) throw new Error("User 2FA is already initialized");
+    user.has2FA = true;
+
+    await this.repository.update({ id: user.id }, { ...user });
+    return user;
+  }
 }
+
+

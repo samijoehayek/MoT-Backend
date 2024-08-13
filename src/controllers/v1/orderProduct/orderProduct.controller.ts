@@ -15,7 +15,7 @@ export class OrderProductController {
 
     @Get("/")
     @Authenticate("jwt-passport")
-    @Returns(200, Array).Of(OrderProductResponse)
+    @(Returns(200, Array).Of(OrderProductResponse))
     public async getOrderProduct(@QueryParams("filter") filter?: string): Promise<OrderProductResponse[]> {
         try {
             return filter ? await this.service.getOrderProduct(JSON.parse(filter)) : await this.service.getOrderProduct();

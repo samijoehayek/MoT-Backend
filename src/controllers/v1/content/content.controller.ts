@@ -16,7 +16,7 @@ export class ContentController{
 
     @Get("/")
     @Authenticate("user-passport")
-    @Returns(200, Array).Of(ContentResponse)
+    @(Returns(200, Array).Of(ContentResponse))
     public async getContent(@QueryParams("filter") filter?: string): Promise<ContentResponse[]> {
         try {
             return filter ? await this.service.getContent(JSON.parse(filter)) : await this.service.getContent();

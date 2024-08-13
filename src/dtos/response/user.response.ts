@@ -41,6 +41,18 @@ export class UserResponse implements User {
     feet: string;
 
     @Property()
+    hands: string;
+
+    @Property()
+    ears: string;
+
+    @Property()
+    upperFace: string;
+
+    @Property()
+    lowerFace: string;
+
+    @Property()
     roleId: string;
 
     @Property(() => RoleResponse)
@@ -72,6 +84,12 @@ export class UserResponse implements User {
 
     @Property()
     isOAuth: boolean;
+
+    @Property()
+    has2FA: boolean;
+
+    @Property()
+    twoFactorSecret: string;
 
     @Property()
     createAt: Date;

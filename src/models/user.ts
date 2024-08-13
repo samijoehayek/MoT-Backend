@@ -36,6 +36,18 @@ export class User {
   @Column({ nullable: true })
   feet: string;
 
+  @Column({ nullable: true })
+  hands: string;
+
+  @Column({ nullable: true })
+  ears: string;
+
+  @Column({ nullable: true })
+  upperFace: string;
+
+  @Column({ nullable: true })
+  lowerFace: string;
+
   // Add foreign key from the roles table
   @Column({ nullable: true })
   roleId: string;
@@ -71,6 +83,12 @@ export class User {
 
   @Column({ default: false })
   isOAuth!: boolean;
+
+  @Column({ default: false })
+  has2FA: boolean;
+
+  @Column({ default: null })
+  twoFactorSecret: string;
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createAt: Date;
