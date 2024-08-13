@@ -285,4 +285,16 @@ export class UserController {
     }
   }
 
+  @Post("/create2FA")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserResponse)
+  public async create2FA(@Arg(0) jwtPayload: any): Promise<UserResponse> {
+    try {   
+      return await this.service.update2FA(jwtPayload);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
+  
+
 }
