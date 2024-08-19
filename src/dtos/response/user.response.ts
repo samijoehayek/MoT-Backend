@@ -47,10 +47,10 @@ export class UserResponse implements User {
     ears: string;
 
     @Property()
-    upperFace: string;
+    upperface: string;
 
     @Property()
-    lowerFace: string;
+    lowerface: string;
 
     @Property()
     roleId: string;
