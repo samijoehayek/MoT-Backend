@@ -43,10 +43,10 @@ export class User {
   ears: string;
 
   @Column({ nullable: true })
-  upperFace: string;
+  upperface: string;
 
   @Column({ nullable: true })
-  lowerFace: string;
+  lowerface: string;
 
   // Add foreign key from the roles table
   @Column({ nullable: true })

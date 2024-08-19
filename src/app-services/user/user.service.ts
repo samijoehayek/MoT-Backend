@@ -258,8 +258,8 @@ export class UserService {
     if (item.type === "feet") user.feet = itemId;
     if (item.type === "hands") user.hands = itemId;
     if (item.type === "ears") user.ears = itemId;
-    if (item.type === "upperFace") user.upperFace = itemId;
-    if (item.type === "lowerFace") user.lowerFace = itemId;
+    if (item.type === "upperface") user.upperface = itemId;
+    if (item.type === "lowerface") user.lowerface = itemId;
 
     await this.repository.save(user);
     return user;
@@ -288,8 +288,8 @@ export class UserService {
     if (item.type === "feet") user.feet = "";
     if (item.type === "hands") user.hands = "";
     if (item.type === "ears") user.ears = "";
-    if (item.type === "upperFace") user.upperFace = "";
-    if (item.type === "lowerFace") user.lowerFace = "";
+    if (item.type === "upperface") user.upperface = "";
+    if (item.type === "lowerface") user.lowerface = "";
 
     await this.repository.save(user);
     return user;
