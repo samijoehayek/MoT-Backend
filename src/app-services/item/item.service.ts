@@ -39,9 +39,9 @@ export class ItemService {
     const avatar = await this.avatarRepository.findOne({ where: { id: payload.avatarId } });
     if (!avatar) throw new NotFound("Avatar not found");
 
-    // Make the type lowercase and see if it does match one of the 4 types
+    // Make the type lowercase and see if it does match one of the 8 types
     payload.type = payload.type.toLowerCase();
-    if (payload.type !== "head" && payload.type !== "torso" && payload.type !== "legs" && payload.type !== "feet" && payload.type !== "hands" && payload.type !== "ears" && payload.type !== "upperFace" && payload.type !== "lowerFace") {
+    if (payload.type !== "head" && payload.type !== "torso" && payload.type !== "legs" && payload.type !== "feet" && payload.type !== "hands" && payload.type !== "ears" && payload.type !== "upperface" && payload.type !== "lowerface") {
       throw new NotFound("Type not found");
     }
 
