@@ -13,9 +13,10 @@ import { USER_ITEM_REPOSITORY } from "../../repositories/userItem/userItem.repos
 import { ILike, LessThan } from "typeorm";
 import { ROLE_REPOSITORY } from "../../repositories/role/role.repository";
 import OpenAI from "openai";
+import { authenticator } from "otplib";
+import qrCode from "qrcode";
 import { USER_SESSION_REPOSITORY } from "../../repositories/userSession/userSession.repository";
 import { UserSessionResponse } from "../../dtos/response/userSession.response";
-
 
 @Service()
 export class UserService {
@@ -142,7 +143,7 @@ export class UserService {
   public async checkUserSessions(): Promise<boolean> {
     const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
     const expiredSessions = await this.userSessionRepository.find({
-      where: { lastPingAt: LessThan(tenMinutesAgo) },
+      where: { lastPingAt: LessThan(tenMinutesAgo) }
     });
 
     if (expiredSessions.length > 0) {
@@ -156,11 +157,10 @@ export class UserService {
   }
 
   public async searchUserByName(search: string): Promise<Array<UserResponse>> {
-    const users = await this.repository.find(
-      {
-        where: { username: ILike("%" + search + "%") },
-        relations: ["role"]
-      });
+    const users = await this.repository.find({
+      where: { username: ILike("%" + search + "%") },
+      relations: ["role"]
+    });
     if (!users) return [];
     return users;
   }
@@ -367,7 +367,7 @@ export class UserService {
   }
 
   // Function to update user tag in the database
-  public async updateUserTag(userId: string, tag:string): Promise<UserResponse> {
+  public async updateUserTag(userId: string, tag: string): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -381,7 +381,7 @@ export class UserService {
   }
 
   // Function to update user balance in the database
-  public async updateUserBalance(userId: string, balance:number): Promise<UserResponse> {
+  public async updateUserBalance(userId: string, balance: number): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -394,7 +394,7 @@ export class UserService {
   }
 
   // Function to update user balance in the database
-  public async updateUserRole(userId: string, roleId:string): Promise<UserResponse> {
+  public async updateUserRole(userId: string, roleId: string): Promise<UserResponse> {
     userId = userId.toLowerCase();
     const user = await this.repository.findOne({ where: { id: userId } });
     if (!user) throw new Error("User not found");
@@ -448,7 +448,18 @@ export class UserService {
 
     const completions = await openai.audio.speech.create({
       model: "tts-1",
-      voice: voice == "alloy" ? "alloy" : voice == "echo" ? "echo" : voice == "fable" ? "fable" : voice == "onyx" ? "onyx" : voice == "nova" ? "nova" : "shimmer",
+      voice:
+        voice == "alloy"
+          ? "alloy"
+          : voice == "echo"
+            ? "echo"
+            : voice == "fable"
+              ? "fable"
+              : voice == "onyx"
+                ? "onyx"
+                : voice == "nova"
+                  ? "nova"
+                  : "shimmer",
       input: input,
       response_format: "mp3",
       speed: speed
@@ -459,17 +470,49 @@ export class UserService {
 
   // Function to update user and change 2FA in the database
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async update2FA(jwtPayload: any): Promise<UserResponse> {
+  public async create2FA(jwtPayload: any): Promise<string> {
     const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
     if (!user) throw new Error("User not found");
 
     // Check if the 2FA being changed exists
     if (user.has2FA) throw new Error("User 2FA is already initialized");
-    user.has2FA = true;
 
+    const secret = authenticator.generateSecret();
+
+    const salt = jwtPayload.sub;
+    const encryptedSecret = this.encryptionService.aesEncrypt(secret, salt);
+
+    // Update the 2FA secret after it is encrypted
+    user.twoFactorSecret = encryptedSecret;
+
+    const otpauth = authenticator.keyuri(user.username, "MT+Metaverse", secret);
+    let qr = "";
+    try {
+      qr = await qrCode.toDataURL(otpauth);
+    } catch {
+      console.log("Error generating QR code");
+    }
+
+    const response = qr;
     await this.repository.update({ id: user.id }, { ...user });
-    return user;
+    return response;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async verify2FA(jwtPayload: any, otp: string): Promise<boolean> {
+    const user = await this.repository.findOne({ where: { id: jwtPayload.sub } });
+    if (!user) throw new Error("User not found");
+
+    const salt = jwtPayload.sub;
+    const decryptedSecret = this.encryptionService.aesDecrypt(user.twoFactorSecret, salt);
+    
+    if (!authenticator.verify({ token: otp, secret: decryptedSecret })) throw new Error("Invalid 2FA code");
+
+    if (!user.has2FA) {
+      user.has2FA = true;
+    }
+    await this.repository.update({ id: user.id }, { ...user });
+
+    return true;
   }
 }
-
-
