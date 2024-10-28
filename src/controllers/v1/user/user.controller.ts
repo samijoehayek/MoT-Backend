@@ -103,7 +103,6 @@ export class UserController {
     }
   }
 
-
   @Get("/searchUserByName")
   @Authenticate("admin-passport")
   @(Returns(200, Array).Of(UserResponse))
@@ -231,7 +230,7 @@ export class UserController {
   }
 
   @Put("/updateUserBalance/:userId")
-  @Authenticate("admin-passport")
+  @Authenticate("jwt-passport")
   @Returns(200, UserResponse)
   public async updateUserBalance(@PathParams("userId") userId: string, @BodyParams() balance: { balance: number }): Promise<UserResponse> {
     try {
@@ -277,7 +276,7 @@ export class UserController {
   @Put("/chatGpt/textToSpeech")
   @Authenticate("jwt-passport")
   @Returns(200, Buffer)
-  public async chatGptTextToSpeech(@BodyParams() textToSpeechObject: { input: string, voice: string, speed: number }): Promise<Buffer> {
+  public async chatGptTextToSpeech(@BodyParams() textToSpeechObject: { input: string; voice: string; speed: number }): Promise<Buffer> {
     try {
       return await this.service.chatTextToSpeech(textToSpeechObject.input, textToSpeechObject.speed, textToSpeechObject.voice);
     } catch (error) {
@@ -288,13 +287,22 @@ export class UserController {
   @Post("/create2FA")
   @Authenticate("jwt-passport")
   @Returns(200, UserResponse)
-  public async create2FA(@Arg(0) jwtPayload: any): Promise<UserResponse> {
-    try {   
-      return await this.service.update2FA(jwtPayload);
+  public async create2FA(@Arg(0) jwtPayload: any): Promise<string> {
+    try {
+      return await this.service.create2FA(jwtPayload);
     } catch (error) {
       throw new Exception(error.status, error.message);
     }
   }
-  
 
+  @Post("/verify2FA")
+  @Authenticate("jwt-passport")
+  @Returns(200, UserResponse)
+  public async verify2FA(@Arg(0) jwtPayload: any, @BodyParams("otp") otp: string): Promise<boolean> {
+    try {
+      return await this.service.verify2FA(jwtPayload, otp);
+    } catch (error) {
+      throw new Exception(error.status, error.message);
+    }
+  }
 }
