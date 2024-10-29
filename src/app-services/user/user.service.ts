@@ -412,6 +412,37 @@ export class UserService {
     return user;
   }
 
+  // Function to reset user from the database
+  public async resetUser(userId: string): Promise<UserResponse> {
+    userId = userId.toLowerCase();
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (!user) throw new Error("User not found");
+
+    // Delete all collectables for this user
+    await this.userCollectableRepository.delete({
+      userId: userId
+    });
+
+    // Delete all items for this user
+    await this.userItemRepository.delete({
+      userId: userId
+    });
+
+    user.balance = 100;
+    user.tag = "";
+    user.head = "";
+    user.torso = "";
+    user.legs = "";
+    user.feet = "";
+    user.hands = "";
+    user.ears = "";
+    user.upperface = "";
+    user.lowerface = "";
+
+    await this.repository.update({ id: userId }, { ...user });
+    return user;
+  }
+
   // Function to create chat completions for user
   public async chatCompletions(userMessage: string): Promise<string> {
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, organization: process.env.OPENAI_ORGANIZATION_ID });
@@ -505,7 +536,7 @@ export class UserService {
 
     const salt = jwtPayload.sub;
     const decryptedSecret = this.encryptionService.aesDecrypt(user.twoFactorSecret, salt);
-    
+
     if (!authenticator.verify({ token: otp, secret: decryptedSecret })) throw new Error("Invalid 2FA code");
 
     if (!user.has2FA) {
