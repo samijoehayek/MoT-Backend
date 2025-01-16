@@ -429,6 +429,7 @@ export class UserService {
     });
 
     user.balance = 100;
+    user.avatarId = "";
     user.tag = "";
     user.head = "";
     user.torso = "";
