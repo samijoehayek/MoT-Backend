@@ -429,7 +429,7 @@ export class UserService {
     });
 
     user.balance = 100;
-    user.avatarId = "";
+    user.avatarId = "00000000-0000-0000-0000-000000000000";
     user.tag = "";
     user.head = "";
     user.torso = "";
