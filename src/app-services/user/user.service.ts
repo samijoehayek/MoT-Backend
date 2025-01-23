@@ -244,6 +244,8 @@ export class UserService {
     const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
     if (userId != user_Id?.id) throw new Error("User not authorized to set wearable for another user");
 
+    if(user.avatarId == null) throw new Error("User does not have an avatar");
+
     const avatar = await this.avatarRepository.findOne({ where: { id: user.avatarId } });
     if (!avatar) throw new Error("Avatar not found");
 
@@ -273,6 +275,8 @@ export class UserService {
 
     const user_Id = await this.repository.findOne({ where: { id: jwtPayload.sub } });
     if (userId != user_Id?.id) throw new Error("User not authorized to set wearable for another user");
+
+    if(user.avatarId == null) throw new Error("User does not have an avatar");
 
     const avatar = await this.avatarRepository.findOne({ where: { id: user.avatarId } });
     if (!avatar) throw new Error("Avatar not found");
@@ -429,7 +433,7 @@ export class UserService {
     });
 
     user.balance = 100;
-    user.avatarId = "00000000-0000-0000-0000-000000000000";
+    user.avatarId = null;
     user.tag = "";
     user.head = "";
     user.torso = "";
