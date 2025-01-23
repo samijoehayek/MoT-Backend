@@ -59,7 +59,7 @@ export class UserResponse implements User {
     role: Role;
 
     @Property()
-    avatarId: string;
+    avatarId: string | null;
 
     @Property(() => AvatarResponse)
     avatar: Avatar;
