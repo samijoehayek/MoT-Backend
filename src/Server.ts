@@ -1,6 +1,6 @@
-import { join } from "path";
-import { Configuration, Inject } from "@tsed/di";
-import { PlatformApplication } from "@tsed/common";
+import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/ajv";
 import "@tsed/swagger";
@@ -9,7 +9,7 @@ import bodyParser from "body-parser";
 import compress from "compression";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
-import { config } from "./config/index";
+import {config} from "./config/index";
 import * as pages from "./controllers/pages/index";
 import * as v1 from "./controllers/v1/index";
 import session from "express-session";
@@ -19,6 +19,7 @@ import { specInfo } from "./specs/specInfo";
 const rootDir = __dirname;
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : [];
 
+
 @Configuration({
   rootDir,
   allowedOrigins,
@@ -26,7 +27,12 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  componentsScan: [`${rootDir}/repositories/*.ts`, `${rootDir}/app-services/*.ts`, `${rootDir}/services/*.ts`, `${rootDir}/protocols/*.ts`],
+  componentsScan: [
+    `${rootDir}/repositories/*.ts`,
+    `${rootDir}/app-services/*.ts`,
+    `${rootDir}/services/*.ts`,
+    `${rootDir}/protocols/*.ts`
+  ],
   multer: {
     dest: `${rootDir}../../public`
   },
@@ -43,8 +49,12 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS
     returnsCoercedValues: true
   },
   mount: {
-    "/v1": [...Object.values(v1)],
-    "/": [...Object.values(pages)]
+    "/v1": [
+      ...Object.values(v1)
+    ],
+    "/": [
+      ...Object.values(pages)
+    ]
   },
   swagger: [
     {
@@ -58,16 +68,26 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS
   middlewares: [
     cors({
       origin: [...allowedOrigins],
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      allowedHeaders: ["Content-Type", "Authorization"]
+      credentials: true, // ADDED: Important for cookies/auth
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"], // ADDED: OPTIONS and PATCH
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With", // ADDED
+        "Accept" // ADDED
+      ],
+      exposedHeaders: ["Content-Range", "X-Content-Range"], // ADDED
+      maxAge: 86400, // ADDED: Cache preflight for 24 hours (critical fix!)
+      preflightContinue: false, // ADDED
+      optionsSuccessStatus: 204 // ADDED
     }),
     cookieParser(),
     compress({}),
     methodOverride(),
     bodyParser.json(),
     bodyParser.urlencoded({
-      extended: true
-    })
+      extended: true,
+    }),
   ],
   views: {
     root: join(process.cwd(), "../views"),
@@ -75,7 +95,9 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS
       ejs: "ejs"
     }
   },
-  exclude: ["**/*.spec.ts"]
+  exclude: [
+    "**/*.spec.ts"
+  ]
 })
 export class Server {
   @Inject()
@@ -88,6 +110,18 @@ export class Server {
   protected injectorService: InjectorService;
 
   $beforeRoutesInit() {
+    // ADDED: Explicit OPTIONS handler for debugging
+    this.app.use((req: { method: string; headers: { origin: any; }; path: any; }, res: any, next: () => void) => {
+      if (req.method === 'OPTIONS') {
+        console.log('OPTIONS request:', {
+          origin: req.headers.origin,
+          path: req.path,
+          timestamp: new Date().toISOString()
+        });
+      }
+      next();
+    });
+
     this.app
       .use(cookieParser())
       .use(methodOverride())
@@ -105,10 +139,10 @@ export class Server {
           cookie: {
             path: "/",
             httpOnly: true,
-            secure: false,
-            maxAge: 1
+            secure: process.env.NODE_ENV === "production", // CHANGED: Conditional based on environment
+            maxAge: 24 * 60 * 60 * 1000 // CHANGED: 24 hours instead of 1ms (BIG BUG FIX!)
           }
         })
-      );
+      )
   }
 }
